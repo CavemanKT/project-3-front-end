@@ -5,7 +5,7 @@ const PagesAnother = () => (
   <div id="pages-another" className="container">
     <header className="text-center border-bottom">
       <h1>Another Page</h1>
-      <p><Link to="/">Home Page</Link></p>
+      <div><Link to="/">Home Page</Link></div>
     </header>
   </div>
 )
