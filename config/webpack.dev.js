@@ -9,6 +9,7 @@ module.exports = {
     path.resolve(__dirname, '../src/index.jsx')
   ],
   output: {
+    publicPath: '/',
     filename: '[name].[fullhash].js'
   },
   resolve: {
