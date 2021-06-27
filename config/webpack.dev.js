@@ -67,6 +67,7 @@ module.exports = {
   devServer: {
     host: 'localhost',
     port,
+    publicPath: path.resolve(__dirname, '../public'),
     historyApiFallback: true,
     hot: true
   }
