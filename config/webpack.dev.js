@@ -2,16 +2,13 @@ const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-const port = process.env.PORT || 8080
-
 module.exports = {
-  entry: {
-    app: path.resolve(__dirname, '../src/index.jsx'),
-    vendor: ['react-bootstrap']
-  },
+  entry: [
+    'webpack-dev-server/client?http://localhost:8080',
+    'webpack/hot/only-dev-server',
+    path.resolve(__dirname, '../src/index.jsx')
+  ],
   output: {
-    path: path.resolve(__dirname, '../public'),
-    publicPath: '/',
     filename: '[name].[fullhash].js'
   },
   resolve: {
@@ -27,7 +24,7 @@ module.exports = {
       {
         test: /\.(jsx?)$/,
         exclude: /node_modules/,
-        use: ['babel-loader', 'eslint-loader']
+        use: ['react-hot-loader/webpack', 'babel-loader', 'eslint-loader']
       }, {
         test: /\.s[ac]ss$/,
         use: [
@@ -39,24 +36,6 @@ module.exports = {
       }
     ]
   },
-  optimization: {
-    splitChunks: {
-      cacheGroups: {
-        styles: {
-          name: 'styles',
-          test: /\.s[ac]ss$/,
-          chunks: 'all',
-          enforce: true
-        },
-        vendor: {
-          name: 'vendor',
-          test: 'vendor',
-          chunks: 'initial',
-          enforce: true
-        }
-      }
-    }
-  },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
@@ -65,9 +44,6 @@ module.exports = {
     })
   ],
   devServer: {
-    host: 'localhost',
-    port,
-    publicPath: path.resolve(__dirname, '../public'),
     historyApiFallback: true,
     hot: true
   }
