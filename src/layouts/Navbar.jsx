@@ -7,20 +7,26 @@ import { connect } from 'react-redux'
 
 // modals
 import ModalsSignup from '@/modals/auth/Signup'
+import ModalsLogin from '@/modals/auth/Login'
 
-import { authLogout } from '@/actions/auth'
+import { authLogout, authLogin, authSignup } from '@/actions/auth'
 
 class LayoutsNavbar extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      showModalsSignup: false
+      showModalsSignup: false,
+      showModalsLogin: false
     }
 
     this.openModalsSignup = this.openModalsSignup.bind(this)
+    this.openModalsLogin = this.openModalsLogin.bind(this)
     this.closeModalsSignup = this.closeModalsSignup.bind(this)
+    this.closeModalsLogin = this.closeModalsLogin.bind(this)
     this.handleLogoutClick = this.handleLogoutClick.bind(this)
+    this.handleSignupSubmit = this.handleSignupSubmit.bind(this)
+    this.handleLoginSubmit = this.handleLoginSubmit.bind(this)
   }
 
   handleLogoutClick() {
@@ -28,27 +34,42 @@ class LayoutsNavbar extends React.Component {
   }
 
   handleSignupSubmit(values) {
-    // this.props.authSignup(values).then(() => {
-    //   const { history: { push } } = this.props
-    //   push('/auth/login')
-    // })
+    this.props.authSignup(values).then(() => {
+      const { history: { push } } = this.props
+      push('/auth/login')
+    })
+  }
+
+  handleLoginSubmit(values) {
+    this.props.authLogin(values).then(() => {
+      const { history: { push } } = this.props
+      push('/api/games')
+    })
   }
 
   openModalsSignup() {
     this.setState({ showModalsSignup: true })
   }
 
+  openModalsLogin() {
+    this.setState({ showModalsLogin: true })
+  }
+
   closeModalsSignup() {
     this.setState({ showModalsSignup: false })
   }
 
+  closeModalsLogin() {
+    this.setState({ showModalsLogin: false })
+  }
+
   render() {
     // const { currentUserState: { currentUser } } = this.props
-    const { showModalsSignup } = this.state
+    const { showModalsSignup, showModalsLogin } = this.state
     return (
       <>
         <Navbar id="layouts-navbar" bg="dark" variant="dark" expand="lg" collapseOnSelect>
-          <Navbar.Brand as={NavLink} to="/">Todo DB</Navbar.Brand>
+          <Navbar.Brand as={NavLink} to="/">Indie Dever Zone</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">
@@ -61,7 +82,7 @@ class LayoutsNavbar extends React.Component {
               {/* ) : ( */}
               {/* <> */}
               <Nav.Link onClick={this.openModalsSignup} eventKey="3">Signup</Nav.Link>
-              <Nav.Link as={NavLink} to="/auth/login" eventKey="4">Login</Nav.Link>
+              <Nav.Link onClick={this.openModalsLogin} eventKey="4">Login</Nav.Link>
               {/* </> */}
               {/* ) */}
               {/* } */}
@@ -69,10 +90,10 @@ class LayoutsNavbar extends React.Component {
           </Navbar.Collapse>
         </Navbar>
 
-        <div id="modalsSignup" className="container">
+        <div id="authModals" className="container">
           { showModalsSignup && <ModalsSignup close={this.closeModalsSignup} onSubmit={this.handleSignupSubmit} />}
           {/* remember to define the function in this page */}
-
+          { showModalsLogin && <ModalsLogin close={this.closeModalsLogin} onSubmit={this.handleLoginSubmit} />}
         </div>
       </>
     )
@@ -81,7 +102,11 @@ class LayoutsNavbar extends React.Component {
 
 LayoutsNavbar.propTypes = {
   // currentUserState: PropTypes.shape().isRequired,
-  authLogout: PropTypes.func.isRequired
+  history: PropTypes.shape().isRequired,
+  authLogout: PropTypes.func.isRequired,
+  authSignup: PropTypes.func.isRequired,
+  authLogin: PropTypes.func.isRequired
+
 }
 
 const mapStateToProps = (state) => ({
@@ -89,7 +114,9 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  authLogout
+  authLogout,
+  authLogin,
+  authSignup
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LayoutsNavbar)
