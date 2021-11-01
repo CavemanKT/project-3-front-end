@@ -4,6 +4,7 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import ListGroup from 'react-bootstrap/ListGroup'
+import compShowGames from '@/components/ShowGames'
 
 class PagesHome extends React.Component {
   constructor(props) {
@@ -30,6 +31,8 @@ class PagesHome extends React.Component {
                     {
                       items.map((item, idy) => {
                         const key = `${idx}-${idy}`
+                        console.log(key)
+                        console.log(item)
                         return (
                           <ListGroup.Item className="pagesHome-games-item" key={key}>{`${item}`} </ListGroup.Item>
                         )
@@ -39,8 +42,8 @@ class PagesHome extends React.Component {
                 ))
               }
             </Col>
-
           </Row>
+          <compShowGames/>
         </Container>
 
         <footer className="bg-dark text-center text-white">
