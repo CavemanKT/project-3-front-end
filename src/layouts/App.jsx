@@ -3,6 +3,7 @@ import { Switch, BrowserRouter as Router, Route } from 'react-router-dom'
 
 import LayoutsNavbar from '@/layouts/Navbar'
 import PagesHome from '@/pages/Home'
+import PagesDevShow from '@/pages/show-page/dev/Show'
 import PagesNotFound from '@/pages/NotFound'
 
 const App = () => (
@@ -10,7 +11,7 @@ const App = () => (
     <LayoutsNavbar />
     <Switch>
       <Route exact path="/" component={PagesHome} />
-      <Route exact path="/" component={PagesHome} />
+      <Route exact path="/api/dev/games" component={PagesDevShow} />
 
       <Route component={PagesNotFound} />
     </Switch>

@@ -36,7 +36,6 @@ class PagesHome extends React.Component {
                 ))
               }
             </Col>
-
           </Row>
         </Container>
 

@@ -15,24 +15,22 @@ html {
 
   body {
     #root {
+      position: relative;
       min-height: 100vh;
       min-width: 100vw;
 
-      #pagesHome-games-container {
-        display: flex;
-        justify-content: center;
+      margin: 0px;
+      padding: 0px;
 
-        .pagesHome-games-list {
-          display: flex;
-          justify-content: center;
-
-          .pagesHome-games-item {
-            border-style: none;
-
-          }
+      //sign up form
+      .radio-group {
+        .radio-label {
+          margin-right: 10px;
         }
+
       }
 
+      // layout-navbar
       #layouts-navbar {
 
         #layouts-navbar-brand {
@@ -48,9 +46,65 @@ html {
         }
       }
 
-      .radio-label {
-        margin-right: 10px
+      // public show page
+      #pagesHome-games-container {
+        display: flex;
+        justify-content: center;
+
+        .pagesHome-games-list {
+          display: flex;
+          justify-content: center;
+
+          .pagesHome-games-item {
+            border-style: none;
+
+          }
+        }
       }
+
+      // dev-showpage
+      #dev-showpage {
+        #showpage-carousel-and-description-wrapper {
+          margin-left: 100px;
+          margin-top: 100px;
+          position: relative;
+
+          #showpage-carousel-container {
+            width: 650px;
+            height: 500px;
+
+
+            @media screen and(max-width: 1100px) {
+              width: 400px;
+              height: 300px;
+              margin-left: 60px;
+              margin-top: 60px;
+            }
+          }
+
+          #showpage-description-container {
+            // width: 400px;
+            // height: 500px;
+            margin-left: 70px;
+            margin-top: 200px;
+            margin-right: 60px;
+
+            position: relative;
+
+            // @media screen and(max-width: 1100px) {
+            //   width: 350px;
+            //   min-height: 400px;
+            //   margin-right: 60px;
+            // }
+          }
+        }
+
+        #contact-list {
+          margin-top: 200px;
+          margin-left: 200px;
+        }
+      }
+
 
       #footer-company-url:hover {
         text-decoration: none;
