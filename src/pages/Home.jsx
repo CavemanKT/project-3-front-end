@@ -28,10 +28,13 @@ class PagesHome extends React.Component {
                 games.map((items, idx) => (
                   <ListGroup horizontal="sm" className="pagesHome-games-list">
                     {
-                    items.map((item, idy) => (
-                      <ListGroup.Item className="pagesHome-games-item" key={idy}>{`${item}`} </ListGroup.Item>
-                    ))
-                  }
+                      items.map((item, idy) => {
+                        const key = `${idx}-${idy}`
+                        return (
+                          <ListGroup.Item className="pagesHome-games-item" key={key}>{`${item}`} </ListGroup.Item>
+                        )
+                      })
+                    }
                   </ListGroup>
                 ))
               }
