@@ -42,12 +42,19 @@ html {
           margin-right: 60px;
 
           position: relative;
+        }
 
-          // @media screen and(max-width: 1100px) {
-          //   width: 350px;
-          //   min-height: 400px;
-          //   margin-right: 60px;
-          // }
+        #applicant-list {
+          margin-top: 200px;
+
+          .showpage-applicant-list-row {
+            margin-top: 10px;
+
+            .showpage-applicant-list-item {
+              border-right-style: none;
+            }
+
+          }
         }
       }
 

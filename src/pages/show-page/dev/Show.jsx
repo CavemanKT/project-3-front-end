@@ -1,7 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Carousel from 'react-bootstrap/Carousel'
 
+import Container from 'react-bootstrap/Container'
+import Carousel from 'react-bootstrap/Carousel'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import ListGroup from 'react-bootstrap/ListGroup'
@@ -12,17 +13,24 @@ class PagesDevShow extends React.Component {
 
     this.state = {
       applicants: [
-        // {}
-      ]
+        { fullname: 'Faky Ralap', email: '123@123.com', cvUrl: 'https://www.alksdfj.com' },
+        { fullname: 'Faky Ralap', email: '123@123.com', cvUrl: 'https://www.alksdfj.com' },
+        { fullname: 'Faky Ralap', email: '123@123.com', cvUrl: 'https://www.alksdfj.com' },
+        { fullname: 'Faky Ralap', email: '123@123.com', cvUrl: 'https://www.alksdfj.com' }
+      ],
+      game: {
+        name: 'Among us',
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio laudantium amet incidunt quo ducimus numquam ipsum nostrum unde quasi ratione voluptatem laboriosam impedit earum quod dolorem animi, laborum facilis illum.'
+      }
     }
   }
 
   render() {
-    const { applicants } = this.state
+    const { applicants, game } = this.state
     return (
       <>
         <div id="dev-showpage">
-          <div className="game-name">Lorem ipsum dolor</div>
+          <div className="game-name">{game.name}</div>
 
           <div id="showpage-carousel-and-description-wrapper">
             <Row>
@@ -61,7 +69,7 @@ class PagesDevShow extends React.Component {
                 <div id="showpage-description-container" className="col-md-auto">
                   <h2>Description: </h2>
                   <article>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, accusamus repellendus cumque, tempore quisquam nostrum iste, provident quae optio doloremque magnam sunt expedita deleniti. Doloribus officia sequi recusandae quos sint.</p>
+                    <p>{game.description}</p>
                   </article>
 
                 </div>
@@ -71,20 +79,85 @@ class PagesDevShow extends React.Component {
             </Row>
           </div>
 
-          <div id="contact-list">
-            <h3>Applicant list</h3>
-            {
+          <Container className="mb-5">
+            <div id="applicant-list">
+              <h3>Applicant list</h3>
+              <Row>
+                <Col>
+                  {
                   applicants.map((applicant, i) => (
-                    <ListGroup horizontal={applicant.email} className="my-2" key={i}>
-                      <ListGroup.Item>{applicant.fullname}</ListGroup.Item>
-                      <ListGroup.Item>{applicant.email}</ListGroup.Item>
-                      <ListGroup.Item>{applicant.cvUrl}</ListGroup.Item>
-                      <ListGroup.Item>Approve</ListGroup.Item>
+                    <ListGroup horizontal className="showpage-applicant-list-row" key={i}>
+                      <ListGroup.Item className="showpage-applicant-list-item">{applicant.fullname}</ListGroup.Item>
+                      <ListGroup.Item className="showpage-applicant-list-item">{applicant.email}</ListGroup.Item>
+                      <ListGroup.Item className="showpage-applicant-list-item">{applicant.cvUrl}</ListGroup.Item>
+                      <button type="button" className="btn btn-primary">Approve</button>
                     </ListGroup>
                   ))
                 }
+                </Col>
+              </Row>
+            </div>
+          </Container>
 
-          </div>
+          <footer className="bg-dark text-center text-white">
+            {/* <!-- Grid container --> */}
+            <div className="container p-4 pb-0">
+              {/* <!-- Section: Social media --> */}
+              <section className="mb-4">
+                {/* <!-- Facebook --> */}
+                <a
+                  className="btn btn-outline-light btn-floating m-1"
+                  href="#!"
+                  role="button"
+                ><i className="fab fa-facebook-f" /></a>
+
+                {/* <!-- Twitter --> */}
+                <a
+                  className="btn btn-outline-light btn-floating m-1"
+                  href="#!"
+                  role="button"
+                ><i className="fab fa-twitter" /></a>
+
+                {/* <!-- Google --> */}
+                <a
+                  className="btn btn-outline-light btn-floating m-1"
+                  href="#!"
+                  role="button"
+                ><i className="fab fa-google" /></a>
+
+                {/* <!-- Instagram --> */}
+                <a
+                  className="btn btn-outline-light btn-floating m-1"
+                  href="#!"
+                  role="button"
+                ><i className="fab fa-instagram" /></a>
+
+                {/* <!-- Linkedin --> */}
+                <a
+                  className="btn btn-outline-light btn-floating m-1"
+                  href="#!"
+                  role="button"
+                ><i className="fab fa-linkedin-in" /></a>
+
+                {/* <!-- Github --> */}
+                <a
+                  className="btn btn-outline-light btn-floating m-1"
+                  href="#!"
+                  role="button"
+                ><i className="fab fa-github" /></a>
+              </section>
+              {/* <!-- Section: Social media --> */}
+            </div>
+            {/* <!-- Grid container --> */}
+
+            {/* <!-- Copyright --> */}
+            <div className="text-center p-3">
+              © 2021 Copyright:
+              <a id="footer-company-url" className="text-white" href="https://www.iz.io">     iz.io</a>
+            </div>
+            {/* <!-- Copyright --> */}
+          </footer>
+
         </div>
 
       </>
