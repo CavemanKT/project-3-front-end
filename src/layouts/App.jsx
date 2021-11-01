@@ -5,6 +5,7 @@ import LayoutsNavbar from '@/layouts/Navbar'
 import LayoutsFooter from '@/layouts/Footer'
 
 import PagesHome from '@/pages/Home'
+import PagesDevShow from '@/pages/show-page/dev/Show'
 import PagesNotFound from '@/pages/NotFound'
 
 const App = () => (
@@ -13,6 +14,7 @@ const App = () => (
 
     <Switch>
       <Route exact path="/" component={PagesHome} />
+      <Route exact path="/api/dev/games" component={PagesDevShow} />
 
       <Route component={PagesNotFound} />
     </Switch>

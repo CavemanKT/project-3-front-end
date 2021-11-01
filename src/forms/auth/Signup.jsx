@@ -40,27 +40,27 @@ const RenderForm = ({ errors, touched, isSubmitting }) => (
 
     <div id="radio-role-group">Role</div>
     {/* need radio validation */}
-    <div className="form-group radio-group mt-3" role="group" aira-labelledby="radio-role-group">
-      <label htmlFor="roleChoice" className="radio-label">
+    <div className="form-group radio-group mt-3 " role="group" aira-labelledby="radio-role-group">
+      <label htmlFor="type" className="radio-label">
         <Field
-          className={`form-control ${(errors.roleChoice && touched.roleChoice ? ' is-invalid' : '')}`}
-          name="roleChoice"
+          className={`form-control ${(errors.type && touched.type ? ' is-invalid' : '')}`}
+          name="type"
           type="radio"
           value="Developer"
         />
         Developer
       </label>
 
-      <label htmlFor="roleChoice" className="radio-label">
+      <label htmlFor="type" className="radio-label">
         <Field
-          className={`form-control ${(errors.roleChoice && touched.roleChoice ? ' is-invalid' : '')}`}
-          name="roleChoice"
+          className={`form-control ${(errors.type && touched.type ? ' is-invalid' : '')}`}
+          name="type"
           type="radio"
           value="Marketer"
         />
         Marketer
       </label>
-      <ErrorMessage component="div" className="invalid-feedback" name="roleChoice" />
+      <ErrorMessage component="div" className="invalid-feedback" name="type" />
     </div>
 
     <button className="btn btn-success" type="submit" disabled={isSubmitting}>Submit</button>
@@ -82,7 +82,7 @@ const authSignupSchema = yup.object().shape({
       'Both Password need to be the same'
     )
   }),
-  roleChoice: yup.string().required('A radio option is required')
+  type: yup.string().required('A radio option is required')
 })
 
 const FormsAuthSignup = ({ onSubmit }) => (
