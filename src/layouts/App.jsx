@@ -10,6 +10,7 @@ const App = () => (
     <LayoutsNavbar />
     <Switch>
       <Route exact path="/" component={PagesHome} />
+      <Route exact path="/" component={PagesHome} />
 
       <Route component={PagesNotFound} />
     </Switch>

@@ -68,11 +68,11 @@ class LayoutsNavbar extends React.Component {
     const { showModalsSignup, showModalsLogin } = this.state
     return (
       <>
-        <Navbar id="layouts-navbar" bg="dark" variant="dark" expand="lg" collapseOnSelect>
-          <Navbar.Brand as={NavLink} to="/">Indie Dever Zone</Navbar.Brand>
+        <Navbar id="layouts-navbar" bg="light" variant="light" expand="lg" collapseOnSelect>
+          <Navbar.Brand id="layouts-navbar-brand" as={NavLink} to="/">Indie Dever Zone</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="ml-auto">
+            <Nav id="layouts-navbar-navlink" className="ml-auto">
               <Nav.Link as={NavLink} to="/todos" eventKey="1">Browse Todo</Nav.Link>
               {/* { */}
               {/* currentUser ? ( */}
