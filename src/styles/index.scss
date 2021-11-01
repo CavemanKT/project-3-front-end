@@ -99,9 +99,17 @@ html {
           }
         }
 
-        #contact-list {
+        #applicant-list {
           margin-top: 200px;
-          margin-left: 200px;
+
+          .showpage-applicant-list-row {
+            margin-top: 10px;
+
+            .showpage-applicant-list-item {
+              border-right-style: none;
+            }
+
+          }
         }
       }
 
