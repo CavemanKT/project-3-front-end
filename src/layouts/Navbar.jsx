@@ -73,7 +73,7 @@ class LayoutsNavbar extends React.Component {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav id="layouts-navbar-navlink" className="ml-auto">
-              <Nav.Link as={NavLink} to="/todos" eventKey="1">Browse Todo</Nav.Link>
+              <Nav.Link as={NavLink} to="/todos" eventKey="1">Browse Games</Nav.Link>
               {/* { */}
               {/* currentUser ? ( */}
               {/* <> */}

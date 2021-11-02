@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import ListGroup from 'react-bootstrap/ListGroup'
 
-class PagesHome extends React.Component {
+class PagesTalentsGameList extends React.Component {
   constructor(props) {
     super(props)
 
@@ -17,19 +17,20 @@ class PagesHome extends React.Component {
   render() {
     const { games } = this.state
     return (
-      <div id="pages-home">
-        <header className="text-center border-bottom">
-          <h1>All Games</h1>
+      <div id="pages-talents-gamelist">
+        <header className="text-center border-bottom pages-talents-gamelist-header">
+          <h1>My Games</h1>
+          <button type="button" className="btn btn-primary">Profile</button>
         </header>
-        <Container id="pagesHome-games-container">
+        <Container id="pages-talents-games-container">
           <Row>
             <Col>
               {
                 games.map((items, idx) => (
-                  <ListGroup horizontal="sm" className="pagesHome-games-list">
+                  <ListGroup horizontal="sm" className="pages-talents-games-list">
                     {
                     items.map((item, idy) => (
-                      <ListGroup.Item className="pagesHome-games-item" key={idy}><a href="#">{`${item}`}</a></ListGroup.Item>
+                      <ListGroup.Item className="pages-talents-games-item" key={idy}><a href="#">{`${item}`}</a></ListGroup.Item>
                     ))
                   }
                   </ListGroup>
@@ -103,4 +104,4 @@ class PagesHome extends React.Component {
   }
 }
 
-export default PagesHome
+export default PagesTalentsGameList
