@@ -3,6 +3,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Biryani&family=Expletus+Sans&family=Fruktur&family=Mate&display=swap');
 
 @import "@/styles/layouts/Navbar";
+@import "./dev-game-list.scss";
+@import "./talents-game-list.scss";
 
 html {
   box-sizing: border-box;
@@ -34,34 +36,38 @@ html {
           }
         }
 
-        #showpage-description-container {
-          // width: 400px;
-          // height: 500px;
-          margin-left: 70px;
-          margin-top: 200px;
-          margin-right: 60px;
-
-          position: relative;
-        }
-
-        #applicant-list {
-          margin-top: 200px;
-
-          .showpage-applicant-list-row {
-            margin-top: 10px;
-
-            .showpage-applicant-list-item {
-              border-right-style: none;
-            }
-
-          }
-        }
-      }
-
-      #contact-list {
+        // width: 400px;
+        // height: 500px;
+        margin-left: 70px;
         margin-top: 200px;
-        margin-left: 200px;
+        margin-right: 60px;
+
+        position: relative;
       }
+
+      margin-top: 50px;
+
+      .showpage-job-requirement-listgroup {
+        margin-top: 10px;
+
+        .showpage-job-requirement-item {
+          border-right-style: none;
+        }
+      }
+
     }
   }
+
+}
+}
+
+
+}
+
+#contact-list {
+  margin-top: 200px;
+  margin-left: 200px;
+}
+}
+}
 }

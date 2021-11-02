@@ -1,4 +1,4 @@
-// applicants' list shows or not depends on if the game being owned by dev or not owned
+// applied btn shows or not depends on if the game being owned by dev or not owned
 
 import React from 'react'
 import { Link } from 'react-router-dom'
@@ -9,7 +9,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import ListGroup from 'react-bootstrap/ListGroup'
 
-class PagesDevShow extends React.Component {
+class PagesTalentsShow extends React.Component {
   constructor(props) {
     super(props)
 
@@ -20,6 +20,10 @@ class PagesDevShow extends React.Component {
         { fullname: 'Faky Ralap', email: '123@123.com', cvUrl: 'https://www.alksdfj.com' },
         { fullname: 'Faky Ralap', email: '123@123.com', cvUrl: 'https://www.alksdfj.com' }
       ],
+      job: {
+        description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nisi ipsam officiis velit harum, voluptatem porro, veritatis expedita odit illum magnam cumque tenetur possimus, earum suscipit blanditiis amet nihil quisquam ducimus!',
+        requirement: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti totam itaque quasi repellat et velit omnis quas quod corporis reprehenderit, quam aliquam impedit officiis iste error deserunt fugiat quos? Incidunt.'
+      },
       game: {
         name: 'Among us',
         description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio laudantium amet incidunt quo ducimus numquam ipsum nostrum unde quasi ratione voluptatem laboriosam impedit earum quod dolorem animi, laborum facilis illum.'
@@ -35,6 +39,8 @@ class PagesDevShow extends React.Component {
 
           <div id="showpage-carousel-and-description-wrapper">
             <h1 id="game-name">{game.name}</h1>
+            {/* <button type="button" id="btn-apply" className="btn btn-primary my-3">Apply</button> */}
+            <button type="button" id="btn-applied" className="btn btn-secondary my-3">Applied</button>
             <Row>
               <Col>
                 <div id="showpage-carousel-container">
@@ -73,26 +79,34 @@ class PagesDevShow extends React.Component {
                   <article>
                     <p>{game.description}</p>
                   </article>
-
                 </div>
-
               </Col>
-
             </Row>
           </div>
 
-          <Container className="mb-5">
-            <div id="applicant-list">
-              <h3>Applicant list</h3>
-              <Row>
-                <Col>
+          <Container className="mb-5" fluid id="showpage-job-detail-container">
+            <div id="job-detail">
+              <Row className="showpage-job-detail-row">
+                <Col xs={12} lg={6} className="job-description">
+                  <h3>Job Description</h3>
                   {
                   applicants.map((applicant, i) => (
-                    <ListGroup horizontal className="showpage-applicant-list-row" key={i}>
-                      <ListGroup.Item className="showpage-applicant-list-item">{applicant.fullname}</ListGroup.Item>
-                      <ListGroup.Item className="showpage-applicant-list-item">{applicant.email}</ListGroup.Item>
-                      <ListGroup.Item className="showpage-applicant-list-item">{applicant.cvUrl}</ListGroup.Item>
-                      <button type="button" className="btn btn-primary">Approve</button>
+                    <ListGroup horizontal className="showpage-job-description-listgroup" key={i}>
+                      <ListGroup.Item className="showpage-job-description-item">{applicant.fullname}</ListGroup.Item>
+                      <ListGroup.Item className="showpage-job-description-item">{applicant.email}</ListGroup.Item>
+                      <ListGroup.Item className="showpage-job-description-item">{applicant.cvUrl}</ListGroup.Item>
+                    </ListGroup>
+                  ))
+                }
+                </Col>
+                <Col xs={12} lg={6} className="job-requirement">
+                  <h3>Requirements</h3>
+                  {
+                  applicants.map((applicant, i) => (
+                    <ListGroup horizontal className="showpage-job-requirement-listgroup" key={i}>
+                      <ListGroup.Item className="showpage-job-requirement-item">{applicant.fullname}</ListGroup.Item>
+                      <ListGroup.Item className="showpage-job-requirement-item">{applicant.email}</ListGroup.Item>
+                      <ListGroup.Item className="showpage-job-requirement-item">{applicant.cvUrl}</ListGroup.Item>
                     </ListGroup>
                   ))
                 }
@@ -167,4 +181,4 @@ class PagesDevShow extends React.Component {
   }
 }
 
-export default PagesDevShow
+export default PagesTalentsShow
