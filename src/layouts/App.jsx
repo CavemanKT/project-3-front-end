@@ -14,6 +14,7 @@ import PagesDevShow from '@/pages/show-page/dev/Show'
 import PagesTalentsShow from '@/pages/show-page/talents/Show'
 
 // publish page
+import pageDevPublish from '@/pages/form-page/dev/publish'
 
 // profile page
 
@@ -26,12 +27,14 @@ const App = () => (
     <Switch>
       <Route exact path="/" component={PagesHome} />
       <Route exact path="/api/dev/games" component={PagesDevGameList} />
-      <Route exact path="/api/talents/games" component={PagesTalentsGameList} />
+      <Route exact path="/api/talent/games" component={PagesTalentsGameList} />
 
       <Route exact path="/api/games/:id" component={PagesPublicShow} />
       <Route exact path="/api/dev/games/:id" component={PagesDevShow} />
-      <Route exact path="/api/talents/games/:id" component={PagesTalentsShow} />
+      <Route exact path="/api/talent/games/:id" component={PagesTalentsShow} />
       {/* <Route exact path="/showpages/dev/game/:id/edit" component={PagesDevShowEdit} /> */}
+
+      <Route exact path="/api/dev/publish" component={pageDevPublish} />
 
       <Route component={PagesNotFound} />
     </Switch>

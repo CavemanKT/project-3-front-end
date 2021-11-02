@@ -5,7 +5,7 @@ import { setCurrentUser, unsetCurrentUser } from '@/actions/my/profile'
 export const authSignup = (values) => () => new Promise((resolve, reject) => {
   axios({
     method: 'POST',
-    url: '/api/auth/signup',
+    url: 'http://localhost:3000/api/auth/signup',
     data: values
   }).then((resp) => {
     resolve(resp)
@@ -17,7 +17,7 @@ export const authSignup = (values) => () => new Promise((resolve, reject) => {
 export const authLogin = (values) => (dispatch) => new Promise((resolve, reject) => {
   axios({
     method: 'POST',
-    url: '/api/auth/login',
+    url: 'http://localhost:3000/api/auth/login',
     data: values,
     withCredentials: true
   }).then((resp) => {
@@ -31,7 +31,7 @@ export const authLogin = (values) => (dispatch) => new Promise((resolve, reject)
 export const authLogout = () => (dispatch) => new Promise((resolve, reject) => {
   axios({
     method: 'DELETE',
-    url: '/api/auth/logout',
+    url: 'http://localhost:3000/api/auth/logout',
     withCredentials: true
   }).then((resp) => {
     dispatch(unsetCurrentUser())
