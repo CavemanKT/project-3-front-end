@@ -35,15 +35,16 @@ class LayoutsNavbar extends React.Component {
 
   handleSignupSubmit(values) {
     this.props.authSignup(values).then(() => {
-      const { history: { push } } = this.props
-      push('/auth/login')
+      this.setState({ showModalsSignup: false })
+      this.setState({ showModalsLogin: true })
     })
   }
 
   handleLoginSubmit(values) {
     this.props.authLogin(values).then(() => {
-      const { history: { push } } = this.props
-      push('/api/games')
+      this.setState({ showModalsLogin: false })
+      // const { history: { push } } = this.props
+      // push('http://localhost:8080/api/games')
     })
   }
 
