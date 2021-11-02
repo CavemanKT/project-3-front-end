@@ -8,6 +8,7 @@ import Carousel from 'react-bootstrap/Carousel'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import ListGroup from 'react-bootstrap/ListGroup'
+import Button from 'react-bootstrap/Button'
 
 class PagesDevShow extends React.Component {
   constructor(props) {
@@ -34,7 +35,12 @@ class PagesDevShow extends React.Component {
         <div id="dev-showpage">
 
           <div id="showpage-carousel-and-description-wrapper">
-            <h1 id="game-name">{game.name}</h1>
+            <div className="dev-showpage-header mb-3">
+              <h1 id="game-name">{game.name}</h1>
+              <Button href="/showpages/dev/game/:id/edit" className="btn btn-success">Edit</Button>
+              <Button type="button" className="btn btn-danger mx-4">Delete</Button>
+            </div>
+
             <Row>
               <Col>
                 <div id="showpage-carousel-container">

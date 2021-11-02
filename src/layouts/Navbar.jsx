@@ -69,20 +69,27 @@ class LayoutsNavbar extends React.Component {
     return (
       <>
         <Navbar id="layouts-navbar" bg="light" variant="light" expand="lg" collapseOnSelect>
-          <Navbar.Brand id="layouts-navbar-brand" as={NavLink} to="/">Indie Dever Zone</Navbar.Brand>
+          <Navbar.Brand id="layouts-navbar-brand" as={NavLink} to="/">Indie Zone</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav id="layouts-navbar-navlink" className="ml-auto">
-              <Nav.Link as={NavLink} to="/todos" eventKey="1">Browse Games</Nav.Link>
+              <Nav.Link as={NavLink} to="/" eventKey="1">Browse Games</Nav.Link>
               {/* { */}
               {/* currentUser ? ( */}
               {/* <> */}
-              <Nav.Link onClick={this.handleLogoutClick} eventKey="2">Logout</Nav.Link>
+
+              {/* if the user type is developer */}
+              <Nav.Link as={NavLink} to="/api/dev/games" eventKey="2">My Games</Nav.Link>
+              {/* if the user type is marketers */}
+              {/* <Nav.Link as={NavLink} to="/api/talents/games" eventKey="2">My Games</Nav.Link> */}
+
+              <Nav.Link onClick={this.handleLogoutClick} eventKey="3">Logout</Nav.Link>
+
               {/* </> */}
               {/* ) : ( */}
               {/* <> */}
-              <Nav.Link onClick={this.openModalsSignup} eventKey="3">Signup</Nav.Link>
-              <Nav.Link onClick={this.openModalsLogin} eventKey="4">Login</Nav.Link>
+              <Nav.Link onClick={this.openModalsSignup} eventKey="4">Signup</Nav.Link>
+              <Nav.Link onClick={this.openModalsLogin} eventKey="5">Login</Nav.Link>
               {/* </> */}
               {/* ) */}
               {/* } */}

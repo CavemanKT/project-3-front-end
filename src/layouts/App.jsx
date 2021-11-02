@@ -13,6 +13,10 @@ import PagesPublicShow from '@/pages/show-page/public/Show'
 import PagesDevShow from '@/pages/show-page/dev/Show'
 import PagesTalentsShow from '@/pages/show-page/talents/Show'
 
+// publish page
+
+// profile page
+
 import PagesNotFound from '@/pages/NotFound'
 
 const App = () => (
@@ -26,6 +30,7 @@ const App = () => (
       <Route exact path="/api/games/:id" component={PagesPublicShow} />
       <Route exact path="/api/dev/games/:id" component={PagesDevShow} />
       <Route exact path="/api/talents/games/:id" component={PagesTalentsShow} />
+      {/* <Route exact path="/showpages/dev/game/:id/edit" component={PagesDevShowEdit} /> */}
 
       <Route component={PagesNotFound} />
     </Switch>
