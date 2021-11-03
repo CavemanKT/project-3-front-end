@@ -69,7 +69,7 @@ class LayoutsNavbar extends React.Component {
     return (
       <>
         <Navbar id="layouts-navbar" bg="light" variant="light" expand="lg" collapseOnSelect>
-          <Navbar.Brand id="layouts-navbar-brand" as={NavLink} to="/">Indie Dever Zone</Navbar.Brand>
+          <Navbar.Brand id="layouts-navbar-brand" as={NavLink} to="/">IndieZone</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav id="layouts-navbar-navlink" className="ml-auto">
@@ -91,9 +91,9 @@ class LayoutsNavbar extends React.Component {
         </Navbar>
 
         <div id="authModals" className="container">
-          { showModalsSignup && <ModalsSignup close={this.closeModalsSignup} onSubmit={this.handleSignupSubmit} />}
+          {showModalsSignup && <ModalsSignup close={this.closeModalsSignup} onSubmit={this.handleSignupSubmit} />}
           {/* remember to define the function in this page */}
-          { showModalsLogin && <ModalsLogin close={this.closeModalsLogin} onSubmit={this.handleLoginSubmit} />}
+          {showModalsLogin && <ModalsLogin close={this.closeModalsLogin} onSubmit={this.handleLoginSubmit} />}
         </div>
       </>
     )
