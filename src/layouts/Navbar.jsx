@@ -65,8 +65,19 @@ class LayoutsNavbar extends React.Component {
   }
 
   render() {
-    // const { currentUserState: { currentUser } } = this.props
+    const { currentUserState: { currentUser } } = this.props
     const { showModalsSignup, showModalsLogin } = this.state
+    console.log('currentUser-Navbar: ', currentUser)
+
+    let curUserType
+    if (currentUser && (currentUser.type === 'Developer')) {
+      curUserType = currentUser.type
+    } else if (currentUser && (currentUser.type === 'Marketer')) {
+      curUserType = currentUser.type
+    } else {
+      curUserType = false
+    }
+
     return (
       <>
         <Navbar id="layouts-navbar" bg="light" variant="light" expand="lg" collapseOnSelect>
@@ -75,25 +86,31 @@ class LayoutsNavbar extends React.Component {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav id="layouts-navbar-navlink" className="ml-auto">
               <Nav.Link as={NavLink} to="/" eventKey="1">Browse Games</Nav.Link>
-              {/* { */}
-              {/* currentUser ? ( */}
-              {/* <> */}
-
-              {/* if the user type is developer */}
-              <Nav.Link as={NavLink} to="/api/dev/games" eventKey="2">My Games</Nav.Link>
-              {/* if the user type is marketers */}
-              {/* <Nav.Link as={NavLink} to="/api/talents/games" eventKey="2">My Games</Nav.Link> */}
-
-              <Nav.Link onClick={this.handleLogoutClick} eventKey="3">Logout</Nav.Link>
-
-              {/* </> */}
-              {/* ) : ( */}
-              {/* <> */}
-              <Nav.Link onClick={this.openModalsSignup} eventKey="4">Signup</Nav.Link>
-              <Nav.Link onClick={this.openModalsLogin} eventKey="5">Login</Nav.Link>
-              {/* </> */}
-              {/* ) */}
-              {/* } */}
+              {
+                (curUserType === 'Developer') && (
+                  <>
+                    <Nav.Link as={NavLink} to="/api/dev/games" eventKey="2">My Games</Nav.Link>
+                    {/* if the user type is marketers */}
+                    <Nav.Link onClick={this.handleLogoutClick} eventKey="3">Logout</Nav.Link>
+                  </>
+                )
+              }
+              {
+                (curUserType === 'Marketer') && (
+                  <>
+                    <Nav.Link as={NavLink} to="/api/talents/games" eventKey="2">My Games</Nav.Link>
+                    <Nav.Link onClick={this.handleLogoutClick} eventKey="3">Logout</Nav.Link>
+                  </>
+                )
+              }
+              {
+                (curUserType === false) && (
+                <>
+                  <Nav.Link onClick={this.openModalsSignup} eventKey="4">Signup</Nav.Link>
+                  <Nav.Link onClick={this.openModalsLogin} eventKey="5">Login</Nav.Link>
+                </>
+                )
+              }
             </Nav>
           </Navbar.Collapse>
         </Navbar>
@@ -109,16 +126,15 @@ class LayoutsNavbar extends React.Component {
 }
 
 LayoutsNavbar.propTypes = {
-  // currentUserState: PropTypes.shape().isRequired,
-  history: PropTypes.shape().isRequired,
+  currentUserState: PropTypes.shape().isRequired,
+  // history: PropTypes.shape().isRequired,
   authLogout: PropTypes.func.isRequired,
   authSignup: PropTypes.func.isRequired,
   authLogin: PropTypes.func.isRequired
-
 }
 
 const mapStateToProps = (state) => ({
-  // currentUserState: state.currentUser
+  currentUserState: state.currentUser
 })
 
 const mapDispatchToProps = {

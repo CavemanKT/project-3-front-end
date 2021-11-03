@@ -1,7 +1,15 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Switch, BrowserRouter as Router, Route } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { ToastContainer } from 'react-toastify'
+
+import { getDevProfile, getTalentProfile } from '@/actions/my/profile'
 
 import LayoutsNavbar from '@/layouts/Navbar'
+import DevPrivateRoute from '@/components/DevPrivateRoute'
+import TalentsPrivateRoute from '@/components/TalentsPrivateRoute'
+import Loading from '@/components/Loading'
 
 // main page
 import PagesHome from '@/pages/Home'
@@ -19,22 +27,80 @@ import PagesTalentsShow from '@/pages/show-page/talents/Show'
 
 import PagesNotFound from '@/pages/NotFound'
 
-const App = () => (
-  <Router>
-    <LayoutsNavbar />
-    <Switch>
-      <Route exact path="/" component={PagesHome} />
-      <Route exact path="/api/dev/games" component={PagesDevGameList} />
-      <Route exact path="/api/talents/games" component={PagesTalentsGameList} />
+class App extends React.Component {
+  constructor(props) {
+    super(props)
 
-      <Route exact path="/api/games/:id" component={PagesPublicShow} />
-      <Route exact path="/api/dev/games/:id" component={PagesDevShow} />
-      <Route exact path="/api/talents/games/:id" component={PagesTalentsShow} />
-      {/* <Route exact path="/showpages/dev/game/:id/edit" component={PagesDevShowEdit} /> */}
+    this.state = {
+      loaded: false
+    }
+  }
 
-      <Route component={PagesNotFound} />
-    </Switch>
-  </Router>
-)
+  componentDidMount() {
+    this.props.getDevProfile().finally(() => {
+      this.setState({ loaded: true })
+    })
+    this.props.getTalentProfile().finally(() => {
+      this.setState({ loaded: true })
+    })
+  }
 
-export default App
+  render() {
+    const { loaded } = this.state
+
+    return (
+      <Router>
+        <LayoutsNavbar />
+
+        {
+          loaded ? (
+            <Switch>
+              <Route exact path="/" component={PagesHome} />
+              <Route exact path="/api/games/:id" component={PagesPublicShow} />
+
+              <DevPrivateRoute exact path="/api/dev/games" component={PagesDevGameList} />
+              <TalentsPrivateRoute exact path="/api/talents/games" component={PagesTalentsGameList} />
+
+              <DevPrivateRoute exact path="/api/dev/games/:id" component={PagesDevShow} />
+              <TalentsPrivateRoute exact path="/api/talents/games/:id" component={PagesTalentsShow} />
+              {/* <PrivateRoute exact path="/showpages/dev/game/:id/edit" component={PagesDevShowEdit} /> */}
+
+              <Route component={PagesNotFound} />
+            </Switch>
+
+          ) : (
+            <div className="my-3">
+              <Loading />
+            </div>
+          )
+        }
+
+        <ToastContainer
+          position="bottom-left"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+      </Router>
+    )
+  }
+}
+
+App.propTypes = {
+  getDevProfile: PropTypes.func.isRequired,
+  getTalentProfile: PropTypes.func.isRequired
+
+}
+
+const mapDispatchToProps = {
+  getDevProfile,
+  getTalentProfile
+
+}
+
+export default connect(null, mapDispatchToProps)(App)
