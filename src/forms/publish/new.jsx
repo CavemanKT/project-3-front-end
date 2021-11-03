@@ -22,7 +22,7 @@ const RenderForm = ({ errors, touched, isSubmitting }) => (
         id="description"
         className={`form-control ${(errors.description && touched.description ? ' is-invalid' : '')}`}
         name="description"
-        type="description"
+        type="text"
       />
       <ErrorMessage component="div" className="invalid-feedback" name="description" />
     </div>
@@ -33,7 +33,7 @@ const RenderForm = ({ errors, touched, isSubmitting }) => (
         id="jobDescription"
         className={`form-control ${(errors.jobDescription && touched.jobDescription ? ' is-invalid' : '')}`}
         name="jobDescription"
-        type="jobDescription"
+        type="text"
       />
       <ErrorMessage component="div" className="invalid-feedback" name="jobDescription" />
     </div>
@@ -48,6 +48,19 @@ const RenderForm = ({ errors, touched, isSubmitting }) => (
       />
       <ErrorMessage component="div" className="invalid-feedback" name="qualification" />
     </div>
+
+    {/* <div className="form-group">
+      <label htmlFor="url">File upload</label>
+      <Field
+        id="url"
+        name="url"
+        type="file"
+        onChange={(event) => {
+          setFieldValue('url', event.currentTarget.files[0])
+        }}
+        className="form-control"
+      />
+    </div> */}
 
     <button className="btn btn-success" type="submit" disabled={isSubmitting}>Submit</button>
   </Form>
