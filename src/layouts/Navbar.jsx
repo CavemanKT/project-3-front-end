@@ -65,15 +65,15 @@ class LayoutsNavbar extends React.Component {
   }
 
   render() {
-    const { currentUserState: { currentUser } } = this.props
+    const { devCurrentUserState: { devCurrentUser }, talentCurrentUserState: { talentCurrentUser } } = this.props
     const { showModalsSignup, showModalsLogin } = this.state
-    console.log('currentUser-Navbar: ', currentUser)
+    console.log('currentUser-Navbar: ', devCurrentUser, talentCurrentUser)
 
     let curUserType
-    if (currentUser && (currentUser.type === 'Developer')) {
-      curUserType = currentUser.type
-    } else if (currentUser && (currentUser.type === 'Marketer')) {
-      curUserType = currentUser.type
+    if (devCurrentUser && (devCurrentUser.type === 'Developer')) {
+      curUserType = devCurrentUser.type
+    } else if (talentCurrentUser && (talentCurrentUser.type === 'Marketer')) {
+      curUserType = talentCurrentUser.type
     } else {
       curUserType = false
     }
@@ -126,7 +126,8 @@ class LayoutsNavbar extends React.Component {
 }
 
 LayoutsNavbar.propTypes = {
-  currentUserState: PropTypes.shape().isRequired,
+  devCurrentUserState: PropTypes.shape().isRequired,
+  talentCurrentUserState: PropTypes.shape().isRequired,
   // history: PropTypes.shape().isRequired,
   authLogout: PropTypes.func.isRequired,
   authSignup: PropTypes.func.isRequired,
@@ -134,7 +135,8 @@ LayoutsNavbar.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  currentUserState: state.currentUser
+  devCurrentUserState: state.devUser,
+  talentCurrentUserState: state.talentUser
 })
 
 const mapDispatchToProps = {

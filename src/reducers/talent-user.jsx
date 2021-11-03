@@ -6,7 +6,7 @@ import {
 } from '@/actions/my/profile'
 
 const initialState = {
-  currentUser: null
+  talentUser: null
 }
 
 export default (state = initialState, action) => {
@@ -14,13 +14,13 @@ export default (state = initialState, action) => {
     case SET_CURRENT_USER: {
       console.log('action.payload.type:', action.payload) // results: Developer
       return produce(state, (draft) => {
-        draft.currentUser = action.payload.devUser
-        console.log(draft.currentUser)
+        draft.talentUser = action.payload.talentUser
+        console.log('reducer-- talentUser: ', draft.talentUser)
       })
     }
     case UNSET_CURRENT_USER: {
       return produce(state, (draft) => {
-        draft.currentUser = null
+        draft.talentUser = null
       })
     }
     default: {

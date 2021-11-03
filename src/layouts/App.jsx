@@ -38,9 +38,11 @@ class App extends React.Component {
 
   componentDidMount() {
     this.props.getDevProfile().finally(() => {
+      console.log('getDevProfile---didMount')
       this.setState({ loaded: true })
     })
     this.props.getTalentProfile().finally(() => {
+      console.log('getTalentProfile---didMount')
       this.setState({ loaded: true })
     })
   }
