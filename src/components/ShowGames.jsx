@@ -9,7 +9,10 @@ const ShowGames = () => (
       <Carousel.Item interval={1000}>
         <img
           className="d-block w-100"
-          src="https://i.imgur.com/ih4OGLm.jpg"
+          // src="https://i.imgur.com/ih4OGLm.jpg"
+          // src="https://i.imgur.com/u8xy6Pd.jpg"
+          // src="https://i.imgur.com/gybBS2j.jpg"
+          src="https://i.imgur.com/Lh6T05m.jpg"
           alt="Among us"
         />
         <Carousel.Caption>
