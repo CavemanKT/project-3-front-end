@@ -1,12 +1,10 @@
 import { combineReducers } from 'redux'
 import { connectRouter } from 'connected-react-router'
 
-import ReducersDevUser from '@/reducers/dev-user'
-import ReducersTalentUser from '@/reducers/talent-user'
+import ReducersCurrentUser from '@/reducers/current-user'
 
 const createReducersRoot = (history) => combineReducers({
-  devCurrentUser: ReducersDevUser,
-  talentCurrentUser: ReducersTalentUser,
+  currentUser: ReducersCurrentUser,
   router: connectRouter(history)
 })
 

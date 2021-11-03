@@ -4,7 +4,7 @@ import { Switch, BrowserRouter as Router, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
 
-import { getDevProfile, getTalentProfile } from '@/actions/my/profile'
+import { getMyProfile } from '@/actions/my/profile'
 
 import LayoutsNavbar from '@/layouts/Navbar'
 import DevPrivateRoute from '@/components/DevPrivateRoute'
@@ -37,12 +37,8 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getDevProfile().finally(() => {
-      console.log('getDevProfile---didMount')
-      this.setState({ loaded: true })
-    })
-    this.props.getTalentProfile().finally(() => {
-      console.log('getTalentProfile---didMount')
+    this.props.getMyProfile().finally(() => {
+      console.log('getMyProfile---didMount')
       this.setState({ loaded: true })
     })
   }
@@ -94,14 +90,12 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  getDevProfile: PropTypes.func.isRequired,
-  getTalentProfile: PropTypes.func.isRequired
+  getMyProfile: PropTypes.func.isRequired
 
 }
 
 const mapDispatchToProps = {
-  getDevProfile,
-  getTalentProfile
+  getMyProfile
 
 }
 
