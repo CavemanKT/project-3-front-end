@@ -13,6 +13,7 @@ export const getProfile = () => (dispatch) => {
     withCredentials: true
   }).then((resp) => {
     dispatch(setProfile(resp.data))
+    console.log(resp.data)
   }).finally(() => {
     dispatch(loading(GET_PROFILE, { loading: false }))
   })
@@ -22,12 +23,14 @@ export const EDIT_PROFILE = 'EDIT_PROFILE'
 export const editProfile = (payload) => ({ type: EDIT_PROFILE, payload })
 export const UPDATE_PROFILE = 'UPDATE_PROFILE'
 export const updateProfile = (values, currentUserId) => (dispatch) => new Promise((resolve, reject) => {
+  console.log('hi')
   dispatch(loading(UPDATE_PROFILE, { loading: true }))
   axios({
     method: 'PUT',
     url: `http://localhost:3000/api/profile/${currentUserId}`,
     data: values
   }).then((resp) => {
+    console.log('problem is here')
     dispatch(editProfile(resp.data))
     resolve(resp)
   }).catch((err) => {

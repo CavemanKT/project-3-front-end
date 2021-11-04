@@ -53,17 +53,20 @@ const profileUpdateSchema = yup.object().shape({
   lastName: yup.string().required('Required')
 })
 
-const FormsProfileUpdate = ({ initialValues, onSubmit }) => (
+const FormsProfileUpdate = ({ onSubmit }) => (
   <Formik
-    initialValues={initialValues}
+    initialValues={{
+      username: '',
+      firstName: '',
+      lastName: ''
+    }}
     validationSchema={profileUpdateSchema}
     onSubmit={onSubmit}
     component={RenderForm}
   />
 )
 FormsProfileUpdate.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  initialValues: PropTypes.shape().isRequired
+  onSubmit: PropTypes.func.isRequired
 }
 
 export default FormsProfileUpdate

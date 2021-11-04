@@ -15,7 +15,14 @@ class pageDevProfile extends React.Component {
   }
 
   handleProfileFormUpdateSubmit(values) {
-    this.props.updateProfile(values)
+    const { currentUserState: { currentUser } } = this.props
+
+    console.log(values, currentUser)
+
+    this.props.updateProfile(values, currentUser.id).then(() => {
+      const { history: { push } } = this.props
+      push('/dev/games')
+    })
   }
 
   render() {
@@ -24,12 +31,6 @@ class pageDevProfile extends React.Component {
       <>
         <div>Edit your profile</div>
         <FormsProfileUpdate
-          initialValue={{
-            username: currentUser.username,
-            firstName: currentUser.firstName,
-            lastName: currentUser.lastName
-
-          }}
           onSubmit={this.handleProfileFormUpdateSubmit}
 
         />
