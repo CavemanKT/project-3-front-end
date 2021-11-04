@@ -28,6 +28,13 @@ class PagesDevShow extends React.Component {
     }
   }
 
+  handleEditSubmit(values) {
+    const { selectedTodo: { id } } = this.state
+    this.props.updateTodo(values, id).then(() => {
+      this.closeModalsTodosEdit()
+    })
+  }
+
   render() {
     const { applicants, game } = this.state
     return (
