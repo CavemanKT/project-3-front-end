@@ -7,11 +7,13 @@ import { ToastContainer } from 'react-toastify'
 import { getMyProfile } from '@/actions/my/profile'
 
 import LayoutsNavbar from '@/layouts/Navbar'
+import LayoutsFooter from '@/layouts/Footer'
+
 import DevPrivateRoute from '@/components/DevPrivateRoute'
 import TalentsPrivateRoute from '@/components/TalentsPrivateRoute'
 import Loading from '@/components/Loading'
 
-// main page
+// main page & game list
 import PagesHome from '@/pages/Home'
 import PagesDevGameList from '@/pages/game-list/dev/game-list'
 import PagesTalentsGameList from '@/pages/game-list/talents/game-list'
@@ -49,18 +51,18 @@ class App extends React.Component {
     return (
       <Router>
         <LayoutsNavbar />
-
-        {
+        <div id="body-footer-container">
+          {
           loaded ? (
             <Switch>
               <Route exact path="/" component={PagesHome} />
-              <Route exact path="/api/games/:id" component={PagesPublicShow} />
+              <Route exact path="/games/:id" component={PagesPublicShow} />
 
-              <DevPrivateRoute exact path="/api/dev/games" component={PagesDevGameList} />
-              <TalentsPrivateRoute exact path="/api/talents/games" component={PagesTalentsGameList} />
+              <DevPrivateRoute exact path="/dev/games" component={PagesDevGameList} />
+              <TalentsPrivateRoute exact path="/talents/games" component={PagesTalentsGameList} />
 
-              <DevPrivateRoute exact path="/api/dev/games/:id" component={PagesDevShow} />
-              <TalentsPrivateRoute exact path="/api/talents/games/:id" component={PagesTalentsShow} />
+              <DevPrivateRoute exact path="/dev/games/:id" component={PagesDevShow} />
+              <TalentsPrivateRoute exact path="/talents/games/:id" component={PagesTalentsShow} />
               {/* <PrivateRoute exact path="/showpages/dev/game/:id/edit" component={PagesDevShowEdit} /> */}
 
               <Route component={PagesNotFound} />
@@ -72,6 +74,9 @@ class App extends React.Component {
             </div>
           )
         }
+        </div>
+
+        <LayoutsFooter />
 
         <ToastContainer
           position="bottom-left"
