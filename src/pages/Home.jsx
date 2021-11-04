@@ -73,6 +73,10 @@ class PagesHome extends React.Component {
     this.props.getGames()
   }
 
+  componentWillUnmount() {
+    this.props.resetGames()
+  }
+
   render() {
     const { stateGame: { games } } = this.props
 
@@ -92,7 +96,8 @@ class PagesHome extends React.Component {
 
 PagesHome.propTypes = {
   stateGame: PropTypes.shape().isRequired,
-  getGames: PropTypes.func.isRequired
+  getGames: PropTypes.func.isRequired,
+  resetGames: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({

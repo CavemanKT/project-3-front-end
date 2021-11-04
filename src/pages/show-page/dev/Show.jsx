@@ -1,14 +1,18 @@
 // applicants' list shows or not depends on if the game being owned by dev or not owned
 
 import React from 'react'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+
 import Container from 'react-bootstrap/Container'
 import Carousel from 'react-bootstrap/Carousel'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Button from 'react-bootstrap/Button'
+
+import { getGame, resetGame } from '@/actions/dev/game'
 
 class PagesDevShow extends React.Component {
   constructor(props) {
@@ -20,12 +24,23 @@ class PagesDevShow extends React.Component {
         { fullname: 'Faky Ralap', email: '123@123.com', cvUrl: 'https://www.alksdfj.com' },
         { fullname: 'Faky Ralap', email: '123@123.com', cvUrl: 'https://www.alksdfj.com' },
         { fullname: 'Faky Ralap', email: '123@123.com', cvUrl: 'https://www.alksdfj.com' }
-      ],
-      game: {
-        name: 'Among us',
-        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio laudantium amet incidunt quo ducimus numquam ipsum nostrum unde quasi ratione voluptatem laboriosam impedit earum quod dolorem animi, laborum facilis illum.'
-      }
+      ]
+      // game: {
+      //   name: 'Among us',
+      //   description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio laudantium amet incidunt quo ducimus numquam ipsum nostrum unde quasi ratione voluptatem laboriosam impedit earum quod dolorem animi, laborum facilis illum.'
+      // }
     }
+
+    this.handleEditSubmit = this.handleEditSubmit.bind(this)
+  }
+
+  componentDidMount() {
+    const { id: GameId } = this.props.match.params
+    this.props.getGame(GameId)
+  }
+
+  componentWillUnmount() {
+    this.props.resetGame()
   }
 
   handleEditSubmit() {
@@ -35,14 +50,15 @@ class PagesDevShow extends React.Component {
   }
 
   render() {
-    const { applicants, game } = this.state
+    const { applicants } = this.state
+    const { devGameState: { devGame } } = this.props
     return (
       <>
         <div id="dev-showpage">
 
           <div id="showpage-carousel-and-description-wrapper">
             <div className="dev-showpage-header mb-3">
-              <h1 id="game-name">{game.name}</h1>
+              <h1 id="game-name">{devGame.name}</h1>
               <Button
                 href="/showpages/dev/game/:id/edit"
                 className="btn btn-success"
@@ -90,7 +106,7 @@ class PagesDevShow extends React.Component {
                 <div id="showpage-description-container" className="col-md-auto">
                   <h2>Description: </h2>
                   <article>
-                    <p>{game.description}</p>
+                    <p>{devGame.description}</p>
                   </article>
 
                 </div>
@@ -186,8 +202,21 @@ class PagesDevShow extends React.Component {
   }
 }
 
-PagesDevShow.PropTypes = {
-  history: PropTypes.shape().isRequired
+PagesDevShow.propTypes = {
+  history: PropTypes.shape().isRequired,
+  match: PropTypes.shape().isRequired,
+  getGame: PropTypes.func.isRequired,
+  resetGame: PropTypes.func.isRequired,
+  devGameState: PropTypes.shape().isRequired
 }
 
-export default PagesDevShow
+const mapStateToProps = (state) => ({
+  devGameState: state.devGame
+})
+
+const mapDispatchToProps = {
+  getGame,
+  resetGame
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PagesDevShow)

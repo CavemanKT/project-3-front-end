@@ -2,6 +2,8 @@
 
 import React from 'react'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 import Container from 'react-bootstrap/Container'
 import Carousel from 'react-bootstrap/Carousel'
@@ -9,26 +11,38 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import ListGroup from 'react-bootstrap/ListGroup'
 
+import { getGame, resetGame } from '@/actions/game'
+
 class PagesPublicShow extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      applicants: [
-        { fullname: 'Faky Ralap', email: '123@123.com', cvUrl: 'https://www.alksdfj.com' },
-        { fullname: 'Faky Ralap', email: '123@123.com', cvUrl: 'https://www.alksdfj.com' },
-        { fullname: 'Faky Ralap', email: '123@123.com', cvUrl: 'https://www.alksdfj.com' },
-        { fullname: 'Faky Ralap', email: '123@123.com', cvUrl: 'https://www.alksdfj.com' }
-      ],
-      game: {
-        name: 'Among us',
-        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio laudantium amet incidunt quo ducimus numquam ipsum nostrum unde quasi ratione voluptatem laboriosam impedit earum quod dolorem animi, laborum facilis illum.'
-      }
+      // applicants: [
+      //   { fullname: 'Faky Ralap', email: '123@123.com', cvUrl: 'https://www.alksdfj.com' },
+      //   { fullname: 'Faky Ralap', email: '123@123.com', cvUrl: 'https://www.alksdfj.com' },
+      //   { fullname: 'Faky Ralap', email: '123@123.com', cvUrl: 'https://www.alksdfj.com' },
+      //   { fullname: 'Faky Ralap', email: '123@123.com', cvUrl: 'https://www.alksdfj.com' }
+      // ],
+      // game: {
+      //   name: 'Among us',
+      //   description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio laudantium amet incidunt quo ducimus numquam ipsum nostrum unde quasi ratione voluptatem laboriosam impedit earum quod dolorem animi, laborum facilis illum.'
+      // }
     }
   }
 
+  componentDidMount() {
+    const { id: GameId } = this.props.match.params
+    this.props.getGame(GameId)
+  }
+
+  componentWillUnmount() {
+    this.props.resetGame()
+  }
+
   render() {
-    const { applicants, game } = this.state
+    // const { applicants, game } = this.state
+    const { gameState: { game } } = this.props
     return (
       <>
         <div id="dev-showpage">
@@ -86,4 +100,20 @@ class PagesPublicShow extends React.Component {
   }
 }
 
-export default PagesPublicShow
+PagesPublicShow.propTypes = {
+  match: PropTypes.shape().isRequired,
+  getGame: PropTypes.func.isRequired,
+  resetGame: PropTypes.func.isRequired,
+  gameState: PropTypes.shape().isRequired
+}
+
+const mapStateToProps = (state) => ({
+  gameState: state.game
+})
+
+const mapDispatchToProps = {
+  getGame,
+  resetGame
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PagesPublicShow)

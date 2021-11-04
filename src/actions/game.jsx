@@ -12,6 +12,7 @@ export const getGames = () => (dispatch) => {
     url: 'http://localhost:3000/api/games'
   }).then((resp) => {
     dispatch(setGames(resp.data))
+    console.log(resp.data)
   }).finally(() => {
     dispatch(loading(GET_GAMES, { loading: false }))
   })
