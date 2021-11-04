@@ -19,9 +19,9 @@ class PagesDevGameList extends React.Component {
     return (
       <div id="pages-dev-gamelist">
         <header className="text-center border-bottom pages-dev-gamelist-header">
-          <button type="button" className="btn btn-primary">Profile</button>
+          <Link className="btn btn-primary" to="/dev/profile/edit">Profile</Link>
           <h1>My Games</h1>
-          <button type="button" className="btn btn-primary">Publish</button>
+          <Link className="btn btn-primary" to="/dev/publish">Publish</Link>
         </header>
         <Container id="pages-dev-games-container">
           <Row>

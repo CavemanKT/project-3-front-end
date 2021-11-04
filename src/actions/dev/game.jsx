@@ -18,11 +18,11 @@ export const getGames = () => (dispatch) => {
   })
 }
 
-export const UNSET_DEV_GAMES = 'UNSET_DEV_GAMES'
-export const unsetDevGames = () => ({ type: UNSET_DEV_GAMES })
-export const resetGames = () => (dispatch) => {
-  dispatch(unsetDevGames())
-}
+// export const UNSET_DEV_GAMES = 'UNSET_DEV_GAMES'
+// export const unsetDevGames = () => ({ type: UNSET_DEV_GAMES })
+// export const resetGames = () => (dispatch) => {
+//   dispatch(unsetDevGames())
+// }
 
 export const ADD_GAME_IN_DEV = 'ADD_GAME_IN_DEV'
 export const addGameInDev = (payload) => ({ type: ADD_GAME_IN_DEV, payload })

@@ -29,9 +29,9 @@ class pageDevPublish extends React.Component {
 }
 
 pageDevPublish.propTypes = {
-  createGame: PropTypes.func.isRequired,
-  updateGame: PropTypes.func.isRequired,
-  destroyGame: PropTypes.func.isRequired
+  createGame: PropTypes.func.isRequired
+  // updateGame: PropTypes.func.isRequired,
+  // destroyGame: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
