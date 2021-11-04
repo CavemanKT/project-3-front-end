@@ -22,6 +22,8 @@ import PagesDevShow from '@/pages/show-page/dev/Show'
 import PagesTalentsShow from '@/pages/show-page/talents/Show'
 
 // publish page
+import pageDevPublish from '@/pages/form-page/dev/publish'
+import pageDevEditPublish from '@/pages/form-page/dev/edit-publish'
 
 // profile page
 
@@ -54,13 +56,15 @@ class App extends React.Component {
           loaded ? (
             <Switch>
               <Route exact path="/" component={PagesHome} />
-              <Route exact path="/api/games/:id" component={PagesPublicShow} />
+              <Route exact path="/games/:id" component={PagesPublicShow} />
 
-              <DevPrivateRoute exact path="/api/dev/games" component={PagesDevGameList} />
-              <TalentsPrivateRoute exact path="/api/talents/games" component={PagesTalentsGameList} />
+              <DevPrivateRoute exact path="/dev/games" component={PagesDevGameList} />
+              <DevPrivateRoute exact path="/dev/publish" component={pageDevPublish} />
+              <DevPrivateRoute exact path="/dev/games/:id/edit" component={pageDevEditPublish} />
+              <TalentsPrivateRoute exact path="/talents/games" component={PagesTalentsGameList} />
 
-              <DevPrivateRoute exact path="/api/dev/games/:id" component={PagesDevShow} />
-              <TalentsPrivateRoute exact path="/api/talents/games/:id" component={PagesTalentsShow} />
+              <DevPrivateRoute exact path="/dev/games/:id" component={PagesDevShow} />
+              <TalentsPrivateRoute exact path="/talents/games/:id" component={PagesTalentsShow} />
               {/* <PrivateRoute exact path="/showpages/dev/game/:id/edit" component={PagesDevShowEdit} /> */}
 
               <Route component={PagesNotFound} />
