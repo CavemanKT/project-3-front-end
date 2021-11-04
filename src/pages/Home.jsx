@@ -1,106 +1,109 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import ListGroup from 'react-bootstrap/ListGroup'
+// import Container from 'react-bootstrap/Container'
+// import Row from 'react-bootstrap/Row'
+// import Col from 'react-bootstrap/Col'
+// import ListGroup from 'react-bootstrap/ListGroup'
+
+import { getGames, resetGames, getGame, resetGame } from '@/actions/game'
+
+// const games = [
+//   {
+//     id: 'Among us',
+//     name: 'Among us'
+//   }, {
+//     id: 'League of Legend',
+//     name: 'League of Legend'
+//   }, {
+//     id: 'Counter Strike Online',
+//     name: 'Counter Strike Online'
+//   }, {
+//     id: 'Left 4 Dead',
+//     name: 'Left 4 Dead'
+//   }, {
+//     id: 'Minecraft',
+//     name: 'Minecraft'
+//   }, {
+//     id: 'CyberPunk',
+//     name: 'CyberPunk'
+//   }, {
+//     id: 'Call of Duty',
+//     name: 'Call of Duty'
+//   }, {
+//     id: 'Back 4 Blood',
+//     name: 'Back 4 Blood'
+//   }, {
+//     id: 'Grand Theft Auto V',
+//     name: 'Grand Theft Auto V'
+//   }, {
+//     id: 'Roblox',
+//     name: 'Roblox'
+//   }, {
+//     id: 'Fortnite',
+//     name: 'Fortnite'
+//   }, {
+//     id: 'Hacknet',
+//     name: 'Hacknet'
+//   }, {
+//     id: 'Nite team 4',
+//     name: 'Nite team 4'
+//   }, {
+//     id: 'CrossCode',
+//     name: 'CrossCode'
+//   }, {
+//     id: 'Euro Truck Simulator 2 ',
+//     name: 'Euro Truck Simulator 2 '
+//   }, {
+//     id: 'Far Cry 6',
+//     name: 'Far Cry 6'
+//   }
+// ]
 
 class PagesHome extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      games: [['among us', 'League of Legend', 'Counter Strike Online', 'Left 4 Dead'], ['Minecraft', 'CyberPunk', 'Call of Duty', 'Back 4 Blood'], ['Grand Theft Auto V', 'Roblox', 'Fortnite', 'Hacknet'], ['Nite team 4', 'Nite team 4', 'Nite team 4', 'Nite team 4']]
     }
   }
 
+  componentDidMount() {
+    this.props.getGames()
+  }
+
   render() {
-    const { games } = this.state
+    const { stateGame: { games } } = this.props
+
     return (
-      <div id="pages-home">
-        <header className="text-center border-bottom">
-          <h1>All Games</h1>
-        </header>
-        <Container id="pagesHome-games-container">
-          <Row>
-            <Col>
-              {
-                games.map((items, idx) => (
-                  <ListGroup horizontal="sm" className="pagesHome-games-list">
-                    {
-                    items.map((item, idy) => (
-                      <ListGroup.Item className="pagesHome-games-item" key={idy}><a href="#">{`${item}`}</a></ListGroup.Item>
-                    ))
-                  }
-                  </ListGroup>
-                ))
-              }
-            </Col>
-          </Row>
-        </Container>
-
-        <footer className="bg-dark text-center text-white">
-          {/* <!-- Grid container --> */}
-          <div className="container p-4 pb-0">
-            {/* <!-- Section: Social media --> */}
-            <section className="mb-4">
-              {/* <!-- Facebook --> */}
-              <a
-                className="btn btn-outline-light btn-floating m-1"
-                href="#!"
-                role="button"
-              ><i className="fab fa-facebook-f" /></a>
-
-              {/* <!-- Twitter --> */}
-              <a
-                className="btn btn-outline-light btn-floating m-1"
-                href="#!"
-                role="button"
-              ><i className="fab fa-twitter" /></a>
-
-              {/* <!-- Google --> */}
-              <a
-                className="btn btn-outline-light btn-floating m-1"
-                href="#!"
-                role="button"
-              ><i className="fab fa-google" /></a>
-
-              {/* <!-- Instagram --> */}
-              <a
-                className="btn btn-outline-light btn-floating m-1"
-                href="#!"
-                role="button"
-              ><i className="fab fa-instagram" /></a>
-
-              {/* <!-- Linkedin --> */}
-              <a
-                className="btn btn-outline-light btn-floating m-1"
-                href="#!"
-                role="button"
-              ><i className="fab fa-linkedin-in" /></a>
-
-              {/* <!-- Github --> */}
-              <a
-                className="btn btn-outline-light btn-floating m-1"
-                href="#!"
-                role="button"
-              ><i className="fab fa-github" /></a>
-            </section>
-            {/* <!-- Section: Social media --> */}
-          </div>
-          {/* <!-- Grid container --> */}
-
-          {/* <!-- Copyright --> */}
-          <div className="text-center p-3">
-            © 2021 Copyright:
-            <a id="footer-company-url" className="text-white" href="https://www.iz.io">     iz.io</a>
-          </div>
-          {/* <!-- Copyright --> */}
-        </footer>
+      <div id="pages-home" className="container text-center">
+        <div className="row">
+          {
+            games.map((game) => (
+              <Link key={game.id} className="col-6 col-sm-4 col-md-3 mb-4" to={`/games/${game.id}`}>{game.name}</Link>
+            ))
+          }
+        </div>
       </div>
-
     )
   }
 }
 
-export default PagesHome
+PagesHome.propTypes = {
+  stateGame: PropTypes.shape().isRequired,
+  getGames: PropTypes.func.isRequired
+}
+
+const mapStateToProps = (state) => ({
+  stateGame: state.games
+})
+
+const mapDispatchToProps = {
+  getGames,
+  resetGames,
+  getGame,
+  resetGame
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PagesHome)
