@@ -10,14 +10,14 @@ class pageDevEditPublish extends React.Component {
     super(props)
 
     this.state = {
-      selectedGame: 6
+      // selectedGame: null
     }
 
     this.handlePublishFormUpdateSubmit = this.handlePublishFormUpdateSubmit.bind(this)
   }
 
   handlePublishFormUpdateSubmit(values) {
-    const { selectedGame: GameId } = this.state
+    const GameId = this.props.match.params.id
     this.props.updateGame(values, GameId).then((resp) => {
       const { history: { push } } = this.props
       push(`/dev/games/${resp.data.game.id}`)

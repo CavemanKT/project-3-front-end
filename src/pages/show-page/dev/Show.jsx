@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { Link } from 'react-router-dom'
-
+import PropTypes from 'prop-types'
 import Container from 'react-bootstrap/Container'
 import Carousel from 'react-bootstrap/Carousel'
 import Row from 'react-bootstrap/Row'
@@ -28,11 +28,10 @@ class PagesDevShow extends React.Component {
     }
   }
 
-  handleEditSubmit(values) {
-    const { selectedTodo: { id } } = this.state
-    this.props.updateTodo(values, id).then(() => {
-      this.closeModalsTodosEdit()
-    })
+  handleEditSubmit() {
+    const GameId = this.props.match.params.id
+    const { history: { push } } = this.props
+    push(`/dev/games/${GameId}/edit`)
   }
 
   render() {
@@ -44,7 +43,14 @@ class PagesDevShow extends React.Component {
           <div id="showpage-carousel-and-description-wrapper">
             <div className="dev-showpage-header mb-3">
               <h1 id="game-name">{game.name}</h1>
-              <Button href="/showpages/dev/game/:id/edit" className="btn btn-success">Edit</Button>
+              <Button
+                href="/showpages/dev/game/:id/edit"
+                className="btn btn-success"
+                onClick={(e) => {
+                  e.preventDefault()
+                  this.handleEditSubmit()
+                }}
+              >Edit</Button>
               <Button type="button" className="btn btn-danger mx-4">Delete</Button>
             </div>
 
@@ -178,6 +184,10 @@ class PagesDevShow extends React.Component {
       </>
     )
   }
+}
+
+PagesDevShow.PropTypes = {
+  history: PropTypes.shape().isRequired
 }
 
 export default PagesDevShow
