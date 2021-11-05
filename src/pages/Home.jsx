@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 // import Col from 'react-bootstrap/Col'
 // import ListGroup from 'react-bootstrap/ListGroup'
 
-import { getGames, resetGames, getGame, resetGame } from '@/actions/game'
+import { getGames, resetGames } from '@/actions/game'
 
 // const games = [
 //   {
@@ -106,9 +106,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   getGames,
-  resetGames,
-  getGame,
-  resetGame
+  resetGames
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PagesHome)

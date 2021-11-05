@@ -17,7 +17,6 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_GAME: {
-      console.log(action.payload.game)
       return produce(state, (draft) => {
         draft.game = action.payload.game
       })
