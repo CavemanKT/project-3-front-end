@@ -9,7 +9,7 @@ export const getProfile = () => (dispatch) => {
   dispatch(loading(GET_PROFILE, { loading: true }))
   axios({
     method: 'GET',
-    url: 'http://localhost:3000/api/profile/:currentUserId',
+    url: 'http://localhost:3000/api/profile',
     withCredentials: true
   }).then((resp) => {
     dispatch(setProfile(resp.data))
@@ -28,7 +28,7 @@ export const updateProfile = (values, currentUserId) => (dispatch) => new Promis
   dispatch(loading(UPDATE_PROFILE, { loading: true }))
   axios({
     method: 'PUT',
-    url: `http://localhost:3000/api/profile/${currentUserId}`,
+    url: 'http://localhost:3000/api/profile',
     data: values,
     withCredentials: true
   }).then((resp) => {

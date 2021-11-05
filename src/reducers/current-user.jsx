@@ -14,7 +14,7 @@ export default (state = initialState, action) => {
     case SET_CURRENT_USER: {
       console.log('action.payload.type:', action.payload) // results: Developer
       return produce(state, (draft) => {
-        draft.currentUser = action.payload.currentUser
+        draft.currentUser = action.payload
         console.log('reducer--currentUser', draft.currentUser)
       })
     }

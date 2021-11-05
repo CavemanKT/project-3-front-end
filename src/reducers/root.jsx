@@ -10,7 +10,6 @@ import ReducersGame from '@/reducers/public-game'
 import ReducersDevGames from '@/reducers/dev-games'
 import ReducersDevGame from '@/reducers/dev-game'
 
-
 const createReducersRoot = (history) => combineReducers({
   profile: ReducersProfile,
   currentUser: ReducersCurrentUser,

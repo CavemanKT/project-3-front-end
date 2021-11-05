@@ -15,8 +15,7 @@ import Loading from '@/components/Loading'
 
 // main page & game list
 import PagesHome from '@/pages/Home'
-import PagesDevGameList from '@/pages/game-list/dev/game-list'
-import PagesTalentsGameList from '@/pages/game-list/talents/game-list'
+import PagesUserGameList from '@/pages/game-list'
 
 // show page
 import PagesPublicShow from '@/pages/show-page/public/Show'
@@ -60,22 +59,21 @@ class App extends React.Component {
           loaded ? (
             <Switch>
               <Route exact path="/" component={PagesHome} />
+
+              <DevPrivateRoute exact path="/my/games" component={PagesUserGameList} />
+
               <Route exact path="/games/:id" component={PagesPublicShow} />
 
-              <DevPrivateRoute exact path="/dev/games" component={PagesDevGameList} />
+              <DevPrivateRoute exact path="/dev/games/:id" component={PagesDevShow} />
 
+              <TalentsPrivateRoute exact path="/talents/games/:id" component={PagesTalentsShow} />
 
-              
               <DevPrivateRoute exact path="/dev/games/:id/edit" component={pageDevEditPublish} />
 
-
-              <DevPrivateRoute exact path="/dev/games/:id" component={PagesDevShow} />
               <DevPrivateRoute exact path="/dev/publish" component={pageDevPublish} />
-              {/* <DevPrivateRoute exact path="/dev/edit" component={pageDevEdit} /> */}
+
               <DevPrivateRoute exact path="/dev/profile/edit" component={pageDevProfile} />
 
-              <TalentsPrivateRoute exact path="/talents/games" component={PagesTalentsGameList} />
-              <TalentsPrivateRoute exact path="/talents/games/:id" component={PagesTalentsShow} />
               {/* <PrivateRoute exact path="/showpages/dev/game/:id/edit" component={PagesDevShowEdit} /> */}
 
               <Route component={PagesNotFound} />
