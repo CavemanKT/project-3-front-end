@@ -1,8 +1,8 @@
 // applicants' list shows or not depends on if the game being owned by dev or not owned
 import React from 'react'
-//import { Link } from 'react-router-dom'
-//import PropTypes from 'prop-types'
-//import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 import Carousel from 'react-bootstrap/Carousel'
 import Row from 'react-bootstrap/Row'

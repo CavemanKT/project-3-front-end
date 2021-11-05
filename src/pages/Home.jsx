@@ -9,117 +9,13 @@ import { Link } from 'react-router-dom'
 
 import { getGames, resetGames } from '@/actions/game'
 
-// const games = [
-//   {
-//     id: 'Among us',
-//     name: 'Among us'
-//   }, {
-//     id: 'League of Legend',
-//     name: 'League of Legend'
-//   }, {
-//     id: 'Counter Strike Online',
-//     name: 'Counter Strike Online'
-//   }, {
-//     id: 'Left 4 Dead',
-//     name: 'Left 4 Dead'
-//   }, {
-//     id: 'Minecraft',
-//     name: 'Minecraft'
-//   }, {
-//     id: 'CyberPunk',
-//     name: 'CyberPunk'
-//   }, {
-//     id: 'Call of Duty',
-//     name: 'Call of Duty'
-//   }, {
-//     id: 'Back 4 Blood',
-//     name: 'Back 4 Blood'
-//   }, {
-//     id: 'Grand Theft Auto V',
-//     name: 'Grand Theft Auto V'
-//   }, {
-//     id: 'Roblox',
-//     name: 'Roblox'
-//   }, {
-//     id: 'Fortnite',
-//     name: 'Fortnite'
-//   }, {
-//     id: 'Hacknet',
-//     name: 'Hacknet'
-//   }, {
-//     id: 'Nite team 4',
-//     name: 'Nite team 4'
-//   }, {
-//     id: 'CrossCode',
-//     name: 'CrossCode'
-//   }, {
-//     id: 'Euro Truck Simulator 2 ',
-//     name: 'Euro Truck Simulator 2 '
-//   }, {
-//     id: 'Far Cry 6',
-//     name: 'Far Cry 6'
-//   }
-// ]
-
-
 class PagesHome extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
     }
-// const games = [
-  {
-    id: 'Among us',
-    name: 'Among us'
-  }, {
-    id: 'League of Legend',
-    name: 'League of Legend'
-  }, {
-    id: 'Counter Strike Online',
-    name: 'Counter Strike Online'
-  }, {
-    id: 'Left 4 Dead',
-    name: 'Left 4 Dead'
-  }, {
-    id: 'Minecraft',
-    name: 'Minecraft'
-  }, {
-    id: 'CyberPunk',
-    name: 'CyberPunk'
-  }, {
-    id: 'Call of Duty',
-    name: 'Call of Duty'
-  }, {
-    id: 'Back 4 Blood',
-    name: 'Back 4 Blood'
-  }, {
-    id: 'Grand Theft Auto V',
-    name: 'Grand Theft Auto V'
-  }, {
-    id: 'Roblox',
-    name: 'Roblox'
-  }, {
-    id: 'Fortnite',
-    name: 'Fortnite'
-  }, {
-    id: 'Hacknet',
-    name: 'Hacknet'
-  }, {
-    id: 'Nite team 4',
-    name: 'Nite team 4'
-  }, {
-    id: 'CrossCode',
-    name: 'CrossCode'
-  }, {
-    id: 'Euro Truck Simulator 2 ',
-    name: 'Euro Truck Simulator 2 '
-  }, {
-    id: 'Far Cry 6',
-    name: 'Far Cry 6'
   }
-]//
-
 
   componentDidMount() {
     this.props.getGames()
@@ -145,7 +41,6 @@ class PagesHome extends React.Component {
     )
   }
 }
-
 
 PagesHome.propTypes = {
   stateGame: PropTypes.shape().isRequired,
