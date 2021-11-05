@@ -26,8 +26,8 @@ class pageDevProfile extends React.Component {
   }
 
   render() {
-    // const { currentUserState: { currentUser }, profileState: { devInfo, updatingIDs } } = this.props
-    // console.log('currentUser: ', currentUser, 'devInfo: ', devInfo, 'updatingIDs:', updatingIDs)
+    const { currentUserState: { currentUser }, profileState: { devInfo, updatingIDs } } = this.props
+    console.log('currentUser: ', currentUser, 'devInfo: ', devInfo, 'updatingIDs:', updatingIDs)
     // in need of a fix
     return (
       <>
@@ -44,13 +44,13 @@ class pageDevProfile extends React.Component {
 pageDevProfile.propTypes = {
   history: PropTypes.shape().isRequired,
   updateProfile: PropTypes.func.isRequired,
-  currentUserState: PropTypes.shape().isRequired
-  // profileState: PropTypes.shape().isRequired
+  currentUserState: PropTypes.shape().isRequired,
+  profileState: PropTypes.shape().isRequired
 }
 
 const mapStateToProps = (state) => ({
-  currentUserState: state.currentUser
-  // profileState: state.devInfo
+  currentUserState: state.currentUser,
+  profileState: state.profile
 })
 
 const mapDispatchToProps = {

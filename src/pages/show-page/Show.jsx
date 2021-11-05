@@ -43,7 +43,7 @@ class PagesPublicShow extends React.Component {
   handleEditSubmit() {
     const GameId = this.props.match.params.id
     const { history: { push } } = this.props
-    push(`/dev/games/${GameId}/edit`)
+    push(`/my/games/${GameId}/edit`)
   }
 
   render() {
@@ -59,7 +59,7 @@ class PagesPublicShow extends React.Component {
           <div className="dev-showpage-header mb-3">
             <h1 id="game-name">{devGame.name}</h1>
             <Button
-              href="/showpages/dev/game/:id/edit"
+              href="/my/game/:id/edit"
               className="btn btn-success"
               onClick={(e) => {
                 e.preventDefault()

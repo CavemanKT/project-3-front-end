@@ -20,7 +20,7 @@ class pageDevEditPublish extends React.Component {
     const GameId = this.props.match.params.id
     this.props.updateGame(values, GameId).then((resp) => {
       const { history: { push } } = this.props
-      push(`/dev/games/${resp.data.game.id}`)
+      push(`/games/${resp.data.game.id}`)
     })
   }
 
@@ -35,6 +35,7 @@ class pageDevEditPublish extends React.Component {
 }
 
 pageDevEditPublish.propTypes = {
+  match: PropTypes.shape().isRequired,
   history: PropTypes.shape().isRequired,
   createGame: PropTypes.func.isRequired,
   updateGame: PropTypes.func.isRequired,

@@ -48,9 +48,9 @@ class PagesDevGameList extends React.Component {
         <header className="text-center border-bottom pages-dev-gamelist-header">
           {currentUser && currentUser.type === 'Developer' && (
           <>
-            <Link className="btn btn-primary" to="/dev/profile/edit" onClick={this.handleGetDevProfile}>Profile</Link>
+            <Link className="btn btn-primary" to="/my/profile" onClick={this.handleGetDevProfile}>Profile</Link>
             <h1>My Games</h1>
-            <Link className="btn btn-primary" to="/dev/publish">Publish</Link>
+            <Link className="btn btn-primary" to="/my/games/new">Publish</Link>
           </>
           )}
           {currentUser && currentUser.type === 'Talent' && (
@@ -71,7 +71,7 @@ class PagesDevGameList extends React.Component {
                   <ListGroup horizontal="sm" className="pages-dev-games-list">
                     <Link
                       key={item.id}
-                      to={`/dev/games/${item.id}`}
+                      to={`/games/${item.id}`}
                       className="list-group-item list-group-item-action"
                     >
                       <div>{item.name}</div>
