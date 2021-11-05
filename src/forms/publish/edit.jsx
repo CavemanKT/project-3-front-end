@@ -78,7 +78,8 @@ const authLoginSchema = yup.object().shape({
   qualification: yup.string().required('Required')
 })
 
-const FormsGameEdit = ({ onSubmit }) => (
+
+const FormsGamePublishEdit = ({ onSubmit }) => (
   <Formik
     initialValues={{
       name: '',
@@ -91,8 +92,10 @@ const FormsGameEdit = ({ onSubmit }) => (
     component={RenderForm}
   />
 )
-FormsGameEdit.propTypes = {
+
+FormsGamePublishEdit.propTypes = {
   onSubmit: PropTypes.func.isRequired
 }
 
-export default FormsGameEdit
+export default FormsGamePublishEdit
+
