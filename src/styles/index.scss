@@ -1,5 +1,14 @@
 @import "~bootstrap/scss/bootstrap";
+@import '~react-toastify/scss/main';
+
 @import url('https://fonts.googleapis.com/css2?family=Biryani&family=Expletus+Sans&family=Fruktur&family=Mate&display=swap');
+
+@import "@/styles/layouts/Navbar";
+@import "@/styles/layouts/Footer";
+
+@import "./dev-game-list.scss";
+@import "./talents-game-list.scss";
+
 
 // font-family: 'Biryani',
 // sans-serif;
@@ -15,46 +24,70 @@ html {
 
   body {
     #root {
+      position: relative;
       min-height: 100vh;
       min-width: 100vw;
 
-      #pagesHome-games-container {
-        display: flex;
-        justify-content: center;
+      margin: 0px;
+      padding: 0px;
 
-        .pagesHome-games-list {
+      //sign up form
+      .radio-group {
+        .radio-label {
+          margin-right: 10px;
+        }
+
+      }
+
+
+
+      #body-footer-container {
+        min-height: 100vh;
+
+        // public main page
+        #pages-home {
+          min-height: 100vh;
+          position: relative;
           display: flex;
-          justify-content: center;
+          flex-direction: column;
 
-          .pagesHome-games-item {
-            border-style: none;
+          header {
+            font-family: 'Biryani',
+              sans-serif;
+          }
 
+          #pagesHome-games-container {
+            // display: flex;
+            // justify-content: center;
+
+            .pagesHome-games-list {
+              // display: flex;
+              // justify-content: center;
+
+              .pagesHome-games-item {
+                margin: 10px;
+                text-align: center;
+                border-style: none;
+                font-family: 'Biryani',
+                  sans-serif;
+
+                a:link,
+                a:visited {
+                  color: black;
+                  text-decoration: none;
+                }
+
+                a:hover {
+                  color: rgb(233, 131, 36)
+                }
+              }
+            }
           }
         }
+
+
       }
 
-      #layouts-navbar {
-
-        #layouts-navbar-brand {
-          font-family: 'Expletus Sans',
-            cursive;
-          font-weight: 900;
-          font-style: italic;
-          font-size: 2rem;
-        }
-
-        #layouts-navbar-navlink {
-          font-size: 1.4rem;
-        }
-      }
-
-      .radio-label {
-        margin-right: 10px
-      }
-
-      #footer-company-url:hover {
-        text-decoration: none;
-      }
     }
 
   }

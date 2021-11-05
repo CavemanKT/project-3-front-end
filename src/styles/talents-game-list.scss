@@ -1,0 +1,47 @@
+html {
+  body {
+
+
+    // talents game list page
+    #pages-talents-gamelist {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+
+      .pages-talents-gamelist-header {
+        font-family: 'Biryani',
+          sans-serif;
+
+      }
+
+      #pages-talents-games-container {
+        display: flex;
+        justify-content: center;
+        flex-grow: 1;
+
+        .pages-talents-games-list {
+          display: flex;
+          justify-content: center;
+
+          .pages-talents-games-item {
+            border-style: none;
+            font-family: 'Biryani',
+              sans-serif;
+
+            a:link,
+            a:visited {
+              color: black;
+              text-decoration: none;
+            }
+
+            a:hover {
+              color: rgb(233, 131, 36)
+            }
+          }
+        }
+      }
+    }
+
+  }
+}

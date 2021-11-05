@@ -35,15 +35,16 @@ class LayoutsNavbar extends React.Component {
 
   handleSignupSubmit(values) {
     this.props.authSignup(values).then(() => {
-      const { history: { push } } = this.props
-      push('/auth/login')
+      this.setState({ showModalsSignup: false })
+      this.setState({ showModalsLogin: true })
     })
   }
 
   handleLoginSubmit(values) {
     this.props.authLogin(values).then(() => {
-      const { history: { push } } = this.props
-      push('/api/games')
+      this.setState({ showModalsLogin: false })
+      // const { history: { push } } = this.props
+      // push('http://localhost:8080/api/games')
     })
   }
 
@@ -64,28 +65,52 @@ class LayoutsNavbar extends React.Component {
   }
 
   render() {
-    // const { currentUserState: { currentUser } } = this.props
+    const { currentUserState: { currentUser } } = this.props
     const { showModalsSignup, showModalsLogin } = this.state
+    console.log('currentUser-Navbar: ', currentUser)
+
+    let curUserType
+    if (currentUser && (currentUser.type === 'Developer')) {
+      curUserType = currentUser.type
+    } else if (currentUser && (currentUser.type === 'Marketer')) {
+      curUserType = currentUser.type
+    } else {
+      curUserType = false
+    }
+
     return (
       <>
         <Navbar id="layouts-navbar" bg="light" variant="light" expand="lg" collapseOnSelect>
-          <Navbar.Brand id="layouts-navbar-brand" as={NavLink} to="/">Indie Dever Zone</Navbar.Brand>
+          <Navbar.Brand id="layouts-navbar-brand" as={NavLink} to="/">Indie Zone</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav id="layouts-navbar-navlink" className="ml-auto">
-              <Nav.Link as={NavLink} to="/todos" eventKey="1">Browse Todo</Nav.Link>
-              {/* { */}
-              {/* currentUser ? ( */}
-              {/* <> */}
-              <Nav.Link onClick={this.handleLogoutClick} eventKey="2">Logout</Nav.Link>
-              {/* </> */}
-              {/* ) : ( */}
-              {/* <> */}
-              <Nav.Link onClick={this.openModalsSignup} eventKey="3">Signup</Nav.Link>
-              <Nav.Link onClick={this.openModalsLogin} eventKey="4">Login</Nav.Link>
-              {/* </> */}
-              {/* ) */}
-              {/* } */}
+              <Nav.Link as={NavLink} to="/" eventKey="1">Browse Games</Nav.Link>
+              {
+                (curUserType === 'Developer') && (
+                  <>
+                    <Nav.Link as={NavLink} to="/dev/games" eventKey="2">My Games</Nav.Link>
+                    {/* if the user type is marketers */}
+                    <Nav.Link onClick={this.handleLogoutClick} eventKey="3">Logout</Nav.Link>
+                  </>
+                )
+              }
+              {
+                (curUserType === 'Marketer') && (
+                  <>
+                    <Nav.Link as={NavLink} to="/talents/games" eventKey="2">My Games</Nav.Link>
+                    <Nav.Link onClick={this.handleLogoutClick} eventKey="3">Logout</Nav.Link>
+                  </>
+                )
+              }
+              {
+                (curUserType === false) && (
+                <>
+                  <Nav.Link onClick={this.openModalsSignup} eventKey="4">Signup</Nav.Link>
+                  <Nav.Link onClick={this.openModalsLogin} eventKey="5">Login</Nav.Link>
+                </>
+                )
+              }
             </Nav>
           </Navbar.Collapse>
         </Navbar>
@@ -101,16 +126,16 @@ class LayoutsNavbar extends React.Component {
 }
 
 LayoutsNavbar.propTypes = {
-  // currentUserState: PropTypes.shape().isRequired,
-  history: PropTypes.shape().isRequired,
+  currentUserState: PropTypes.shape().isRequired,
+  // history: PropTypes.shape().isRequired,
   authLogout: PropTypes.func.isRequired,
   authSignup: PropTypes.func.isRequired,
   authLogin: PropTypes.func.isRequired
-
 }
 
 const mapStateToProps = (state) => ({
-  // currentUserState: state.currentUser
+  currentUserState: state.currentUser
+
 })
 
 const mapDispatchToProps = {
