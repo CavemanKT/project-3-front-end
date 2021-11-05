@@ -62,6 +62,7 @@ const RenderForm = ({ errors, touched, isSubmitting }) => (
       />
     </div>
 
+
     <button className="btn btn-success" type="submit" disabled={isSubmitting}>Submit</button>
   </Form>
 )
@@ -85,7 +86,6 @@ const FormsGamePublishNew = ({ onSubmit }) => (
       description: '',
       jobDescription: '',
       qualification: '',
-      url: ''
     }}
     validationSchema={authLoginSchema}
     onSubmit={onSubmit}

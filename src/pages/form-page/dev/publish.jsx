@@ -19,6 +19,7 @@ class pageDevPublish extends React.Component {
       const { history: { push } } = this.props
       push(`/dev/games/${resp.data.game.id}`)
     })
+
   }
 
   render() {
