@@ -18,9 +18,7 @@ import PagesHome from '@/pages/Home'
 import PagesUserGameList from '@/pages/game-list'
 
 // show page
-import PagesPublicShow from '@/pages/show-page/public/Show'
-import PagesDevShow from '@/pages/show-page/dev/Show'
-import PagesTalentsShow from '@/pages/show-page/talents/Show'
+import PagesShow from '@/pages/show-page/Show'
 
 // publish page
 import pageDevPublish from '@/pages/form-page/dev/publish'
@@ -58,27 +56,25 @@ class App extends React.Component {
           {
           loaded ? (
             <Switch>
+              {/* Shared Paths */}
               <Route exact path="/" component={PagesHome} />
+              <Route exact path="/games/:id" component={PagesShow} />
+              {/* for now, it will just be Route, later change to GeneralRoute */}
+              <Route exact path="/my/profile" component={pageDevProfile} />
 
+              {/* Talent Paths */}
+              <TalentsPrivateRoute exact path="/my/application" component={PagesUserGameList} />
+
+              {/* Developer Paths */}
               <DevPrivateRoute exact path="/my/games" component={PagesUserGameList} />
-
-              <Route exact path="/games/:id" component={PagesPublicShow} />
-
-              <DevPrivateRoute exact path="/dev/games/:id" component={PagesDevShow} />
-
-              <TalentsPrivateRoute exact path="/talents/games/:id" component={PagesTalentsShow} />
-
-              <DevPrivateRoute exact path="/dev/games/:id/edit" component={pageDevEditPublish} />
-
-              <DevPrivateRoute exact path="/dev/publish" component={pageDevPublish} />
-
-              <DevPrivateRoute exact path="/dev/profile/edit" component={pageDevProfile} />
-
-              {/* <PrivateRoute exact path="/showpages/dev/game/:id/edit" component={PagesDevShowEdit} /> */}
+              <DevPrivateRoute exact path="/my/games/new" component={pageDevPublish} />
+              <DevPrivateRoute exact path="/my/games/:id/edit" component={pageDevEditPublish} />
 
               <Route component={PagesNotFound} />
             </Switch>
-
+          // note
+          // change all the link first!.
+          //
           ) : (
             <div className="my-3">
               <Loading />

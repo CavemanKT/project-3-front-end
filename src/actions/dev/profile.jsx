@@ -23,7 +23,6 @@ export const EDIT_PROFILE = 'EDIT_PROFILE'
 export const editProfile = (payload) => ({ type: EDIT_PROFILE, payload })
 export const UPDATE_PROFILE = 'UPDATE_PROFILE'
 export const updateProfile = (values, currentUserId) => (dispatch) => new Promise((resolve, reject) => {
-  console.log('hi')
   console.log('currentUserId', currentUserId)
   dispatch(loading(UPDATE_PROFILE, { loading: true }))
   axios({
@@ -33,7 +32,7 @@ export const updateProfile = (values, currentUserId) => (dispatch) => new Promis
     withCredentials: true
   }).then((resp) => {
     console.log(resp.data)
-    dispatch(editProfile(resp.data))
+    // dispatch(editProfile(resp.data))
     resolve(resp)
   }).catch((err) => {
     reject(err)

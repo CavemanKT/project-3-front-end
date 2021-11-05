@@ -33,7 +33,7 @@ class PagesHome extends React.Component {
         <div className="row">
           {
             games.map((game) => (
-              <Link key={game.id} className="col-6 col-sm-4 col-md-3 mb-4" to={`/games/${game.id}`}>{game.name}</Link>
+              <Link key={game.id} className="col-6 col-sm-4 col-md-3 mt-4" to={`/games/${game.id}`}>{game.name}</Link>
             ))
           }
         </div>

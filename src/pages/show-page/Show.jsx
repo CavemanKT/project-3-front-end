@@ -1,0 +1,216 @@
+// applicants' list shows or not depends on if the game being owned by dev or not owned
+import React from 'react'
+import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+
+import Carousel from 'react-bootstrap/Carousel'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Button from 'react-bootstrap/Button'
+import ListGroup from 'react-bootstrap/ListGroup'
+import Container from 'react-bootstrap/Container'
+
+import { getGame, resetGame } from '@/actions/game'
+import { getGame as getDevGame, unsetDevGame } from '@/actions/dev/game'
+
+class PagesPublicShow extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      applicants: [
+        { fullname: 'Faky Ralap', email: '123@123.com', cvUrl: 'https://www.alksdfj.com' },
+        { fullname: 'Faky Ralap', email: '123@123.com', cvUrl: 'https://www.alksdfj.com' },
+        { fullname: 'Faky Ralap', email: '123@123.com', cvUrl: 'https://www.alksdfj.com' },
+        { fullname: 'Faky Ralap', email: '123@123.com', cvUrl: 'https://www.alksdfj.com' }
+      ]
+    }
+  }
+
+  componentDidMount() {
+    const { id: GameId } = this.props.match.params
+    this.props.getGame(GameId)
+
+    this.props.getDevGame(GameId)
+  }
+
+  componentWillUnmount() {
+    this.props.resetGame()
+    this.props.unsetDevGame()
+  }
+
+  handleEditSubmit() {
+    const GameId = this.props.match.params.id
+    const { history: { push } } = this.props
+    push(`/dev/games/${GameId}/edit`)
+  }
+
+  render() {
+    const { gameState: { game }, devGameState: { devGame }, currentUserState: { currentUser } } = this.props
+    const { applicants } = this.state
+
+    return (
+      <div id="dev-showpage">
+
+        <div id="showpage-carousel-and-description-wrapper">
+
+          { currentUser && currentUser.type === 'Developer' && (
+          <div className="dev-showpage-header mb-3">
+            <h1 id="game-name">{devGame.name}</h1>
+            <Button
+              href="/showpages/dev/game/:id/edit"
+              className="btn btn-success"
+              onClick={(e) => {
+                e.preventDefault()
+                this.handleEditSubmit()
+              }}
+            >Edit</Button>
+            <Button type="button" className="btn btn-danger mx-4">Delete</Button>
+          </div>
+          )}
+          {
+            currentUser && currentUser.type === 'Marketer' && (
+              <>
+                <h1 id="game-name">{game.name}</h1>
+                {/* <button type="button" id="btn-apply" className="btn btn-primary my-3">Apply</button> */}
+                <button type="button" id="btn-applied" className="btn btn-secondary my-3">Applied</button>
+              </>
+            )
+          }
+
+          {!currentUser && <h1 id="game-name">{game.name}</h1>}
+
+          {/* public */}
+          <Row>
+            <Col>
+              <div id="showpage-carousel-container">
+                <Carousel variant="dark">
+                  <Carousel.Item className="showpage-carousel-item">
+                    <img
+                      className="w-100"
+                      src="https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/HNEV2?wid=1144&hei=1144&fmt=jpeg&qlt=95&.v=1599760849000"
+                      alt="First slide"
+                    />
+
+                  </Carousel.Item>
+                  <Carousel.Item>
+                    <img
+                      className="w-100"
+                      src="https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/HNEV2?wid=1144&hei=1144&fmt=jpeg&qlt=95&.v=1599760849000"
+                      alt="Second slide"
+                    />
+
+                  </Carousel.Item>
+                  <Carousel.Item>
+                    <img
+                      className="w-100"
+                      src="https://media.contentapi.ea.com/content/dam/gin/images/2021/06/battlefield-2042-key-art.jpg.adapt.crop1x1.767p.jpg"
+                      alt="Third slide"
+                    />
+
+                  </Carousel.Item>
+                </Carousel>
+              </div>
+            </Col>
+
+            <Col xs={6}>
+              <div id="showpage-description-container" className="col-md-auto">
+                <h2>Description: </h2>
+                <article>
+                  <p>{game.description}</p>
+                </article>
+              </div>
+            </Col>
+          </Row>
+        </div>
+
+        {currentUser && currentUser.type === 'Developer' && (
+        <Container className="mb-5">
+          <div id="applicant-list">
+            <h3>Applicant list</h3>
+            <Row>
+              <Col>
+                {
+                  applicants.map((applicant, i) => (
+                    <ListGroup horizontal className="showpage-applicant-list-row" key={i}>
+                      <ListGroup.Item className="showpage-applicant-list-item">{applicant.fullname}</ListGroup.Item>
+                      <ListGroup.Item className="showpage-applicant-list-item">{applicant.email}</ListGroup.Item>
+                      <ListGroup.Item className="showpage-applicant-list-item">{applicant.cvUrl}</ListGroup.Item>
+                      <button type="button" className="btn btn-primary">Approve</button>
+                    </ListGroup>
+                  ))
+                }
+              </Col>
+            </Row>
+          </div>
+        </Container>
+        )}
+
+        {currentUser && currentUser.type === 'Marketer' && (
+
+          <Container className="mb-5" fluid id="showpage-job-detail-container">
+            <div id="job-detail">
+              <Row className="showpage-job-detail-row">
+                <Col xs={12} lg={6} className="job-description">
+                  <h3>Job Description</h3>
+                  {
+                  applicants.map((applicant, i) => (
+                    <ListGroup horizontal className="showpage-job-description-listgroup" key={i}>
+                      <ListGroup.Item className="showpage-job-description-item">{applicant.fullname}</ListGroup.Item>
+                      <ListGroup.Item className="showpage-job-description-item">{applicant.email}</ListGroup.Item>
+                      <ListGroup.Item className="showpage-job-description-item">{applicant.cvUrl}</ListGroup.Item>
+                    </ListGroup>
+                  ))
+                }
+                </Col>
+                <Col xs={12} lg={6} className="job-requirement">
+                  <h3>Requirements</h3>
+                  {
+                  applicants.map((applicant, i) => (
+                    <ListGroup horizontal className="showpage-job-requirement-listgroup" key={i}>
+                      <ListGroup.Item className="showpage-job-requirement-item">{applicant.fullname}</ListGroup.Item>
+                      <ListGroup.Item className="showpage-job-requirement-item">{applicant.email}</ListGroup.Item>
+                      <ListGroup.Item className="showpage-job-requirement-item">{applicant.cvUrl}</ListGroup.Item>
+                    </ListGroup>
+                  ))
+                }
+                </Col>
+              </Row>
+            </div>
+          </Container>
+        )}
+      </div>
+    )
+  }
+}
+
+PagesPublicShow.propTypes = {
+  history: PropTypes.shape().isRequired,
+
+  match: PropTypes.shape().isRequired,
+  getDevGame: PropTypes.func.isRequired,
+  unsetDevGame: PropTypes.func.isRequired,
+  getGame: PropTypes.func.isRequired,
+  resetGame: PropTypes.func.isRequired,
+
+  gameState: PropTypes.shape().isRequired,
+  devGameState: PropTypes.shape().isRequired,
+  currentUserState: PropTypes.shape().isRequired
+}
+
+const mapStateToProps = (state) => ({
+  gameState: state.game,
+  devGameState: state.devGame,
+  currentUserState: state.currentUser
+
+})
+
+const mapDispatchToProps = {
+  getDevGame,
+  unsetDevGame,
+  getGame,
+  resetGame
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PagesPublicShow)

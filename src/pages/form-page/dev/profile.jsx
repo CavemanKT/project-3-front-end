@@ -21,7 +21,7 @@ class pageDevProfile extends React.Component {
 
     this.props.updateProfile(values, currentUser.id).then(() => {
       const { history: { push } } = this.props
-      push('/dev/games')
+      push('/my/games')
     })
   }
 
@@ -44,13 +44,13 @@ class pageDevProfile extends React.Component {
 pageDevProfile.propTypes = {
   history: PropTypes.shape().isRequired,
   updateProfile: PropTypes.func.isRequired,
-  currentUserState: PropTypes.shape().isRequired,
-  profileState: PropTypes.shape().isRequired
+  currentUserState: PropTypes.shape().isRequired
+  // profileState: PropTypes.shape().isRequired
 }
 
 const mapStateToProps = (state) => ({
-  currentUserState: state.currentUser,
-  profileState: state.profile
+  currentUserState: state.currentUser
+  // profileState: state.devInfo
 })
 
 const mapDispatchToProps = {
