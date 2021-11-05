@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
@@ -17,6 +18,11 @@ class PagesDevGameList extends React.Component {
     this.state = {
       // games: [['among us', 'League of Legend', 'Counter Strike Online', 'Left 4 Dead'], ['Minecraft', 'CyberPunk', 'Call of Duty', 'Back 4 Blood'], ['Grand Theft Auto V', 'Roblox', 'Fortnite', 'Hacknet'], ['Nite team 4', 'Nite team 4', 'Nite team 4', 'Nite team 4']]
     }
+    this.handleGetDevProfile = this.handleGetDevProfile.bind(this)
+  }
+
+  handleGetDevProfile() {
+    this.props.getProfile()
   }
 
   componentDidMount() {
@@ -28,14 +34,15 @@ class PagesDevGameList extends React.Component {
   }
 
   render() {
+
     const { devGamesState: { devGames } } = this.props
 
     return (
       <div id="pages-dev-gamelist">
         <header className="text-center border-bottom pages-dev-gamelist-header">
-          <button type="button" className="btn btn-primary">Profile</button>
+          <Link className="btn btn-primary" to="/dev/profile/edit" onClick={this.handleGetDevProfile}>Profile</Link>
           <h1>My Games</h1>
-          <button type="button" className="btn btn-primary">Publish</button>
+          <Link className="btn btn-primary" to="/dev/publish">Publish</Link>
         </header>
         <Container id="pages-dev-games-container">
           <Row>
@@ -62,69 +69,14 @@ class PagesDevGameList extends React.Component {
           </Row>
         </Container>
 
-        <footer className="bg-dark text-center text-white">
-          {/* <!-- Grid container --> */}
-          <div className="container p-4 pb-0">
-            {/* <!-- Section: Social media --> */}
-            <section className="mb-4">
-              {/* <!-- Facebook --> */}
-              <a
-                className="btn btn-outline-light btn-floating m-1"
-                href="#!"
-                role="button"
-              ><i className="fab fa-facebook-f" /></a>
-
-              {/* <!-- Twitter --> */}
-              <a
-                className="btn btn-outline-light btn-floating m-1"
-                href="#!"
-                role="button"
-              ><i className="fab fa-twitter" /></a>
-
-              {/* <!-- Google --> */}
-              <a
-                className="btn btn-outline-light btn-floating m-1"
-                href="#!"
-                role="button"
-              ><i className="fab fa-google" /></a>
-
-              {/* <!-- Instagram --> */}
-              <a
-                className="btn btn-outline-light btn-floating m-1"
-                href="#!"
-                role="button"
-              ><i className="fab fa-instagram" /></a>
-
-              {/* <!-- Linkedin --> */}
-              <a
-                className="btn btn-outline-light btn-floating m-1"
-                href="#!"
-                role="button"
-              ><i className="fab fa-linkedin-in" /></a>
-
-              {/* <!-- Github --> */}
-              <a
-                className="btn btn-outline-light btn-floating m-1"
-                href="#!"
-                role="button"
-              ><i className="fab fa-github" /></a>
-            </section>
-            {/* <!-- Section: Social media --> */}
-          </div>
-          {/* <!-- Grid container --> */}
-
-          {/* <!-- Copyright --> */}
-          <div className="text-center p-3">
-            © 2021 Copyright:
-            <a id="footer-company-url" className="text-white" href="https://www.iz.io">     iz.io</a>
-          </div>
-          {/* <!-- Copyright --> */}
-        </footer>
       </div>
 
     )
   }
 }
+
+
+
 
 PagesDevGameList.propTypes = {
   getGames: PropTypes.func.isRequired,
@@ -140,5 +92,6 @@ const mapDispatchToProps = {
   getGames,
   resetGames
 }
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(PagesDevGameList)

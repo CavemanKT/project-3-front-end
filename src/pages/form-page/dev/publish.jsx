@@ -33,11 +33,13 @@ class pageDevPublish extends React.Component {
 }
 
 pageDevPublish.propTypes = {
+
   history: PropTypes.shape().isRequired,
   createGame: PropTypes.func.isRequired,
   updateGame: PropTypes.func.isRequired,
   destroyGame: PropTypes.func.isRequired
   // stateGame: PropTypes.shape().isRequired
+
 }
 
 const mapStateToProps = (state) => ({
