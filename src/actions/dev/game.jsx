@@ -33,9 +33,9 @@ export const createGame = (values) => (dispatch) => new Promise((resolve, reject
   axios({
     method: 'POST',
     url: 'http://localhost:3000/api/dev/games',
-    data: values
+    data: values,
+    withCredentials: true
   }).then((resp) => {
-    console.log(resp)
     dispatch(addGameInDev(resp.data))
     resolve(resp)
   }).catch((err) => {
@@ -53,7 +53,8 @@ export const updateGame = (values, GameId) => (dispatch) => new Promise((resolve
   axios({
     method: 'PUT',
     url: `http://localhost:3000/api/dev/games/${GameId}`,
-    data: values
+    data: values,
+    withCredentials: true
   }).then((resp) => {
     dispatch(editGameInDev(resp.data))
     resolve(resp)
