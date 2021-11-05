@@ -26,7 +26,9 @@ class pageDevProfile extends React.Component {
   }
 
   render() {
-    const { currentUserState: { currentUser } } = this.props
+    // const { currentUserState: { currentUser }, profileState: { devInfo, updatingIDs } } = this.props
+    // console.log('currentUser: ', currentUser, 'devInfo: ', devInfo, 'updatingIDs:', updatingIDs)
+    // in need of a fix
     return (
       <>
         <div>Edit your profile</div>
@@ -42,12 +44,13 @@ class pageDevProfile extends React.Component {
 pageDevProfile.propTypes = {
   history: PropTypes.shape().isRequired,
   updateProfile: PropTypes.func.isRequired,
-  currentUserState: PropTypes.shape().isRequired
-
+  currentUserState: PropTypes.shape().isRequired,
+  profileState: PropTypes.shape().isRequired
 }
 
 const mapStateToProps = (state) => ({
-  currentUserState: state.currentUser
+  currentUserState: state.currentUser,
+  profileState: state.profile
 })
 
 const mapDispatchToProps = {

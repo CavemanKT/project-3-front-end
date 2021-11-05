@@ -24,18 +24,21 @@ export const editProfile = (payload) => ({ type: EDIT_PROFILE, payload })
 export const UPDATE_PROFILE = 'UPDATE_PROFILE'
 export const updateProfile = (values, currentUserId) => (dispatch) => new Promise((resolve, reject) => {
   console.log('hi')
+  console.log('currentUserId', currentUserId)
   dispatch(loading(UPDATE_PROFILE, { loading: true }))
   axios({
     method: 'PUT',
     url: `http://localhost:3000/api/profile/${currentUserId}`,
-    data: values
+    data: values,
+    withCredentials: true
   }).then((resp) => {
-    console.log('problem is here')
+    console.log(resp.data)
     dispatch(editProfile(resp.data))
     resolve(resp)
   }).catch((err) => {
     reject(err)
   }).finally(() => {
+    console.log('currentUserId', currentUserId)
     dispatch(loading(UPDATE_PROFILE, { loading: false, id: currentUserId }))
   })
 })
