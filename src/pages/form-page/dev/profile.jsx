@@ -33,6 +33,11 @@ class pageDevProfile extends React.Component {
       <>
         <div>Edit your profile</div>
         <FormsProfileUpdate
+          initialValues={{
+            username: '',
+            firstName: '',
+            lastName: ''
+          }}
           onSubmit={this.handleProfileFormUpdateSubmit}
 
         />

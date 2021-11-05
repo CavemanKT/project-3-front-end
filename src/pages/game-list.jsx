@@ -25,6 +25,7 @@ class PagesDevGameList extends React.Component {
 
   componentDidMount() {
     this.props.getGames()
+    // get talents' getGames, make the alias as getTalentGamesList or sth else
   }
 
   componentWillUnmount() {

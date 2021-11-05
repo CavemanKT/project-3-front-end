@@ -15,25 +15,25 @@ const initialState = {
 }
 
 export default (state = initialState, action) => {
-  console.log(action.type, action.payload)
   switch (action.type) {
     case SET_PROFILE: {
-      console.log('SET_PROFILE:', action.payload)
-
+      console.log(action.type, action.payload)
       return produce(state, (draft) => {
-        draft.devInfo = action.payload.developer
+        draft.devInfo = action.payload.currentUser
       })
     }
     case GET_PROFILE: {
+      console.log(action.type, action.payload)
       return produce(state, (draft) => {
         draft.isGetProfileLoading = action.payload.loading
       })
     }
     case EDIT_PROFILE: {
-      console.log('!!!!!!!!!!!!!!!!', action.payload, action.payload.currentUser)
+      console.log(action.type, action.payload)
       return produce(state, (draft) => {
         // in need of a fix
-        const index = draft.devInfo.findIndex((currentUser) => currentUser.id === action.payload.currentUser.id)
+        const index = draft.devInfo.find((currentUser) => currentUser.id === action.payload.currentUser.id)
+        // issue: if I don't use findIndex or find ,what can I use
         if (index !== -1) {
           draft.devInfo[index] = action.payload.currentUser
         }
@@ -41,6 +41,7 @@ export default (state = initialState, action) => {
       })
     }
     case UPDATE_PROFILE: {
+      console.log(action.type, action.payload)
       return produce(state, (draft) => {
         console.log(action.payload)
         if (action.payload.loading) {
