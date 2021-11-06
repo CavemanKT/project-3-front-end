@@ -2,12 +2,18 @@
 
 import React from 'react'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 import Container from 'react-bootstrap/Container'
 import Carousel from 'react-bootstrap/Carousel'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import ListGroup from 'react-bootstrap/ListGroup'
+import Button from 'react-bootstrap/Button'
+
+import { getGame, resetGame } from '@/actions/game'
+import { createTalentApplication, destroyTalentApplication } from '@/actions/talent/application'
 
 class PagesTalentsShow extends React.Component {
   constructor(props) {
@@ -23,16 +29,22 @@ class PagesTalentsShow extends React.Component {
       job: {
         description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nisi ipsam officiis velit harum, voluptatem porro, veritatis expedita odit illum magnam cumque tenetur possimus, earum suscipit blanditiis amet nihil quisquam ducimus!',
         requirement: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti totam itaque quasi repellat et velit omnis quas quod corporis reprehenderit, quam aliquam impedit officiis iste error deserunt fugiat quos? Incidunt.'
-      },
-      game: {
-        name: 'Among us',
-        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio laudantium amet incidunt quo ducimus numquam ipsum nostrum unde quasi ratione voluptatem laboriosam impedit earum quod dolorem animi, laborum facilis illum.'
       }
+      // game: {
+      //   name: 'Among us',
+      //   description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio laudantium amet incidunt quo ducimus numquam ipsum nostrum unde quasi ratione voluptatem laboriosam impedit earum quod dolorem animi, laborum facilis illum.'
+      // }
     }
   }
 
+  handleApplySubmit() {
+    const { id: GameId } = this.props.match.params
+    this.props.createTalentApplication(GameId)
+  }
+
   render() {
-    const { applicants, game } = this.state
+    const { applicants } = this.state
+    const { gameState: { game }, applicationsState: { applications } } = this.props
     return (
       <>
         <div id="dev-showpage">
@@ -40,7 +52,16 @@ class PagesTalentsShow extends React.Component {
           <div id="showpage-carousel-and-description-wrapper">
             <h1 id="game-name">{game.name}</h1>
             {/* <button type="button" id="btn-apply" className="btn btn-primary my-3">Apply</button> */}
-            <button type="button" id="btn-applied" className="btn btn-secondary my-3">Applied</button>
+            <Button
+              type="button"
+              id="btn-applied"
+              className="btn btn-secondary my-3"
+              onClick={(e) => {
+                e.preventDefault()
+                this.handleApplySubmit()
+              }}
+            >Applied
+            </Button>
             <Row>
               <Col>
                 <div id="showpage-carousel-container">
@@ -122,4 +143,26 @@ class PagesTalentsShow extends React.Component {
   }
 }
 
-export default PagesTalentsShow
+PagesTalentsShow.propTypes = {
+  getGame: PropTypes.func.isRequired,
+  resetGame: PropTypes.func.isRequired,
+  createTalentApplication: PropTypes.func.isRequired,
+  destroyTalentApplication: PropTypes.func.isRequired,
+  gameState: PropTypes.shape().isRequired,
+  applicationsState: PropTypes.shape().isRequired,
+  match: PropTypes.shape().isRequired
+}
+
+const mapStateToProps = (state) => ({
+  gameState: state.game,
+  applicationsState: state.applications
+})
+
+const mapDispatchToProps = {
+  getGame,
+  resetGame,
+  createTalentApplication,
+  destroyTalentApplication
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PagesTalentsShow)
