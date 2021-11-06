@@ -25,6 +25,7 @@ class PagesDevGameList extends React.Component {
 
   componentDidMount() {
     this.props.getGames()
+    // get talents' getGames, make the alias as getTalentGamesList or sth else
   }
 
   componentWillUnmount() {
@@ -48,15 +49,15 @@ class PagesDevGameList extends React.Component {
         <header className="text-center border-bottom pages-dev-gamelist-header">
           {currentUser && currentUser.type === 'Developer' && (
           <>
-            <Link className="btn btn-primary" to="/dev/profile/edit" onClick={this.handleGetDevProfile}>Profile</Link>
+            <Link className="btn btn-primary" to="/my/profile" onClick={this.handleGetDevProfile}>Profile</Link>
             <h1>My Games</h1>
-            <Link className="btn btn-primary" to="/dev/publish">Publish</Link>
+            <Link className="btn btn-primary" to="/my/games/new">Publish</Link>
           </>
           )}
           {currentUser && currentUser.type === 'Marketer' && (
           <>
-            <h1>My applications</h1>
-            <button type="button" className="btn btn-primary">Profile</button>
+            <h1>My Applications</h1>
+            <Link className="btn btn-primary" to="/my/profile" onClick={this.handleGetDevProfile}>Profile</Link>
           </>
           )}
         </header>
@@ -71,7 +72,7 @@ class PagesDevGameList extends React.Component {
                   <ListGroup horizontal="sm" className="pages-dev-games-list">
                     <Link
                       key={item.id}
-                      to={`/dev/games/${item.id}`}
+                      to={`/games/${item.id}`}
                       className="list-group-item list-group-item-action"
                     >
                       <div>{item.name}</div>
@@ -80,7 +81,8 @@ class PagesDevGameList extends React.Component {
                 ))
               }
               {
-                currentUser && currentUser.type === 'Marketer' && games.map((items, idx) => (
+                currentUser && currentUser.type === 'Marketer'
+                && games.map((items, idx) => (
                   <ListGroup horizontal="sm" className="pages-talents-games-list">
                     {
                     items.map((item, idy) => (

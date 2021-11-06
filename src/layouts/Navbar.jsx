@@ -69,15 +69,6 @@ class LayoutsNavbar extends React.Component {
     const { showModalsSignup, showModalsLogin } = this.state
     console.log('currentUser-Navbar: ', currentUser)
 
-    let curUserType
-    if (currentUser && (currentUser.type === 'Developer')) {
-      curUserType = currentUser.type
-    } else if (currentUser && (currentUser.type === 'Marketer')) {
-      curUserType = currentUser.type
-    } else {
-      curUserType = false
-    }
-
     return (
       <>
         <Navbar id="layouts-navbar" bg="light" variant="light" expand="lg" collapseOnSelect>
@@ -87,7 +78,7 @@ class LayoutsNavbar extends React.Component {
             <Nav id="layouts-navbar-navlink" className="ml-auto">
               <Nav.Link as={NavLink} to="/" eventKey="1">Browse Games</Nav.Link>
               {
-                (curUserType === 'Developer') && (
+                currentUser && (currentUser.type === 'Developer') && (
                   <>
                     <Nav.Link as={NavLink} to="/my/games" eventKey="2">My Games</Nav.Link>
                     {/* if the user type is marketers */}
@@ -96,7 +87,7 @@ class LayoutsNavbar extends React.Component {
                 )
               }
               {
-                (curUserType === 'Marketer') && (
+                currentUser && (currentUser.type === 'Marketer') && (
                   <>
                     <Nav.Link as={NavLink} to="/my/applications" eventKey="2">My Applications</Nav.Link>
                     <Nav.Link onClick={this.handleLogoutClick} eventKey="3">Logout</Nav.Link>
@@ -104,7 +95,7 @@ class LayoutsNavbar extends React.Component {
                 )
               }
               {
-                (curUserType === false) && (
+                (!currentUser) && (
                 <>
                   <Nav.Link onClick={this.openModalsSignup} eventKey="4">Signup</Nav.Link>
                   <Nav.Link onClick={this.openModalsLogin} eventKey="5">Login</Nav.Link>
