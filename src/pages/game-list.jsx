@@ -53,9 +53,9 @@ class PagesDevGameList extends React.Component {
             <Link className="btn btn-primary" to="/dev/publish">Publish</Link>
           </>
           )}
-          {currentUser && currentUser.type === 'Talent' && (
+          {currentUser && currentUser.type === 'Marketer' && (
           <>
-            <h1>My Games</h1>
+            <h1>My applications</h1>
             <button type="button" className="btn btn-primary">Profile</button>
           </>
           )}
@@ -80,7 +80,7 @@ class PagesDevGameList extends React.Component {
                 ))
               }
               {
-                currentUser && currentUser.type === 'Talent' && games.map((items, idx) => (
+                currentUser && currentUser.type === 'Marketer' && games.map((items, idx) => (
                   <ListGroup horizontal="sm" className="pages-talents-games-list">
                     {
                     items.map((item, idy) => (

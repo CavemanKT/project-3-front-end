@@ -61,6 +61,7 @@ class App extends React.Component {
               <Route exact path="/" component={PagesHome} />
 
               <DevPrivateRoute exact path="/my/games" component={PagesUserGameList} />
+              <TalentsPrivateRoute exact path="/my/applications" component={PagesUserGameList} />
 
               <Route exact path="/games/:id" component={PagesPublicShow} />
 

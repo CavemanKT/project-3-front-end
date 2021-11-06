@@ -98,7 +98,7 @@ class LayoutsNavbar extends React.Component {
               {
                 (curUserType === 'Marketer') && (
                   <>
-                    <Nav.Link as={NavLink} to="/talents/games" eventKey="2">My Games</Nav.Link>
+                    <Nav.Link as={NavLink} to="/my/applications" eventKey="2">My Applications</Nav.Link>
                     <Nav.Link onClick={this.handleLogoutClick} eventKey="3">Logout</Nav.Link>
                   </>
                 )
