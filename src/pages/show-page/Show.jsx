@@ -13,12 +13,14 @@ import Container from 'react-bootstrap/Container'
 
 import { getGame, resetGame } from '@/actions/game'
 import { getGame as getDevGame, unsetDevGame } from '@/actions/dev/game'
+import { createTalentApplication, destroyTalentApplication } from '@/actions/talent/application'
 
 class PagesPublicShow extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
+      clickedApplyBtn: false,
       applicants: [
         { fullname: 'Faky Ralap', email: '123@123.com', cvUrl: 'https://www.alksdfj.com' },
         { fullname: 'Faky Ralap', email: '123@123.com', cvUrl: 'https://www.alksdfj.com' },
@@ -40,6 +42,18 @@ class PagesPublicShow extends React.Component {
     this.props.unsetDevGame()
   }
 
+  handleApplySubmit() {
+    this.setState({ clickedApplyBtn: true })
+    const { id: GameId } = this.props.match.params
+    this.props.createTalentApplication(GameId)
+  }
+
+  handleCancelSubmit() {
+    this.setState({ clickedApplyBtn: false })
+    const { id: GameId } = this.props.match.params
+    this.props.destroyTalentApplication(GameId)
+  }
+
   handleEditSubmit() {
     const GameId = this.props.match.params.id
     const { history: { push } } = this.props
@@ -47,8 +61,8 @@ class PagesPublicShow extends React.Component {
   }
 
   render() {
-    const { gameState: { game }, devGameState: { devGame }, currentUserState: { currentUser } } = this.props
-    const { applicants } = this.state
+    const { gameState: { game }, devGameState: { devGame }, currentUserState: { currentUser }, applicationsState: { applications } } = this.props
+    const { clickedApplyBtn, applicants } = this.state
 
     return (
       <div id="dev-showpage">
@@ -72,9 +86,38 @@ class PagesPublicShow extends React.Component {
           {
             currentUser && currentUser.type === 'Marketer' && (
               <>
-                <h1 id="game-name">{game.name}</h1>
-                {/* <button type="button" id="btn-apply" className="btn btn-primary my-3">Apply</button> */}
-                <button type="button" id="btn-applied" className="btn btn-secondary my-3">Applied</button>
+                <div className="dev-showpage-header mb-3">
+
+                  <h1 id="game-name">{game.name}</h1>
+                </div>
+                {
+                  !clickedApplyBtn && (
+                  <Button
+                    type="button"
+                    id="btn-apply"
+                    className="btn btn-primary my-3"
+                    onClick={() => {
+                      this.handleApplySubmit()
+                    }}
+                  >Apply
+                  </Button>
+                  )
+                }
+
+                {
+                  clickedApplyBtn && (
+                  <Button
+                    type="button"
+                    id="btn-applied"
+                    className="btn btn-secondary my-3"
+                    onClick={() => {
+                      this.handleCancelSubmit()
+                    }}
+                  >Applied
+                  </Button>
+                  )
+                }
+
               </>
             )
           }
@@ -196,13 +239,17 @@ PagesPublicShow.propTypes = {
 
   gameState: PropTypes.shape().isRequired,
   devGameState: PropTypes.shape().isRequired,
-  currentUserState: PropTypes.shape().isRequired
+  currentUserState: PropTypes.shape().isRequired,
+
+  createTalentApplication: PropTypes.func.isRequired,
+  destroyTalentApplication: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
   gameState: state.game,
   devGameState: state.devGame,
-  currentUserState: state.currentUser
+  currentUserState: state.currentUser,
+  applicationsState: state.applications
 
 })
 
@@ -210,7 +257,9 @@ const mapDispatchToProps = {
   getDevGame,
   unsetDevGame,
   getGame,
-  resetGame
+  resetGame,
+  createTalentApplication,
+  destroyTalentApplication
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PagesPublicShow)

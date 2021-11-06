@@ -28,7 +28,7 @@ export const ADD_APPLICATION_IN_TALENT = 'ADD_APPLICATION_IN_TALENT'
 export const addApplicationsInTalent = (payload) => ({ type: ADD_APPLICATION_IN_TALENT, payload })
 export const CREATE_TALENT_APPLICATION = 'CREATE_TALENT_APPLICATION'
 export const createTalentApplication = (GameId) => (dispatch) => new Promise((resolve, reject) => {
-  dispatch(loading(CREATE_TALENT_APPLICATION, { loading: true }))
+  dispatch(loading(CREATE_TALENT_APPLICATION, { loading: true, GameId }))
   axios({
     method: 'POST',
     url: `http://localhost:3000/api/talent/games/${GameId}/applications`,
@@ -40,7 +40,7 @@ export const createTalentApplication = (GameId) => (dispatch) => new Promise((re
   }).catch((err) => {
     reject(err)
   }).finally(() => {
-    dispatch(loading(CREATE_TALENT_APPLICATION, { loading: false }))
+    dispatch(loading(CREATE_TALENT_APPLICATION, { loading: false, GameId }))
   })
 })
 
