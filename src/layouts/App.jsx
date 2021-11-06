@@ -58,12 +58,13 @@ class App extends React.Component {
             <Switch>
               {/* Shared Paths */}
               <Route exact path="/" component={PagesHome} />
+              {/* Shared Paths */}
               <Route exact path="/games/:id" component={PagesShow} />
               {/* for now, it will just be Route, later change to GeneralRoute */}
               <Route exact path="/my/profile" component={pageDevProfile} />
 
               {/* Talent Paths */}
-              <TalentsPrivateRoute exact path="/my/application" component={PagesUserGameList} />
+              <TalentsPrivateRoute exact path="/my/applications" component={PagesUserGameList} />
 
               {/* Developer Paths */}
               <DevPrivateRoute exact path="/my/games" component={PagesUserGameList} />
