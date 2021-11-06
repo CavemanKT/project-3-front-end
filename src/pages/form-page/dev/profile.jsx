@@ -28,7 +28,6 @@ class pageDevProfile extends React.Component {
   render() {
     const { currentUserState: { currentUser }, profileState: { devInfo, updatingIDs } } = this.props
     console.log('currentUser: ', currentUser, 'devInfo: ', devInfo, 'updatingIDs:', updatingIDs)
-
     return (
       <>
         <div>Edit your profile</div>
