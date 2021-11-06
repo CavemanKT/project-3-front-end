@@ -72,9 +72,6 @@ class App extends React.Component {
 
               <Route component={PagesNotFound} />
             </Switch>
-          // note
-          // change all the link first!.
-          //
           ) : (
             <div className="my-3">
               <Loading />
