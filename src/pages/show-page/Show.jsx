@@ -61,9 +61,15 @@ class PagesPublicShow extends React.Component {
   }
 
   render() {
-    const { gameState: { game }, devGameState: { devGame }, currentUserState: { currentUser }, applicationsState: { applications } } = this.props
+    const {
+      gameState: { game },
+      devGameState: { devGame },
+      currentUserState: { currentUser },
+      applicationsState: { applications }
+    } = this.props
     const { clickedApplyBtn, applicants } = this.state
 
+    console.log(game)
     return (
       <div id="dev-showpage">
 
@@ -240,6 +246,8 @@ PagesPublicShow.propTypes = {
   gameState: PropTypes.shape().isRequired,
   devGameState: PropTypes.shape().isRequired,
   currentUserState: PropTypes.shape().isRequired,
+
+  applicationsState: PropTypes.shape().isRequired,
 
   createTalentApplication: PropTypes.func.isRequired,
   destroyTalentApplication: PropTypes.func.isRequired

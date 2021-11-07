@@ -9,7 +9,9 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import ListGroup from 'react-bootstrap/ListGroup'
 
-import { getGames, resetGames } from '@/actions/dev/game'
+import { getGames, resetGames } from '@/actions/game'
+import { getGames as getDevGames, resetGames as resetDevGames } from '@/actions/dev/game'
+import { getTalentApplications, resetTalentApplications } from '@/actions/talent/application'
 
 import { getProfile } from '@/actions/dev/profile'
 
@@ -17,19 +19,19 @@ class PagesDevGameList extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      games: [['among us', 'League of Legend', 'Counter Strike Online', 'Left 4 Dead'], ['Minecraft', 'CyberPunk', 'Call of Duty', 'Back 4 Blood'], ['Grand Theft Auto V', 'Roblox', 'Fortnite', 'Hacknet'], ['Nite team 4', 'Nite team 4', 'Nite team 4', 'Nite team 4']]
-    }
     this.handleGetDevProfile = this.handleGetDevProfile.bind(this)
   }
 
   componentDidMount() {
     this.props.getGames()
-    // get talents' getGames, make the alias as getTalentGamesList or sth else
+    this.props.getDevGames()
+    this.props.getTalentApplications()
   }
 
   componentWillUnmount() {
     this.props.resetGames()
+    this.props.resetDevGames()
+    this.props.resetTalentApplications()
   }
 
   handleGetDevProfile() {
@@ -37,10 +39,22 @@ class PagesDevGameList extends React.Component {
   }
 
   render() {
-    const { devGamesState: { devGames }, currentUserState: { currentUser } } = this.props
-    const { games } = this.state
-    console.log('dev-game-list-currentUser: ', currentUser)
+    const {
+      gameState: { games },
+      devGamesState: { devGames },
+      currentUserState: { currentUser },
+      applicationsState: { applications }
 
+    } = this.props
+
+    // if (applications[0]) { console.log('applications-game-list: ', applications[0].GameId) }
+    console.log(games)
+    const game = () => {
+      applications.forEach((application) => {
+        games.forEach((game, i) => game.filter((g, i) => g.id === application.GameId))
+      })
+    }
+    console.log(game())
     return (
 
       <div id="pages-dev-gamelist">
@@ -82,13 +96,15 @@ class PagesDevGameList extends React.Component {
               }
               {
                 currentUser && currentUser.type === 'Marketer'
-                && games.map((items, idx) => (
+                && applications.map((item, idx) => (
                   <ListGroup horizontal="sm" className="pages-talents-games-list">
-                    {
-                    items.map((item, idy) => (
-                      <ListGroup.Item className="pages-talents-games-item" key={idy}><a href="#">{`${item}`}</a></ListGroup.Item>
-                    ))
-                  }
+                    <Link
+                      key={item.id}
+                      to={`/games/${item.id}`}
+                      className="list-group-item list-group-item-action"
+                    >
+                      <div>{item.name}</div>
+                    </Link>
                   </ListGroup>
                 ))
               }
@@ -104,22 +120,38 @@ class PagesDevGameList extends React.Component {
 }
 
 PagesDevGameList.propTypes = {
+  getTalentApplications: PropTypes.func.isRequired,
+  resetTalentApplications: PropTypes.func.isRequired,
   getProfile: PropTypes.func.isRequired,
+
   getGames: PropTypes.func.isRequired,
   resetGames: PropTypes.func.isRequired,
+  getDevGames: PropTypes.func.isRequired,
+  resetDevGames: PropTypes.func.isRequired,
+
+  gameState: PropTypes.shape().isRequired,
   devGamesState: PropTypes.shape().isRequired,
-  currentUserState: PropTypes.shape().isRequired
+  currentUserState: PropTypes.shape().isRequired,
+  applicationsState: PropTypes.shape().isRequired
 }
 
 const mapStateToProps = (state) => ({
+  gameState: state.games,
   devGamesState: state.devGames,
-  currentUserState: state.currentUser
+  currentUserState: state.currentUser,
+  applicationsState: state.applications
+
 })
 
 const mapDispatchToProps = {
+  getTalentApplications,
+  resetTalentApplications,
   getProfile,
   getGames,
-  resetGames
+  resetGames,
+  getDevGames,
+  resetDevGames
+
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PagesDevGameList)
