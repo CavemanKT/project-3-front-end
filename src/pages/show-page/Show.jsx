@@ -13,28 +13,32 @@ import Container from 'react-bootstrap/Container'
 
 import { getGame, resetGame } from '@/actions/game'
 import { getGame as getDevGame, unsetDevGame } from '@/actions/dev/game'
-import { createTalentApplication, destroyTalentApplication } from '@/actions/talent/application'
+import { createTalentApplication, destroyTalentApplication, getTalentApplication } from '@/actions/talent/application'
 
 class PagesPublicShow extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      clickedApplyBtn: false,
-      applicants: [
-        { fullname: 'Faky Ralap', email: '123@123.com', cvUrl: 'https://www.alksdfj.com' },
-        { fullname: 'Faky Ralap', email: '123@123.com', cvUrl: 'https://www.alksdfj.com' },
-        { fullname: 'Faky Ralap', email: '123@123.com', cvUrl: 'https://www.alksdfj.com' },
-        { fullname: 'Faky Ralap', email: '123@123.com', cvUrl: 'https://www.alksdfj.com' }
-      ]
+      clickedApplyBtn: false
     }
+
+    this.componentDidMount = this.componentDidMount.bind(this)
+    this.componentWillUnmount = this.componentWillUnmount.bind(this)
+    this.handleApplySubmit = this.handleApplySubmit.bind(this)
+    this.handleCancelSubmit = this.handleCancelSubmit.bind(this)
+    this.handleEditSubmit = this.handleEditSubmit.bind(this)
   }
 
   componentDidMount() {
     const { id: GameId } = this.props.match.params
+    const { currentUserState: { currentUser } } = this.props
+
     this.props.getGame(GameId)
 
     this.props.getDevGame(GameId)
+    this.props.get // DEV GAMES APPLICATIONS
+    this.props.getTalentApplication(GameId)
   }
 
   componentWillUnmount() {
@@ -65,11 +69,15 @@ class PagesPublicShow extends React.Component {
       gameState: { game },
       devGameState: { devGame },
       currentUserState: { currentUser },
-      applicationsState: { applications }
+      applicationState: { application }
     } = this.props
-    const { clickedApplyBtn, applicants } = this.state
+    const { clickedApplyBtn } = this.state
 
-    console.log(game)
+    console.log('talent-show-page-game', game)
+    console.log('talent-show-page-devGame', devGame)
+    console.log('talent-show-page-currentUser', currentUser)
+    console.log('talent-show-page-application: ', application)
+
     return (
       <div id="dev-showpage">
 
@@ -181,7 +189,7 @@ class PagesPublicShow extends React.Component {
             <Row>
               <Col>
                 {
-                  applicants.map((applicant, i) => (
+                  application.map((applicant, i) => (
                     <ListGroup horizontal className="showpage-applicant-list-row" key={i}>
                       <ListGroup.Item className="showpage-applicant-list-item">{applicant.fullname}</ListGroup.Item>
                       <ListGroup.Item className="showpage-applicant-list-item">{applicant.email}</ListGroup.Item>
@@ -203,27 +211,25 @@ class PagesPublicShow extends React.Component {
               <Row className="showpage-job-detail-row">
                 <Col xs={12} lg={6} className="job-description">
                   <h3>Job Description</h3>
-                  {
-                  applicants.map((applicant, i) => (
-                    <ListGroup horizontal className="showpage-job-description-listgroup" key={i}>
-                      <ListGroup.Item className="showpage-job-description-item">{applicant.fullname}</ListGroup.Item>
-                      <ListGroup.Item className="showpage-job-description-item">{applicant.email}</ListGroup.Item>
-                      <ListGroup.Item className="showpage-job-description-item">{applicant.cvUrl}</ListGroup.Item>
-                    </ListGroup>
-                  ))
-                }
+                  <ListGroup horizontal className="showpage-job-description-listgroup" key={game.id}>
+                    <ListGroup.Item className="showpage-job-description-item">
+                      <p>
+                        {game.jobDescription}
+                      </p>
+                    </ListGroup.Item>
+
+                  </ListGroup>
                 </Col>
                 <Col xs={12} lg={6} className="job-requirement">
                   <h3>Requirements</h3>
-                  {
-                  applicants.map((applicant, i) => (
-                    <ListGroup horizontal className="showpage-job-requirement-listgroup" key={i}>
-                      <ListGroup.Item className="showpage-job-requirement-item">{applicant.fullname}</ListGroup.Item>
-                      <ListGroup.Item className="showpage-job-requirement-item">{applicant.email}</ListGroup.Item>
-                      <ListGroup.Item className="showpage-job-requirement-item">{applicant.cvUrl}</ListGroup.Item>
-                    </ListGroup>
-                  ))
-                }
+                  <ListGroup horizontal className="showpage-job-description-listgroup" key={game.id}>
+                    <ListGroup.Item className="showpage-job-description-item">
+                      <p>
+                        {game.qualification}
+                      </p>
+                    </ListGroup.Item>
+
+                  </ListGroup>
                 </Col>
               </Row>
             </div>
@@ -247,8 +253,9 @@ PagesPublicShow.propTypes = {
   devGameState: PropTypes.shape().isRequired,
   currentUserState: PropTypes.shape().isRequired,
 
-  applicationsState: PropTypes.shape().isRequired,
+  applicationState: PropTypes.shape().isRequired,
 
+  getTalentApplication: PropTypes.func.isRequired,
   createTalentApplication: PropTypes.func.isRequired,
   destroyTalentApplication: PropTypes.func.isRequired
 }
@@ -257,7 +264,7 @@ const mapStateToProps = (state) => ({
   gameState: state.game,
   devGameState: state.devGame,
   currentUserState: state.currentUser,
-  applicationsState: state.applications
+  applicationState: state.application
 
 })
 
@@ -266,6 +273,7 @@ const mapDispatchToProps = {
   unsetDevGame,
   getGame,
   resetGame,
+  getTalentApplication,
   createTalentApplication,
   destroyTalentApplication
 }

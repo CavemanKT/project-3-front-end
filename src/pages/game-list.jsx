@@ -23,9 +23,14 @@ class PagesDevGameList extends React.Component {
   }
 
   componentDidMount() {
+    const { currentUserState: { currentUser } } = this.props
     this.props.getGames()
-    this.props.getDevGames()
-    this.props.getTalentApplications()
+    if (currentUser.type === 'Developer') {
+      this.props.getDevGames()
+    }
+    if (currentUser.type === 'Marketer') {
+      this.props.getTalentApplications()
+    }
   }
 
   componentWillUnmount() {
@@ -45,9 +50,9 @@ class PagesDevGameList extends React.Component {
       currentUserState: { currentUser },
       applicationsState: { applications }
     } = this.props
+    console.log(applications)
 
     return (
-
       <div id="pages-dev-gamelist">
 
         {/* // header */}
