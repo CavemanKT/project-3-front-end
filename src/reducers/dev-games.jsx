@@ -42,9 +42,10 @@ export default (state = initialState, action) => {
       })
     }
     case REMOVE_GAME_IN_DEV: {
+      console.log(action.payload)
       return produce(state, (draft) => {
         const index = draft.devGames.findIndex((game) => game.id === action.payload)
-        if (index !== -1) draft.games.splice(index, 1)
+        if (index !== -1) draft.devGames.splice(index, 1)
       })
     }
     case GET_DEV_GAMES: {

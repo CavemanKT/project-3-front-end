@@ -9,7 +9,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import ListGroup from 'react-bootstrap/ListGroup'
 
-import { getGames, resetGames } from '@/actions/dev/game'
+import { getGames, resetGames, unsetDevGames } from '@/actions/dev/game'
 
 import { getProfile } from '@/actions/dev/profile'
 
@@ -30,6 +30,7 @@ class PagesDevGameList extends React.Component {
 
   componentWillUnmount() {
     this.props.resetGames()
+    this.props.unsetDevGames()
   }
 
   handleGetDevProfile() {
@@ -107,6 +108,7 @@ PagesDevGameList.propTypes = {
   getProfile: PropTypes.func.isRequired,
   getGames: PropTypes.func.isRequired,
   resetGames: PropTypes.func.isRequired,
+  unsetDevGames: PropTypes.func.isRequired,
   devGamesState: PropTypes.shape().isRequired,
   currentUserState: PropTypes.shape().isRequired
 }
@@ -119,7 +121,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   getProfile,
   getGames,
-  resetGames
+  resetGames,
+  unsetDevGames
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PagesDevGameList)
