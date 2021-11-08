@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 import { loading } from '@/actions/loading'
+import getFormData from '@/services/getFormData'
 
 export const ADD_IMAGE_IN_DEV_GAME = 'ADD_IMAGE_IN_DEV_GAME'
 export const addImageInDevGame = (payload) => ({ type: ADD_IMAGE_IN_DEV_GAME, payload })
@@ -10,9 +11,10 @@ export const createImage = (values, GameId) => (dispatch) => new Promise((resolv
   axios({
     method: 'POST',
     url: `http://localhost:3000/api/dev/games/${GameId}/images`,
-    data: values,
+    data: getFormData(values, 'data'),
     withCredentials: true
   }).then((resp) => {
+    console.log(resp.data)
     dispatch(addImageInDevGame(resp.data))
     resolve(resp)
   }).catch((err) => {

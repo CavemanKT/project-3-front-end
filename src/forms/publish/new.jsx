@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as yup from 'yup'
 
-const RenderForm = ({ errors, touched, isSubmitting }) => (
+const RenderForm = ({ values, errors, touched, isSubmitting, setFieldValue }) => (
   <Form>
     <div className="form-group">
       <label htmlFor="name">Name</label>
@@ -51,17 +51,17 @@ const RenderForm = ({ errors, touched, isSubmitting }) => (
 
     <div className="form-group">
       <label htmlFor="url">File upload</label>
-      <Field
+      <input
         id="url"
+        className="form-control"
         name="url"
         type="file"
-        onChange={(event) => {
-          setFieldValue('url', event.currentTarget.files[0])
+        onChange={(e) => {
+          setFieldValue('url', e.target.files[0])
         }}
-        className="form-control"
+        value={values?.url?.filename}
       />
     </div>
-
 
     <button className="btn btn-success" type="submit" disabled={isSubmitting}>Submit</button>
   </Form>
@@ -69,7 +69,9 @@ const RenderForm = ({ errors, touched, isSubmitting }) => (
 RenderForm.propTypes = {
   errors: PropTypes.shape().isRequired,
   touched: PropTypes.shape().isRequired,
-  isSubmitting: PropTypes.bool.isRequired
+  isSubmitting: PropTypes.bool.isRequired,
+  setFieldValue: PropTypes.func.isRequired,
+  values: PropTypes.shape().isRequired
 }
 
 const authLoginSchema = yup.object().shape({
@@ -86,15 +88,16 @@ const FormsGamePublishNew = ({ onSubmit }) => (
       description: '',
       jobDescription: '',
       qualification: '',
+      url: ''
     }}
-    validationSchema={authLoginSchema}
+    // validationSchema={authLoginSchema}
     onSubmit={onSubmit}
     component={RenderForm}
   />
 )
 FormsGamePublishNew.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  setFieldValue: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired
+  // setFieldValue: PropTypes.func.isRequired
 }
 
 export default FormsGamePublishNew
