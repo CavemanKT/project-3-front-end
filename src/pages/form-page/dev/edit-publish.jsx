@@ -25,6 +25,7 @@ class pageDevEditPublish extends React.Component {
   }
 
   render() {
+    const { devGameState: { devGame } } = this.props
     return (
       <>
         <div>Edit and Update Your Game Here</div>
@@ -39,12 +40,13 @@ pageDevEditPublish.propTypes = {
   history: PropTypes.shape().isRequired,
   createGame: PropTypes.func.isRequired,
   updateGame: PropTypes.func.isRequired,
-  destroyGame: PropTypes.func.isRequired
+  destroyGame: PropTypes.func.isRequired,
+  devGameState: PropTypes.shape().isRequired
   // stateGame: PropTypes.shape().isRequired
 }
 
 const mapStateToProps = (state) => ({
-  // stateGame: state.game
+  devGameState: state.devGame
 })
 
 const mapDispatchToProps = {

@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as yup from 'yup'
+import { loading } from '@/actions/loading'
 
 const RenderForm = ({ values, errors, touched, isSubmitting, setFieldValue }) => (
   <Form>
@@ -52,17 +53,44 @@ const RenderForm = ({ values, errors, touched, isSubmitting, setFieldValue }) =>
     <div className="form-group">
       <label htmlFor="url">File upload</label>
       <input
-        id="url"
+        id="url1"
         className="form-control"
-        name="url"
+        name="url1"
         type="file"
         onChange={(e) => {
-          setFieldValue('url', e.target.files[0])
+          setFieldValue('url1', e.target.files[0])
         }}
-        value={values?.url?.filename}
+        value={values?.url1?.filename}
       />
     </div>
 
+    <div className="form-group">
+      <label htmlFor="url">File upload</label>
+      <input
+        id="url1"
+        className="form-control"
+        name="url2"
+        type="file"
+        onChange={(e) => {
+          setFieldValue('url2', e.target.files[0])
+        }}
+        value={values?.url2?.filename}
+      />
+    </div>
+
+    <div className="form-group">
+      <label htmlFor="url">File upload</label>
+      <input
+        id="url3"
+        className="form-control"
+        name="url3"
+        type="file"
+        onChange={(e) => {
+          setFieldValue('url3', e.target.files[0])
+        }}
+        value={values?.url1?.filename}
+      />
+    </div>
     <button className="btn btn-success" type="submit" disabled={isSubmitting}>Submit</button>
   </Form>
 )
@@ -88,7 +116,9 @@ const FormsGamePublishNew = ({ onSubmit }) => (
       description: '',
       jobDescription: '',
       qualification: '',
-      url: ''
+      url1: '',
+      url2: '',
+      url3: ''
     }}
     // validationSchema={authLoginSchema}
     onSubmit={onSubmit}
