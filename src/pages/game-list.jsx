@@ -44,17 +44,8 @@ class PagesDevGameList extends React.Component {
       devGamesState: { devGames },
       currentUserState: { currentUser },
       applicationsState: { applications }
-
     } = this.props
 
-    // if (applications[0]) { console.log('applications-game-list: ', applications[0].GameId) }
-    console.log(games)
-    const game = () => {
-      applications.forEach((application) => {
-        games.forEach((game, i) => game.filter((g, i) => g.id === application.GameId))
-      })
-    }
-    console.log(game())
     return (
 
       <div id="pages-dev-gamelist">
@@ -99,11 +90,11 @@ class PagesDevGameList extends React.Component {
                 && applications.map((item, idx) => (
                   <ListGroup horizontal="sm" className="pages-talents-games-list">
                     <Link
-                      key={item.id}
-                      to={`/games/${item.id}`}
+                      key={item.Game.name}
+                      to={`/games/${item.Game.id}`}
                       className="list-group-item list-group-item-action"
                     >
-                      <div>{item.name}</div>
+                      <div>{item.Game.name}</div>
                     </Link>
                   </ListGroup>
                 ))
