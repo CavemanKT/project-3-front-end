@@ -126,7 +126,7 @@ class PagesPublicShow extends React.Component {
       currentUserState: { currentUser }
     } = this.props
 
-    if (currentUser.type !== 'Developer') return null
+    if (currentUser && currentUser.type !== 'Developer') return null
     return (
       <>
         <Button
@@ -155,7 +155,7 @@ class PagesPublicShow extends React.Component {
       devGameState: { devGameApplications }
     } = this.props
 
-    if (currentUser.type !== 'Developer') return null
+    if (currentUser && currentUser.type !== 'Developer') return null
     return (
       <div id="applicant-list">
         <h3>Applicant list</h3>
@@ -185,7 +185,7 @@ class PagesPublicShow extends React.Component {
       applicationState: { application }
     } = this.props
 
-    if (currentUser.type !== 'Marketer') return null
+    if (currentUser && currentUser.type !== 'Marketer') return null
     return (
       <>
         {
@@ -223,7 +223,7 @@ class PagesPublicShow extends React.Component {
       gameState: { game }
     } = this.props
 
-    if (currentUser.type !== 'Marketer') return null
+    if (currentUser && currentUser.type !== 'Marketer') return null
     return (
       <div id="job-detail">
         <Row className="showpage-job-detail-row">
@@ -255,17 +255,18 @@ class PagesPublicShow extends React.Component {
   }
 
   render() {
+    const { currentUserState: { currentUser } } = this.props
     return (
       <div id="dev-showpage" className="container">
         <div className="actions">
-          {this.renderDeveloperActions()}
-          {this.renderTalentApplyButton()}
+          {currentUser && this.renderDeveloperActions()}
+          {currentUser && this.renderTalentApplyButton()}
         </div>
 
         {this.renderBasicInformation()}
 
-        {this.renderDeveloperApplications()}
-        {this.renderDetailsForTalent()}
+        {currentUser && this.renderDeveloperApplications()}
+        {currentUser && this.renderDetailsForTalent()}
       </div>
     )
   }
