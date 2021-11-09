@@ -13,6 +13,8 @@ import { getGames, resetGames } from '@/actions/dev/game'
 
 import { getProfile } from '@/actions/dev/profile'
 
+import { getMyProfile } from '@/actions/my/profile'
+
 class PagesDevGameList extends React.Component {
   constructor(props) {
     super(props)
@@ -33,7 +35,7 @@ class PagesDevGameList extends React.Component {
   }
 
   handleGetDevProfile() {
-    this.props.getProfile()
+    this.props.getMyProfile()
   }
 
   render() {
@@ -107,6 +109,7 @@ PagesDevGameList.propTypes = {
   getProfile: PropTypes.func.isRequired,
   getGames: PropTypes.func.isRequired,
   resetGames: PropTypes.func.isRequired,
+  getMyProfile: PropTypes.func.isRequired,
   devGamesState: PropTypes.shape().isRequired,
   currentUserState: PropTypes.shape().isRequired
 }
@@ -119,7 +122,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   getProfile,
   getGames,
-  resetGames
+  resetGames,
+  getMyProfile
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PagesDevGameList)

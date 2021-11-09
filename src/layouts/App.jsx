@@ -27,6 +27,7 @@ import pageDevEditPublish from '@/pages/form-page/dev/edit-publish'
 
 // profile page
 import pageDevProfile from '@/pages/form-page/dev/profile'
+import pageTalentProfile from '@/pages/form-page/talents/profile'
 
 import PagesNotFound from '@/pages/NotFound'
 
@@ -62,7 +63,7 @@ class App extends React.Component {
               <Route exact path="/games/:id" component={PagesShow} />
               {/* for now, it will just be Route, later change to GeneralRoute */}
               <Route exact path="/my/profile" component={pageDevProfile} />
-
+              {/* <TalentsPrivateRoute exact path="/my/profile/talent" component={pageTalentProfile} /> */}
               {/* Talent Paths */}
               <TalentsPrivateRoute exact path="/my/applications" component={PagesUserGameList} />
 

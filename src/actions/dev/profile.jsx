@@ -19,8 +19,6 @@ export const getProfile = () => (dispatch) => {
   })
 }
 
-export const EDIT_PROFILE = 'EDIT_PROFILE'
-export const editProfile = (payload) => ({ type: EDIT_PROFILE, payload })
 export const UPDATE_PROFILE = 'UPDATE_PROFILE'
 export const updateProfile = (values, currentUserId) => (dispatch) => new Promise((resolve, reject) => {
   console.log('currentUserId', currentUserId)
@@ -32,7 +30,6 @@ export const updateProfile = (values, currentUserId) => (dispatch) => new Promis
     withCredentials: true
   }).then((resp) => {
     console.log(resp.data)
-    dispatch(editProfile(resp.data))
     resolve(resp)
   }).catch((err) => {
     reject(err)
