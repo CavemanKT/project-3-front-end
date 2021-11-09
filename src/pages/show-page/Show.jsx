@@ -1,6 +1,5 @@
 // applicants' list shows or not depends on if the game being owned by dev or not owned
 import React from 'react'
-import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
@@ -12,7 +11,7 @@ import ListGroup from 'react-bootstrap/ListGroup'
 import Container from 'react-bootstrap/Container'
 
 import { getGame, resetGame } from '@/actions/game'
-import { getGame as getDevGame, unsetDevGame } from '@/actions/dev/game'
+import { getDevGame, unsetDevGame, getDevGameApplications, resetDevGameApplications } from '@/actions/dev/game'
 import { createTalentApplication, destroyTalentApplication, getTalentApplication } from '@/actions/talent/application'
 
 class PagesPublicShow extends React.Component {
@@ -32,18 +31,16 @@ class PagesPublicShow extends React.Component {
 
   componentDidMount() {
     const { id: GameId } = this.props.match.params
-    const { currentUserState: { currentUser } } = this.props
-
     this.props.getGame(GameId)
-
     this.props.getDevGame(GameId)
-    this.props.get // DEV GAMES APPLICATIONS
+    this.props.getDevGameApplications(GameId)
     this.props.getTalentApplication(GameId)
   }
 
   componentWillUnmount() {
     this.props.resetGame()
     this.props.unsetDevGame()
+    this.props.resetDevGameApplications()
   }
 
   handleApplySubmit() {
@@ -67,14 +64,17 @@ class PagesPublicShow extends React.Component {
   render() {
     const {
       gameState: { game },
-      devGameState: { devGame },
+      devGameState: { devGame, devGameApplications },
       currentUserState: { currentUser },
       applicationState: { application }
+
     } = this.props
     const { clickedApplyBtn } = this.state
 
     console.log('talent-show-page-game', game)
     console.log('talent-show-page-devGame', devGame)
+    console.log('talent-show-page-devGame-applications', devGameApplications)
+
     console.log('talent-show-page-currentUser', currentUser)
     console.log('talent-show-page-application: ', application)
 
@@ -189,11 +189,13 @@ class PagesPublicShow extends React.Component {
             <Row>
               <Col>
                 {
-                  application.map((applicant, i) => (
-                    <ListGroup horizontal className="showpage-applicant-list-row" key={i}>
-                      <ListGroup.Item className="showpage-applicant-list-item">{applicant.fullname}</ListGroup.Item>
-                      <ListGroup.Item className="showpage-applicant-list-item">{applicant.email}</ListGroup.Item>
-                      <ListGroup.Item className="showpage-applicant-list-item">{applicant.cvUrl}</ListGroup.Item>
+                  devGameApplications.map((applicant, i) => (
+                    <ListGroup horizontal className="showpage-applicant-list-row" key={applicant.Talent.id}>
+                      <ListGroup.Item className="showpage-applicant-list-item">{applicant.Talent.type}</ListGroup.Item>
+                      <ListGroup.Item className="showpage-applicant-list-item">{applicant.Talent.username}</ListGroup.Item>
+                      <ListGroup.Item className="showpage-applicant-list-item">{applicant.Talent.firstName}</ListGroup.Item>
+                      <ListGroup.Item className="showpage-applicant-list-item">{applicant.Talent.lastName}</ListGroup.Item>
+                      <ListGroup.Item className="showpage-applicant-list-item">{applicant.Talent.cvUrl}</ListGroup.Item>
                       <button type="button" className="btn btn-primary">Approve</button>
                     </ListGroup>
                   ))
@@ -256,6 +258,8 @@ PagesPublicShow.propTypes = {
   applicationState: PropTypes.shape().isRequired,
 
   getTalentApplication: PropTypes.func.isRequired,
+  getDevGameApplications: PropTypes.func.isRequired,
+  resetDevGameApplications: PropTypes.func.isRequired,
   createTalentApplication: PropTypes.func.isRequired,
   destroyTalentApplication: PropTypes.func.isRequired
 }
@@ -274,6 +278,8 @@ const mapDispatchToProps = {
   getGame,
   resetGame,
   getTalentApplication,
+  getDevGameApplications,
+  resetDevGameApplications,
   createTalentApplication,
   destroyTalentApplication
 }
