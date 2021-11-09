@@ -9,6 +9,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import ListGroup from 'react-bootstrap/ListGroup'
 
+
 import { getGames, resetGames } from '@/actions/game'
 import { getGames as getDevGames, resetGames as resetDevGames } from '@/actions/dev/game'
 import { getTalentApplications, resetTalentApplications } from '@/actions/talent/application'
@@ -126,6 +127,7 @@ PagesDevGameList.propTypes = {
   resetDevGames: PropTypes.func.isRequired,
 
   gameState: PropTypes.shape().isRequired,
+
   devGamesState: PropTypes.shape().isRequired,
   currentUserState: PropTypes.shape().isRequired,
   applicationsState: PropTypes.shape().isRequired
@@ -145,9 +147,9 @@ const mapDispatchToProps = {
   getProfile,
   getGames,
   resetGames,
+
   getDevGames,
   resetDevGames
-
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PagesDevGameList)

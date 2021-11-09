@@ -72,7 +72,8 @@ export const destroyGame = (GameId) => (dispatch) => new Promise((resolve, rejec
   dispatch(loading(DESTROY_GAME, { loading: true }))
   axios({
     method: 'DELETE',
-    url: `http://localhost:3000/api/dev/games/${GameId}`
+    url: `http://localhost:3000/api/dev/games/${GameId}`,
+    withCredentials: true
   }).then((resp) => {
     dispatch(removeGameInDev(GameId))
     resolve(resp)

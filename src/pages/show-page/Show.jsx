@@ -11,7 +11,7 @@ import ListGroup from 'react-bootstrap/ListGroup'
 import Container from 'react-bootstrap/Container'
 
 import { getGame, resetGame } from '@/actions/game'
-import { getDevGame, unsetDevGame, getDevGameApplications, resetDevGameApplications } from '@/actions/dev/game'
+import { getDevGame, unsetDevGame, getDevGameApplications, resetDevGameApplications, destroyGame } from '@/actions/dev/game'
 import { createTalentApplication, destroyTalentApplication, getTalentApplication } from '@/actions/talent/application'
 
 class PagesPublicShow extends React.Component {
@@ -61,6 +61,14 @@ class PagesPublicShow extends React.Component {
     push(`/my/games/${GameId}/edit`)
   }
 
+  handleDelete() {
+    const GameId = this.props.match.params.id
+    this.props.destroyGame(GameId).then((resp) => {
+      const { history: { replace } } = this.props
+      replace('/my/games')
+    })
+  }
+
   render() {
     const {
       gameState: { game },
@@ -94,7 +102,14 @@ class PagesPublicShow extends React.Component {
                 this.handleEditSubmit()
               }}
             >Edit</Button>
-            <Button type="button" className="btn btn-danger mx-4">Delete</Button>
+            <Button
+              type="button"
+              className="btn btn-danger mx-4"
+              onClick={(e) => {
+                e.preventDefault()
+                this.handleDelete()
+              }}
+            >Delete</Button>
           </div>
           )}
           {
@@ -249,6 +264,7 @@ PagesPublicShow.propTypes = {
   unsetDevGame: PropTypes.func.isRequired,
   getGame: PropTypes.func.isRequired,
   resetGame: PropTypes.func.isRequired,
+  destroyGame: PropTypes.func.isRequired,
 
   gameState: PropTypes.shape().isRequired,
   devGameState: PropTypes.shape().isRequired,
@@ -276,6 +292,7 @@ const mapDispatchToProps = {
   unsetDevGame,
   getGame,
   resetGame,
+  destroyGame,
   getTalentApplication,
   getDevGameApplications,
   resetDevGameApplications,
