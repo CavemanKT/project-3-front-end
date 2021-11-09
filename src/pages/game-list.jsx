@@ -9,7 +9,6 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import ListGroup from 'react-bootstrap/ListGroup'
 
-
 import { getGames, resetGames } from '@/actions/game'
 import { getGames as getDevGames, resetGames as resetDevGames } from '@/actions/dev/game'
 import { getTalentApplications, resetTalentApplications } from '@/actions/talent/application'
@@ -51,7 +50,6 @@ class PagesDevGameList extends React.Component {
       currentUserState: { currentUser },
       applicationsState: { applications }
     } = this.props
-    console.log(applications)
 
     return (
       <div id="pages-dev-gamelist">
@@ -96,7 +94,7 @@ class PagesDevGameList extends React.Component {
                 && applications.map((item, idx) => (
                   <ListGroup horizontal="sm" className="pages-talents-games-list">
                     <Link
-                      key={item.Game.name}
+                      key={item.Game.id}
                       to={`/games/${item.Game.id}`}
                       className="list-group-item list-group-item-action"
                     >

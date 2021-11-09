@@ -67,7 +67,6 @@ class LayoutsNavbar extends React.Component {
   render() {
     const { currentUserState: { currentUser } } = this.props
     const { showModalsSignup, showModalsLogin } = this.state
-    console.log('currentUser-Navbar: ', currentUser)
 
     return (
       <>

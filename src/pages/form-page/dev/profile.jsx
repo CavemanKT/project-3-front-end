@@ -17,8 +17,6 @@ class pageDevProfile extends React.Component {
   handleProfileFormUpdateSubmit(values) {
     const { currentUserState: { currentUser } } = this.props
 
-    console.log(values, currentUser)
-
     this.props.updateProfile(values, currentUser.id).then(() => {
       const { history: { push } } = this.props
       push('/my/games')
@@ -26,8 +24,6 @@ class pageDevProfile extends React.Component {
   }
 
   render() {
-    const { currentUserState: { currentUser }, profileState: { devInfo, updatingIDs } } = this.props
-    console.log('currentUser: ', currentUser, 'devInfo: ', devInfo, 'updatingIDs:', updatingIDs)
     return (
       <>
         <div>Edit your profile</div>

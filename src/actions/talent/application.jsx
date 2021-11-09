@@ -34,7 +34,6 @@ export const createTalentApplication = (GameId) => (dispatch) => new Promise((re
     url: `http://localhost:3000/api/talent/games/${GameId}/applications`,
     withCredentials: true
   }).then((resp) => {
-    console.log(resp.data)
     // dispatch(addApplicationsInTalent(GameId))
     resolve(resp)
   }).catch((err) => {
@@ -49,7 +48,6 @@ export const removeApplicationInTalent = (payload) => ({ type: REMOVE_APPLICATIO
 export const DESTROY_TALENT_APPLICATION = 'DESTROY_TALENT_APPLICATION'
 export const destroyTalentApplication = (GameId) => (dispatch) => new Promise((resolve, reject) => {
   dispatch(loading(DESTROY_TALENT_APPLICATION, { loading: true }))
-  console.log('asdf')
   axios({
     method: 'DELETE',
     url: `http://localhost:3000/api/talent/games/${GameId}/applications`,
@@ -74,7 +72,6 @@ export const getTalentApplication = (GameId) => (dispatch) => {
     url: `/api/talent/applications/${GameId}`,
     withCredentials: true
   }).then((resp) => {
-    console.log(`/api/talent/applications/${GameId}----show`, resp)
     dispatch(setTalentApplication(resp.data))
   }).finally(() => {
     dispatch(loading(GET_TALENT_APPLICATION, { loading: false }))

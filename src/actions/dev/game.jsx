@@ -28,7 +28,6 @@ export const ADD_GAME_IN_DEV = 'ADD_GAME_IN_DEV'
 export const addGameInDev = (payload) => ({ type: ADD_GAME_IN_DEV, payload })
 export const CREATE_GAME = 'CREATE_GAME'
 export const createGame = (values) => (dispatch) => new Promise((resolve, reject) => {
-  console.log(values)
   dispatch(loading(CREATE_GAME, { loading: true }))
   axios({
     method: 'POST',
@@ -116,7 +115,6 @@ export const getDevGameApplications = (GameId) => (dispatch) => {
     url: `http://localhost:3000/api/dev/games/${GameId}/applications`,
     withCredentials: true
   }).then((resp) => {
-    console.log('GET_DEV_GAME_APPLICATIONS: ', resp.data)
     dispatch(setDevGameApplications(resp.data))
   }).finally(() => {
     dispatch(loading(GET_DEV_GAME_APPLICATIONS, { loading: false }))

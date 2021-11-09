@@ -79,39 +79,40 @@ class PagesPublicShow extends React.Component {
     } = this.props
     const { clickedApplyBtn } = this.state
 
-    console.log('talent-show-page-game', game)
-    console.log('talent-show-page-devGame', devGame)
-    console.log('talent-show-page-devGame-applications', devGameApplications)
+    if (devGameApplications[0]) {
+      console.log(devGameApplications)
+    }
 
-    console.log('talent-show-page-currentUser', currentUser)
-    console.log('talent-show-page-application: ', application)
+    console.log(devGame)
 
     return (
       <div id="dev-showpage">
 
         <div id="showpage-carousel-and-description-wrapper">
 
-          { currentUser && currentUser.type === 'Developer' && (
           <div className="dev-showpage-header mb-3">
-            <h1 id="game-name">{devGame.name}</h1>
-            <Button
-              href="/my/game/:id/edit"
-              className="btn btn-success"
-              onClick={(e) => {
-                e.preventDefault()
-                this.handleEditSubmit()
-              }}
-            >Edit</Button>
-            <Button
-              type="button"
-              className="btn btn-danger mx-4"
-              onClick={(e) => {
-                e.preventDefault()
-                this.handleDelete()
-              }}
-            >Delete</Button>
+            <h1 id="game-name">{game.name}</h1>
+            { currentUser && currentUser.type === 'Developer' && (
+            <>
+              <Button
+                href="/my/game/:id/edit"
+                className="btn btn-success"
+                onClick={(e) => {
+                  e.preventDefault()
+                  this.handleEditSubmit()
+                }}
+              >Edit</Button>
+              <Button
+                type="button"
+                className="btn btn-danger mx-4"
+                onClick={(e) => {
+                  e.preventDefault()
+                  this.handleDelete()
+                }}
+              >Delete</Button>
+            </>
+            )}
           </div>
-          )}
           {
             currentUser && currentUser.type === 'Marketer' && (
               <>
@@ -197,24 +198,22 @@ class PagesPublicShow extends React.Component {
           </Row>
         </div>
 
-        {currentUser && currentUser.type === 'Developer' && (
+        {currentUser && currentUser.type === 'Developer' && devGameApplications[0] && (
         <Container className="mb-5">
           <div id="applicant-list">
             <h3>Applicant list</h3>
             <Row>
               <Col>
-                {
-                  devGameApplications.map((applicant, i) => (
-                    <ListGroup horizontal className="showpage-applicant-list-row" key={applicant.Talent.id}>
-                      <ListGroup.Item className="showpage-applicant-list-item">{applicant.Talent.type}</ListGroup.Item>
-                      <ListGroup.Item className="showpage-applicant-list-item">{applicant.Talent.username}</ListGroup.Item>
-                      <ListGroup.Item className="showpage-applicant-list-item">{applicant.Talent.firstName}</ListGroup.Item>
-                      <ListGroup.Item className="showpage-applicant-list-item">{applicant.Talent.lastName}</ListGroup.Item>
-                      <ListGroup.Item className="showpage-applicant-list-item">{applicant.Talent.cvUrl}</ListGroup.Item>
-                      <button type="button" className="btn btn-primary">Approve</button>
-                    </ListGroup>
-                  ))
-                }
+                { devGameApplications.map((applicant, i) => (
+                  <ListGroup horizontal className="showpage-applicant-list-row" key={applicant.Talent.id}>
+                    <ListGroup.Item className="showpage-applicant-list-item">{applicant.Talent.type}</ListGroup.Item>
+                    <ListGroup.Item className="showpage-applicant-list-item">{applicant.Talent.username}</ListGroup.Item>
+                    <ListGroup.Item className="showpage-applicant-list-item">{applicant.Talent.firstName}</ListGroup.Item>
+                    <ListGroup.Item className="showpage-applicant-list-item">{applicant.Talent.lastName}</ListGroup.Item>
+                    <ListGroup.Item className="showpage-applicant-list-item">{applicant.Talent.cvUrl}</ListGroup.Item>
+                    <button type="button" className="btn btn-primary">Approve</button>
+                  </ListGroup>
+                ))}
               </Col>
             </Row>
           </div>
