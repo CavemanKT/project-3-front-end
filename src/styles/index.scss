@@ -3,11 +3,13 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Biryani&family=Expletus+Sans&family=Fruktur&family=Mate&display=swap');
 
+@import "@/styles/utils";
 @import "@/styles/layouts/Navbar";
 @import "@/styles/layouts/Footer";
 
 @import "./dev-game-list.scss";
 @import "./talents-game-list.scss";
+@import "./public-show-page.scss";
 
 
 // font-family: 'Biryani',
@@ -84,13 +86,7 @@ html {
             }
           }
         }
-
-
-
-
       }
-
     }
-
   }
 }
