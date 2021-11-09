@@ -7,9 +7,8 @@ import {
 } from '@/actions/talent/application'
 
 const initialState = {
-  application: [],
+  application: null,
   isGetGameLoading: false,
-  destroyingIDs: [],
   meta: null
 }
 
@@ -23,8 +22,7 @@ export default (state = initialState, action) => {
     }
     case UNSET_TALENT_APPLICATION: {
       return produce(state, (draft) => {
-        draft.meta = null
-        draft.application = []
+        draft.application = null
       })
     }
     case GET_TALENT_APPLICATION: {
