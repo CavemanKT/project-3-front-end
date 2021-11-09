@@ -20,8 +20,8 @@ class pageDevPublish extends React.Component {
     this.props.createGame(values).then((resp) => {
       const GameId = Number(resp.data.game.id)
       this.props.createImage(values, GameId)
-      const { history: { push } } = this.props
-      push(`/games/${resp.data.game.id}`)
+      const { history: { replace } } = this.props
+      replace('/my/games')
     })
   }
 

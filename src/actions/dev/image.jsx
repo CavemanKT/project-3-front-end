@@ -28,11 +28,11 @@ export const createImage = (values, GameId) => (dispatch) => new Promise((resolv
 export const EDIT_IMAGE_IN_DEV_GAME = 'EDIT_IMAGE_IN_DEV_GAME'
 export const editImageInDevGame = (payload) => ({ type: EDIT_IMAGE_IN_DEV_GAME, payload })
 export const UPDATE_IMAGE = 'UPDATE_IMAGE'
-export const updateImage = (values, GameId, ImageId) => (dispatch) => new Promise((resolve, reject) => {
-  dispatch(loading(UPDATE_IMAGE, { loading: true, id: ImageId }))
+export const updateImage = (values, GameId) => (dispatch) => new Promise((resolve, reject) => {
+  dispatch(loading(UPDATE_IMAGE, { loading: true }))
   axios({
     method: 'PUT',
-    url: `http://localhost:300/api/dev/games/${GameId}/images/${ImageId}`,
+    url: `http://localhost:300/api/dev/games/${GameId}/images`,
     data: values,
     withCredentials: true
   }).then((resp) => {
@@ -41,7 +41,7 @@ export const updateImage = (values, GameId, ImageId) => (dispatch) => new Promis
   }).catch((err) => {
     reject(err)
   }).finally(() => {
-    dispatch(loading(UPDATE_IMAGE, { loading: false, id: ImageId }))
+    dispatch(loading(UPDATE_IMAGE, { loading: false }))
   })
 })
 

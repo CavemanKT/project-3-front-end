@@ -120,7 +120,7 @@ const FormsGamePublishNew = ({ onSubmit }) => (
       url2: '',
       url3: ''
     }}
-    // validationSchema={authLoginSchema}
+    validationSchema={authLoginSchema}
     onSubmit={onSubmit}
     component={RenderForm}
   />

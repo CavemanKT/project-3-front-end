@@ -127,38 +127,35 @@ class PagesPublicShow extends React.Component {
           {/* public */}
           <Row>
             {devGame.Images
-                      && (
-                      <Col>
-                        <div id="showpage-carousel-container">
-                          <Carousel variant="dark">
-                            <Carousel.Item className="showpage-carousel-item">
-                              <img
-                                className="w-100"
-                                src={devGame.Images[0].url1}
-                                alt="First slide"
-                              />
-
-                            </Carousel.Item>
-                            <Carousel.Item>
-                              <img
-                                className="w-100"
-                                src={devGame.Images[0].url2}
-                                alt="Second slide"
-                              />
-
-                            </Carousel.Item>
-                            <Carousel.Item>
-                              <img
-                                className="w-100"
-                                src={devGame.Images[0].url3}
-                                alt="Third slide"
-                              />
-
-                            </Carousel.Item>
-                          </Carousel>
-                        </div>
-                      </Col>
-                      )}
+              && (
+              <Col>
+                <div id="showpage-carousel-container">
+                  <Carousel variant="dark">
+                    <Carousel.Item className="showpage-carousel-item">
+                      <img
+                        className="w-100"
+                        src={devGame.Images[0].url1}
+                        alt="First slide"
+                      />
+                    </Carousel.Item>
+                    <Carousel.Item>
+                      <img
+                        className="w-100"
+                        src={devGame.Images[0].url2}
+                        alt="Second slide"
+                      />
+                    </Carousel.Item>
+                    <Carousel.Item>
+                      <img
+                        className="w-100"
+                        src={devGame.Images[0].url3}
+                        alt="Third slide"
+                      />
+                    </Carousel.Item>
+                  </Carousel>
+                </div>
+              </Col>
+              )}
 
             <Col xs={6}>
               <div id="showpage-description-container" className="col-md-auto">
