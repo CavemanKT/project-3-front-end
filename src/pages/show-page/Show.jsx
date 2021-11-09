@@ -207,7 +207,6 @@ class PagesPublicShow extends React.Component {
         )}
 
         {currentUser && currentUser.type === 'Marketer' && (
-
           <Container className="mb-5" fluid id="showpage-job-detail-container">
             <div id="job-detail">
               <Row className="showpage-job-detail-row">
