@@ -43,8 +43,6 @@ class LayoutsNavbar extends React.Component {
   handleLoginSubmit(values) {
     this.props.authLogin(values).then(() => {
       this.setState({ showModalsLogin: false })
-      // const { history: { push } } = this.props
-      // push('http://localhost:8080/api/games')
     })
   }
 
