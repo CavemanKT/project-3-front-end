@@ -21,18 +21,22 @@ class pageDevProfile extends React.Component {
 
     this.props.updateProfile(values, currentUser.id).then(() => {
       const { history: { push } } = this.props
-      push('/dev/games')
+      push('/my/games')
     })
   }
 
   render() {
-    // const { currentUserState: { currentUser }, profileState: { devInfo, updatingIDs } } = this.props
-    // console.log('currentUser: ', currentUser, 'devInfo: ', devInfo, 'updatingIDs:', updatingIDs)
-    // in need of a fix
+    const { currentUserState: { currentUser }, profileState: { devInfo, updatingIDs } } = this.props
+    console.log('currentUser: ', currentUser, 'devInfo: ', devInfo, 'updatingIDs:', updatingIDs)
     return (
       <>
         <div>Edit your profile</div>
         <FormsProfileUpdate
+          initialValues={{
+            username: '',
+            firstName: '',
+            lastName: ''
+          }}
           onSubmit={this.handleProfileFormUpdateSubmit}
 
         />

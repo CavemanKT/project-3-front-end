@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as yup from 'yup'
+import { connect } from 'react-redux'
 
 const RenderForm = ({ errors, touched, isSubmitting }) => (
   <Form>
@@ -53,20 +54,17 @@ const profileUpdateSchema = yup.object().shape({
   lastName: yup.string().required('Required')
 })
 
-const FormsProfileUpdate = ({ onSubmit }) => (
+const FormsProfileUpdate = ({ initialValues, onSubmit }) => (
   <Formik
-    initialValues={{
-      username: '',
-      firstName: '',
-      lastName: ''
-    }}
+    initialValues={initialValues}
     validationSchema={profileUpdateSchema}
     onSubmit={onSubmit}
     component={RenderForm}
   />
 )
 FormsProfileUpdate.propTypes = {
+  initialValues: PropTypes.shape().isRequired,
   onSubmit: PropTypes.func.isRequired
 }
-
+// we can use redux with function component
 export default FormsProfileUpdate

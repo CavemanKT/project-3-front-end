@@ -49,7 +49,7 @@ const RenderForm = ({ errors, touched, isSubmitting }) => (
       <ErrorMessage component="div" className="invalid-feedback" name="qualification" />
     </div>
 
-    {/* <div className="form-group">
+    <div className="form-group">
       <label htmlFor="url">File upload</label>
       <Field
         id="url"
@@ -60,7 +60,8 @@ const RenderForm = ({ errors, touched, isSubmitting }) => (
         }}
         className="form-control"
       />
-    </div> */}
+    </div>
+
 
     <button className="btn btn-success" type="submit" disabled={isSubmitting}>Submit</button>
   </Form>
@@ -84,7 +85,7 @@ const FormsGamePublishNew = ({ onSubmit }) => (
       name: '',
       description: '',
       jobDescription: '',
-      qualification: ''
+      qualification: '',
     }}
     validationSchema={authLoginSchema}
     onSubmit={onSubmit}
@@ -92,7 +93,8 @@ const FormsGamePublishNew = ({ onSubmit }) => (
   />
 )
 FormsGamePublishNew.propTypes = {
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
+  setFieldValue: PropTypes.func.isRequired
 }
 
 export default FormsGamePublishNew
