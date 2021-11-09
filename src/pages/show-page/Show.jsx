@@ -14,6 +14,8 @@ import { getGame, resetGame } from '@/actions/game'
 import { getDevGame, unsetDevGame, getDevGameApplications, resetDevGameApplications, destroyGame } from '@/actions/dev/game'
 import { createTalentApplication, destroyTalentApplication, getTalentApplication } from '@/actions/talent/application'
 
+import { getApplicationsApproval, updateApprovedToTrueInDB } from '@/actions/dev/approval'
+
 class PagesPublicShow extends React.Component {
   constructor(props) {
     super(props)
@@ -27,6 +29,8 @@ class PagesPublicShow extends React.Component {
     this.handleApplySubmit = this.handleApplySubmit.bind(this)
     this.handleCancelSubmit = this.handleCancelSubmit.bind(this)
     this.handleEditSubmit = this.handleEditSubmit.bind(this)
+    this.handleApproveSubmit = this.handleApproveSubmit.bind(this)
+    this.handleApprovedSubmit = this.handleApprovedSubmit.bind(this)
   }
 
   componentDidMount() {
@@ -34,7 +38,7 @@ class PagesPublicShow extends React.Component {
     this.props.getGame(GameId)
     this.props.getDevGame(GameId)
     this.props.getDevGameApplications(GameId)
-    this.props.getTalentApplication(GameId)
+    this.props.getApplicationsApproval(GameId) // action
   }
 
   componentWillUnmount() {
@@ -69,22 +73,23 @@ class PagesPublicShow extends React.Component {
     })
   }
 
+  handleApproveSubmit(GameId, TalentId) {
+    this.props.updateApprovedToTrueInDB(GameId, TalentId)
+  }
+
+  handleApprovedSubmit(GameId) {
+    this.props.getApplicationsApproval(GameId)
+  }
+
   render() {
     const {
       gameState: { game },
       devGameState: { devGame, devGameApplications },
       currentUserState: { currentUser },
       applicationState: { application }
-
     } = this.props
     const { clickedApplyBtn } = this.state
-
-    if (devGameApplications[0]) {
-      console.log(devGameApplications)
-    }
-
-    console.log(devGame)
-
+    console.log(application)
     return (
       <div id="dev-showpage">
 
@@ -121,7 +126,7 @@ class PagesPublicShow extends React.Component {
                   <h1 id="game-name">{game.name}</h1>
                 </div>
                 {
-                  !clickedApplyBtn && (
+                  !application && (
                   <Button
                     type="button"
                     id="btn-apply"
@@ -135,7 +140,7 @@ class PagesPublicShow extends React.Component {
                 }
 
                 {
-                  clickedApplyBtn && (
+                  application && (
                   <Button
                     type="button"
                     id="btn-applied"
@@ -211,7 +216,15 @@ class PagesPublicShow extends React.Component {
                     <ListGroup.Item className="showpage-applicant-list-item">{applicant.Talent.firstName}</ListGroup.Item>
                     <ListGroup.Item className="showpage-applicant-list-item">{applicant.Talent.lastName}</ListGroup.Item>
                     <ListGroup.Item className="showpage-applicant-list-item">{applicant.Talent.cvUrl}</ListGroup.Item>
-                    <button type="button" className="btn btn-primary">Approve</button>
+                    <Button
+                      type="button"
+                      id="btn-apply"
+                      className="btn btn-primary my-3"
+                      onClick={() => {
+                        this.handleApproveSubmit(applicant.GameId, applicant.Talent.id)
+                      }}
+                    >Approve
+                    </Button>
                   </ListGroup>
                 ))}
               </Col>
@@ -271,11 +284,14 @@ PagesPublicShow.propTypes = {
 
   applicationState: PropTypes.shape().isRequired,
 
-  getTalentApplication: PropTypes.func.isRequired,
+  // getTalentApplication: PropTypes.func.isRequired,
   getDevGameApplications: PropTypes.func.isRequired,
   resetDevGameApplications: PropTypes.func.isRequired,
   createTalentApplication: PropTypes.func.isRequired,
-  destroyTalentApplication: PropTypes.func.isRequired
+  destroyTalentApplication: PropTypes.func.isRequired,
+
+  getApplicationsApproval: PropTypes.func.isRequired,
+  updateApprovedToTrueInDB: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
@@ -296,7 +312,10 @@ const mapDispatchToProps = {
   getDevGameApplications,
   resetDevGameApplications,
   createTalentApplication,
-  destroyTalentApplication
+  destroyTalentApplication,
+
+  getApplicationsApproval,
+  updateApprovedToTrueInDB
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PagesPublicShow)
