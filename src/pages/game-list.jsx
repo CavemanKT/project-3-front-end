@@ -51,6 +51,7 @@ class PagesDevGameList extends React.Component {
       applicationsState: { applications }
     } = this.props
 
+    console.log(applications)
     return (
       <div id="pages-dev-gamelist">
 
@@ -94,7 +95,7 @@ class PagesDevGameList extends React.Component {
                 && applications.map((item, idx) => (
                   <ListGroup horizontal="sm" className="pages-talents-games-list">
                     <Link
-                      key={item.Game.id}
+                      key={item.Game.name}
                       to={`/games/${item.Game.id}`}
                       className="list-group-item list-group-item-action"
                     >

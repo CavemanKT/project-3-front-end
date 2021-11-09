@@ -115,7 +115,7 @@ class LayoutsNavbar extends React.Component {
 
 LayoutsNavbar.propTypes = {
   currentUserState: PropTypes.shape().isRequired,
-  history: PropTypes.shape().isRequired,
+  // history: PropTypes.shape().isRequired,
   authLogout: PropTypes.func.isRequired,
   authSignup: PropTypes.func.isRequired,
   authLogin: PropTypes.func.isRequired

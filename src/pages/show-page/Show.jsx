@@ -35,10 +35,18 @@ class PagesPublicShow extends React.Component {
 
   componentDidMount() {
     const { id: GameId } = this.props.match.params
+    const { currentUserState: { currentUser } } = this.props
     this.props.getGame(GameId)
-    this.props.getDevGame(GameId)
-    this.props.getDevGameApplications(GameId)
-    this.props.getApplicationsApproval(GameId) // action
+
+    if (currentUser.type === 'Developer') {
+      this.props.getDevGame(GameId)
+      this.props.getDevGameApplications(GameId)
+      this.props.getApplicationsApproval(GameId) // action
+    }
+
+    if (currentUser.type === 'Talent') {
+      this.props.getTalentApplication(GameId)
+    }
   }
 
   componentWillUnmount() {
@@ -89,7 +97,8 @@ class PagesPublicShow extends React.Component {
       applicationState: { application }
     } = this.props
     const { clickedApplyBtn } = this.state
-    console.log(application)
+    // console.log(application)
+    console.log(devGameApplications)
     return (
       <div id="dev-showpage">
 
@@ -284,7 +293,7 @@ PagesPublicShow.propTypes = {
 
   applicationState: PropTypes.shape().isRequired,
 
-  // getTalentApplication: PropTypes.func.isRequired,
+  getTalentApplication: PropTypes.func.isRequired,
   getDevGameApplications: PropTypes.func.isRequired,
   resetDevGameApplications: PropTypes.func.isRequired,
   createTalentApplication: PropTypes.func.isRequired,
