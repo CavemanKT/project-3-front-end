@@ -14,6 +14,7 @@ class PagesHome extends React.Component {
     super(props)
 
     this.state = {
+      page: 1
     }
   }
 
@@ -25,8 +26,19 @@ class PagesHome extends React.Component {
     this.props.resetGames()
   }
 
+  getFilteredProductsNext(newPage) {
+    this.props.getGames({ ...this.state, page: newPage })
+    this.setState({ page: newPage })
+  }
+
+  getFilteredProductsPrevious(newPage) {
+    this.props.getGames({ ...this.state, page: newPage })
+    this.setState({ page: newPage })
+  }
+
   render() {
     const { stateGame: { games } } = this.props
+    const { page } = this.state
 
     return (
       <div id="pages-home" className="container text-center">
@@ -35,6 +47,15 @@ class PagesHome extends React.Component {
             games.map((game) => (
               <Link key={game.id} className="col-6 col-sm-4 col-md-3 mt-4" to={`/games/${game.id}`}>{game.name}</Link>
             ))
+          }
+        </div>
+
+        <div className="d-flex justify-content-center">
+          {
+            page > 1 && <button type="button" className="btn btn-info btn-spacing" onClick={() => this.getFilteredProductsPrevious(page - 1)}>Previous</button>
+          }
+          {
+            <button type="button" className="btn btn-info" onClick={() => this.getFilteredProductsNext(page + 1)}>Next</button>
           }
         </div>
       </div>
