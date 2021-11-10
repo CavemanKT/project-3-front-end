@@ -8,7 +8,8 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import ListGroup from 'react-bootstrap/ListGroup'
-
+import Card from 'react-bootstrap/Card'
+import { MDBBtn, MDBIcon } from 'mdbreact'
 
 import { getGames, resetGames } from '@/actions/game'
 import { getGames as getDevGames, resetGames as resetDevGames } from '@/actions/dev/game'
@@ -60,9 +61,9 @@ class PagesDevGameList extends React.Component {
         <header className="text-center border-bottom pages-dev-gamelist-header">
           {currentUser && currentUser.type === 'Developer' && (
           <>
-            <Link className="btn btn-primary" to="/my/profile" onClick={this.handleGetDevProfile}>Profile</Link>
+            <Link className="btn btn-primary btn-box" to="/my/profile" onClick={this.handleGetDevProfile}>Profile</Link>
             <h1>My Games</h1>
-            <Link className="btn btn-primary" to="/my/games/new">Publish</Link>
+            <Link className="btn btn-primary btn-box" to="/my/games/new">Publish</Link>
           </>
           )}
           {currentUser && currentUser.type === 'Marketer' && (
@@ -75,38 +76,56 @@ class PagesDevGameList extends React.Component {
 
         {/* Container */}
         <Container id="pages-dev-games-container">
-          <Row>
-            <Col>
-              {
+          <Row xs={1} md={2} lg={2} className="g-4">
+            {
               currentUser && currentUser.type === 'Developer'
                 && devGames.map((item) => (
-                  <ListGroup horizontal="sm" className="pages-dev-games-list">
-                    <Link
-                      key={item.id}
-                      to={`/games/${item.id}`}
-                      className="list-group-item list-group-item-action"
-                    >
-                      <div>{item.name}</div>
-                    </Link>
-                  </ListGroup>
+                  <>
+                    <Col className="col-box">
+                      {/* <ListGroup horizontal="sm" className="pages-dev-games-list" /> */}
+
+                      <Card horizontal="sm" className="pages-dev-games-list card-box">
+                        <Card.Header>{item.name}</Card.Header>
+                        <Card.Body className="cardBody-box">
+                          <Card.Text className="game-list-card-text text-box">
+                            <Link
+                              key={item.id}
+                              to={`/games/${item.id}`}
+                              className="list-group-item list-group-item-action"
+                            >
+                              {item.description}
+                            </Link>
+                          </Card.Text>
+                        </Card.Body>
+                      </Card>
+                    </Col>
+                  </>
                 ))
               }
-              {
+            {
                 currentUser && currentUser.type === 'Marketer'
                 && applications.map((item, idx) => (
-                  <ListGroup horizontal="sm" className="pages-talents-games-list">
-                    <Link
-                      key={item.Game.name}
-                      to={`/games/${item.Game.id}`}
-                      className="list-group-item list-group-item-action"
-                    >
-                      <div>{item.Game.name}</div>
-                    </Link>
-                  </ListGroup>
+                  <>
+                    <Col>
+                      {/* <ListGroup horizontal="sm" className="pages-dev-games-list" /> */}
+                      <Card horizontal="sm" className="pages-dev-games-list">
+                        <Card.Header>{item.Game.name}</Card.Header>
+                        <Card.Body>
+                          <Card.Text>
+                            <Link
+                              key={item.Game.name}
+                              to={`/games/${item.Game.id}`}
+                              className="list-group-item list-group-item-action"
+                            > <div>{item.Game.description}</div>
+                            </Link>
+                          </Card.Text>
+                        </Card.Body>
+                      </Card>
+                    </Col>
+                  </>
                 ))
               }
 
-            </Col>
           </Row>
         </Container>
 

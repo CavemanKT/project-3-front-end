@@ -24,6 +24,8 @@ const RenderForm = ({ values, errors, touched, isSubmitting, setFieldValue }) =>
         className={`form-control ${(errors.description && touched.description ? ' is-invalid' : '')}`}
         name="description"
         type="text"
+        as="textarea"
+        rows={6}
       />
       <ErrorMessage component="div" className="invalid-feedback" name="description" />
     </div>
@@ -35,6 +37,8 @@ const RenderForm = ({ values, errors, touched, isSubmitting, setFieldValue }) =>
         className={`form-control ${(errors.jobDescription && touched.jobDescription ? ' is-invalid' : '')}`}
         name="jobDescription"
         type="text"
+        as="textarea"
+        rows={4}
       />
       <ErrorMessage component="div" className="invalid-feedback" name="jobDescription" />
     </div>
@@ -45,7 +49,9 @@ const RenderForm = ({ values, errors, touched, isSubmitting, setFieldValue }) =>
         id="qualification"
         className={`form-control ${(errors.qualification && touched.qualification ? ' is-invalid' : '')}`}
         name="qualification"
-        type="qualification"
+        type="text"
+        as="textarea"
+        rows={4}
       />
       <ErrorMessage component="div" className="invalid-feedback" name="qualification" />
     </div>

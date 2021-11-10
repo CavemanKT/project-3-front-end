@@ -18,6 +18,7 @@ export default (state = initialState, action) => {
     case SET_GAMES: {
       return produce(state, (draft) => {
         draft.games = action.payload.games
+        draft.meta = action.payload.meta
       })
     }
     case UNSET_GAMES: {
