@@ -49,7 +49,8 @@ class PagesPublicShow extends React.Component {
       this.props.getApplicationsApproval(GameId) // action
     }
 
-    if (currentUser.type === 'Talent') {
+    if (currentUser.type === 'Marketer') {
+      console.log('alksdjflksajfkljlsdajfkl')
       this.props.getTalentApplication(GameId)
     }
   }
@@ -127,6 +128,7 @@ class PagesPublicShow extends React.Component {
       applicationState: { application },
       currentUserState: { currentUser }
     } = this.props
+    console.log(application)
     return (
       <>
         {

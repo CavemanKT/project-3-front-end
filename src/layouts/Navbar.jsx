@@ -49,7 +49,6 @@ class LayoutsNavbar extends React.Component {
 
       const { history: { push } } = this.props
       push('/')
-
     })
   }
 
