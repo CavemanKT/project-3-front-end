@@ -46,8 +46,10 @@ class LayoutsNavbar extends React.Component {
   handleLoginSubmit(values) {
     this.props.authLogin(values).then(() => {
       this.setState({ showModalsLogin: false })
+
       const { history: { push } } = this.props
       push('/')
+
     })
   }
 
@@ -70,7 +72,6 @@ class LayoutsNavbar extends React.Component {
   render() {
     const { currentUserState: { currentUser } } = this.props
     const { showModalsSignup, showModalsLogin } = this.state
-    console.log('currentUser-Navbar: ', currentUser)
 
     return (
       <>

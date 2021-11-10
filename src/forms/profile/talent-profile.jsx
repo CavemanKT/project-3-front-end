@@ -38,6 +38,17 @@ const RenderForm = ({ errors, touched, isSubmitting }) => (
       <ErrorMessage component="div" className="invalid-feedback" name="lastName" />
     </div>
 
+    <div className="form-group">
+      <label htmlFor="resume">Resume</label>
+      <Field
+        id="resume"
+        className={`form-control ${(errors.resume && touched.resume ? ' is-invalid' : '')}`}
+        name="resume"
+        type="text"
+      />
+      <ErrorMessage component="div" className="invalid-feedback" name="resume" />
+    </div>
+
     <button className="btn btn-success" type="submit" disabled={isSubmitting}>Submit</button>
   </Form>
 )
@@ -50,10 +61,11 @@ RenderForm.propTypes = {
 const profileUpdateSchema = yup.object().shape({
   username: yup.string().required('Required'),
   firstName: yup.string().required('Required'),
-  lastName: yup.string().required('Required')
+  lastName: yup.string().required('Required'),
+  resume: yup.string().required('Required')
 })
 
-const FormsProfileUpdate = ({ initialValues, onSubmit }) => (
+const FormsTalentProfileUpdate = ({ initialValues, onSubmit }) => (
   <Formik
     initialValues={initialValues}
     validationSchema={profileUpdateSchema}
@@ -61,9 +73,9 @@ const FormsProfileUpdate = ({ initialValues, onSubmit }) => (
     component={RenderForm}
   />
 )
-FormsProfileUpdate.propTypes = {
+FormsTalentProfileUpdate.propTypes = {
   initialValues: PropTypes.shape().isRequired,
   onSubmit: PropTypes.func.isRequired
 }
 // we can use redux with function component
-export default FormsProfileUpdate
+export default FormsTalentProfileUpdate

@@ -13,17 +13,13 @@ export const getProfile = () => (dispatch) => {
     withCredentials: true
   }).then((resp) => {
     dispatch(setProfile(resp.data))
-    console.log(resp.data)
   }).finally(() => {
     dispatch(loading(GET_PROFILE, { loading: false }))
   })
 }
 
-export const EDIT_PROFILE = 'EDIT_PROFILE'
-export const editProfile = (payload) => ({ type: EDIT_PROFILE, payload })
 export const UPDATE_PROFILE = 'UPDATE_PROFILE'
 export const updateProfile = (values, currentUserId) => (dispatch) => new Promise((resolve, reject) => {
-  console.log('currentUserId', currentUserId)
   dispatch(loading(UPDATE_PROFILE, { loading: true, id: currentUserId }))
   axios({
     method: 'PUT',
@@ -31,8 +27,8 @@ export const updateProfile = (values, currentUserId) => (dispatch) => new Promis
     data: values,
     withCredentials: true
   }).then((resp) => {
+
     console.log(resp.data)
-    dispatch(editProfile(resp.data))
     resolve(resp)
   }).catch((err) => {
     reject(err)

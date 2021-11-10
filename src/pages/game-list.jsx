@@ -9,12 +9,13 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import ListGroup from 'react-bootstrap/ListGroup'
 
-
 import { getGames, resetGames } from '@/actions/game'
 import { getGames as getDevGames, resetGames as resetDevGames } from '@/actions/dev/game'
 import { getTalentApplications, resetTalentApplications } from '@/actions/talent/application'
 
 import { getProfile } from '@/actions/dev/profile'
+
+import { getMyProfile } from '@/actions/my/profile'
 
 class PagesDevGameList extends React.Component {
   constructor(props) {
@@ -41,7 +42,7 @@ class PagesDevGameList extends React.Component {
   }
 
   handleGetDevProfile() {
-    this.props.getProfile()
+    this.props.getMyProfile()
   }
 
   render() {
@@ -51,8 +52,8 @@ class PagesDevGameList extends React.Component {
       currentUserState: { currentUser },
       applicationsState: { applications }
     } = this.props
-    console.log(applications)
 
+    console.log(applications)
     return (
       <div id="pages-dev-gamelist">
 
@@ -123,6 +124,9 @@ PagesDevGameList.propTypes = {
 
   getGames: PropTypes.func.isRequired,
   resetGames: PropTypes.func.isRequired,
+
+  getMyProfile: PropTypes.func.isRequired,
+
   getDevGames: PropTypes.func.isRequired,
   resetDevGames: PropTypes.func.isRequired,
 
@@ -148,8 +152,12 @@ const mapDispatchToProps = {
   getGames,
   resetGames,
 
+  getMyProfile
+
+
   getDevGames,
   resetDevGames
+
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PagesDevGameList)

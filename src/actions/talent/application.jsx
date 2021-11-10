@@ -82,3 +82,4 @@ export const destroyTalentApplication = (GameId) => (dispatch) => new Promise((r
     dispatch(loading(DESTROY_TALENT_APPLICATION, { loading: false }))
   })
 })
+

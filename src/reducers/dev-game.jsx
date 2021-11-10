@@ -47,7 +47,6 @@ export default (state = initialState, action) => {
       })
     }
     case SET_DEV_GAME_APPLICATIONS: {
-      console.log('SET_DEV_GAME_APPLICATIONS', action.payload.applications)
       return produce(state, (draft) => {
         draft.devGameApplications = action.payload.applications
       })

@@ -18,7 +18,7 @@ export default (state = initialState, action) => {
       console.log('SET_TALENT_APPLICATION', action.payload)
       return produce(state, (draft) => {
         draft.application = action.payload.application
-      })
+      }) // click apply btn don't change to applied
     }
     case UNSET_TALENT_APPLICATION: {
       return produce(state, (draft) => {
