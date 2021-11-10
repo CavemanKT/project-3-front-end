@@ -17,6 +17,14 @@ import {
   DESTROY_IMAGE
 } from '@/actions/dev/image'
 
+import {
+  SET_APPLICATIONS_APPROVAL,
+  UNSET_APPLICATION_APPROVAL,
+  CHANGE_BTN_TO_APPROVED,
+  UPDATE_APPROVED_TO_TRUE_IN_DB,
+  CHANGE_BTN_TO_APPROVE
+} from '@/actions/dev/approval'
+
 // TODO this should be an object not an array
 const initialState = {
   devGame: [],
@@ -26,7 +34,9 @@ const initialState = {
   meta: null,
   devGameApplications: [],
   isGetDevGameApplicationsLoading: false,
-  destroyingApplicationIDs: []
+  destroyingApplicationIDs: [],
+
+  applicationsApprovals: []
 }
 
 export default (state = initialState, action) => {
@@ -49,6 +59,7 @@ export default (state = initialState, action) => {
     }
     case SET_DEV_GAME_APPLICATIONS: {
       return produce(state, (draft) => {
+        console.log(action.payload.applications)
         draft.devGameApplications = action.payload.applications
       })
     }
@@ -62,9 +73,6 @@ export default (state = initialState, action) => {
       return produce(state, (draft) => {
         draft.isGetDevGameApplicationsLoading = action.payload.loading
       })
-    }
-    default: {
-      return state
     }
     case ADD_IMAGE_IN_DEV_GAME: {
       return produce(state, (draft) => {
@@ -102,6 +110,25 @@ export default (state = initialState, action) => {
           if (index !== -1) draft.destroyingIDs.splice(index, 1)
         }
       })
+    }
+
+    // application approval
+    case CHANGE_BTN_TO_APPROVED: {
+      return produce(state, (draft) => {
+        const index = draft.devGameApplications.findIndex((application) => application.TalentId === action.payload.application.TalentId)
+        if (index !== -1) draft.devGameApplications[index].approved = true
+        console.log(index)
+      })
+    }
+    case CHANGE_BTN_TO_APPROVE: {
+      console.log(action.payload)
+      return produce(state, (draft) => {
+        const index = draft.devGameApplications.findIndex((application) => application.TalentId === action.payload.application.TalentId)
+        if (index !== -1) draft.devGameApplications[index].approved = false
+      })
+    }
+    default: {
+      return state
     }
   }
 }

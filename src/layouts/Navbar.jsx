@@ -4,7 +4,7 @@ import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
-
+import { withRouter } from 'react-router'
 // modals
 import ModalsSignup from '@/modals/auth/Signup'
 import ModalsLogin from '@/modals/auth/Login'
@@ -138,4 +138,6 @@ const mapDispatchToProps = {
   authSignup
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LayoutsNavbar)
+const LayoutsNavbar1 = withRouter(LayoutsNavbar)
+
+export default connect(mapStateToProps, mapDispatchToProps)(LayoutsNavbar1)

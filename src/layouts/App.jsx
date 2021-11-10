@@ -6,7 +6,7 @@ import { ToastContainer } from 'react-toastify'
 
 import { getMyProfile } from '@/actions/my/profile'
 
-import LayoutsNavbar from '@/layouts/Navbar'
+import LayoutsNavbar1 from '@/layouts/Navbar'
 import LayoutsFooter from '@/layouts/Footer'
 
 import DevPrivateRoute from '@/components/DevPrivateRoute'
@@ -51,7 +51,7 @@ class App extends React.Component {
 
     return (
       <Router>
-        <LayoutsNavbar />
+        <LayoutsNavbar1 />
         <div id="body-footer-container">
           {
           loaded ? (
