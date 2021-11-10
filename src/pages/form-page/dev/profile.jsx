@@ -40,8 +40,10 @@ class pageDevProfile extends React.Component {
   }
 
   render() {
+
     const { currentUserState: { currentUser }, profileState: { devInfo, updatingIDs }, TalentInfoState: { talentInfo } } = this.props
     console.log('currentUser: ', currentUser, 'devInfo: ', devInfo, 'updatingIDs:', updatingIDs, 'talentInfo', talentInfo)
+
     return (
       <>
         {currentUser && currentUser.type === 'Developer' && (

@@ -5,6 +5,8 @@ import { connect } from 'react-redux'
 
 import { createGame, updateGame, destroyGame } from '@/actions/dev/game'
 
+import { createImage } from '@/actions/dev/image'
+
 class pageDevPublish extends React.Component {
   constructor(props) {
     super(props)
@@ -16,8 +18,10 @@ class pageDevPublish extends React.Component {
 
   handlePublishFormCreateSubmit(values) {
     this.props.createGame(values).then((resp) => {
-      const { history: { push } } = this.props
-      push(`/games/${resp.data.game.id}`)
+      const GameId = Number(resp.data.game.id)
+      this.props.createImage(values, GameId)
+      const { history: { replace } } = this.props
+      replace('/my/games')
     })
   }
 
@@ -25,7 +29,9 @@ class pageDevPublish extends React.Component {
     return (
       <>
         <div>Publish Your New Game</div>
-        <FormsGamePublish onSubmit={this.handlePublishFormCreateSubmit} />
+        <FormsGamePublish
+          onSubmit={this.handlePublishFormCreateSubmit}
+        />
       </>
     )
   }
@@ -36,7 +42,8 @@ pageDevPublish.propTypes = {
   history: PropTypes.shape().isRequired,
   createGame: PropTypes.func.isRequired,
   updateGame: PropTypes.func.isRequired,
-  destroyGame: PropTypes.func.isRequired
+  destroyGame: PropTypes.func.isRequired,
+  createImage: PropTypes.func.isRequired
   // stateGame: PropTypes.shape().isRequired
 
 }
@@ -48,7 +55,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   createGame,
   updateGame,
-  destroyGame
+  destroyGame,
+  createImage
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(pageDevPublish)

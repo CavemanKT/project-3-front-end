@@ -42,7 +42,6 @@ class App extends React.Component {
 
   componentDidMount() {
     this.props.getMyProfile().finally(() => {
-      console.log('getMyProfile---didMount')
       this.setState({ loaded: true })
     })
   }

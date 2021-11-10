@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as yup from 'yup'
-import { connect } from 'react-redux'
 
 const RenderForm = ({ errors, touched, isSubmitting }) => (
   <Form>

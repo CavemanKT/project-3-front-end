@@ -12,10 +12,8 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_CURRENT_USER: {
-      console.log('action.payload.type:', action.payload) // results: Developer
       return produce(state, (draft) => {
         draft.currentUser = action.payload
-        console.log('reducer--currentUser', draft.currentUser)
       })
     }
     case UNSET_CURRENT_USER: {

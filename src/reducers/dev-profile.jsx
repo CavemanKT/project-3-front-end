@@ -17,13 +17,11 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_PROFILE: {
-      console.log(action.type, action.payload)
       return produce(state, (draft) => {
         draft.devInfo = action.payload.currentUser
       })
     }
     case GET_PROFILE: {
-      console.log(action.type, action.payload)
       return produce(state, (draft) => {
         draft.isGetProfileLoading = action.payload.loading
       })

@@ -2,8 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as yup from 'yup'
+import { loading } from '@/actions/loading'
 
-const RenderForm = ({ errors, touched, isSubmitting }) => (
+const RenderForm = ({ values, errors, touched, isSubmitting, setFieldValue }) => (
   <Form>
     <div className="form-group">
       <label htmlFor="name">Name</label>
@@ -51,25 +52,54 @@ const RenderForm = ({ errors, touched, isSubmitting }) => (
 
     <div className="form-group">
       <label htmlFor="url">File upload</label>
-      <Field
-        id="url"
-        name="url"
-        type="file"
-        onChange={(event) => {
-          setFieldValue('url', event.currentTarget.files[0])
-        }}
+      <input
+        id="url1"
         className="form-control"
+        name="url1"
+        type="file"
+        onChange={(e) => {
+          setFieldValue('url1', e.target.files[0])
+        }}
+        value={values?.url1?.filename}
       />
     </div>
 
+    <div className="form-group">
+      <label htmlFor="url">File upload</label>
+      <input
+        id="url1"
+        className="form-control"
+        name="url2"
+        type="file"
+        onChange={(e) => {
+          setFieldValue('url2', e.target.files[0])
+        }}
+        value={values?.url2?.filename}
+      />
+    </div>
 
+    <div className="form-group">
+      <label htmlFor="url">File upload</label>
+      <input
+        id="url3"
+        className="form-control"
+        name="url3"
+        type="file"
+        onChange={(e) => {
+          setFieldValue('url3', e.target.files[0])
+        }}
+        value={values?.url1?.filename}
+      />
+    </div>
     <button className="btn btn-success" type="submit" disabled={isSubmitting}>Submit</button>
   </Form>
 )
 RenderForm.propTypes = {
   errors: PropTypes.shape().isRequired,
   touched: PropTypes.shape().isRequired,
-  isSubmitting: PropTypes.bool.isRequired
+  isSubmitting: PropTypes.bool.isRequired,
+  setFieldValue: PropTypes.func.isRequired,
+  values: PropTypes.shape().isRequired
 }
 
 const authLoginSchema = yup.object().shape({
@@ -86,6 +116,9 @@ const FormsGamePublishNew = ({ onSubmit }) => (
       description: '',
       jobDescription: '',
       qualification: '',
+      url1: '',
+      url2: '',
+      url3: ''
     }}
     validationSchema={authLoginSchema}
     onSubmit={onSubmit}
@@ -93,8 +126,8 @@ const FormsGamePublishNew = ({ onSubmit }) => (
   />
 )
 FormsGamePublishNew.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  setFieldValue: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired
+  // setFieldValue: PropTypes.func.isRequired
 }
 
 export default FormsGamePublishNew

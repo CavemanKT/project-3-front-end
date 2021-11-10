@@ -11,6 +11,7 @@ import {
 
 const initialState = {
   applications: [],
+  applied: false,
   isGetGameLoading: false,
   destroyingIDs: [],
   meta: null
@@ -30,9 +31,8 @@ export default (state = initialState, action) => {
       })
     }
     case ADD_APPLICATION_IN_TALENT: {
-      console.log('ADD_APPLICATION_IN_TALENT: ', action.payload)
       return produce(state, (draft) => {
-        draft.applications.push(action.payload.application)
+        // draft.applied = true
       })
     }
     case REMOVE_APPLICATION_IN_TALENT: {
