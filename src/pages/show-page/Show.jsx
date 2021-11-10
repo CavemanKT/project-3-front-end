@@ -28,6 +28,8 @@ class PagesPublicShow extends React.Component {
     this.handleEditSubmit = this.handleEditSubmit.bind(this)
     this.handleApproveSubmit = this.handleApproveSubmit.bind(this)
     this.handleApprovedSubmit = this.handleApprovedSubmit.bind(this)
+
+    this.componentDidUpdate = this.componentDidUpdate.bind(this)
   }
 
   componentDidMount() {
@@ -38,13 +40,15 @@ class PagesPublicShow extends React.Component {
     if (currentUser.type === 'Developer') {
       this.props.getDevGame(GameId)
       this.props.getDevGameApplications(GameId)
-      this.props.getApplicationsApproval(GameId) // action
+      this.props.getApplicationsApproval(GameId)
     }
 
     if (currentUser.type === 'Marketer') {
-      console.log('alksdjflksajfkljlsdajfkl')
       this.props.getTalentApplication(GameId)
     }
+
+    const { devGameState: { devGameApplications } } = this.props
+    console.log(devGameApplications)
   }
 
   componentWillUnmount() {
@@ -79,6 +83,8 @@ class PagesPublicShow extends React.Component {
 
   handleApproveSubmit(GameId, TalentId) {
     this.props.updateApprovedToTrueInDB(GameId, TalentId)
+    const { devGameState: { devGameApplications } } = this.props
+    console.log(devGameApplications)
   }
 
   handleApprovedSubmit(GameId) {
@@ -87,11 +93,6 @@ class PagesPublicShow extends React.Component {
 
   // render func
   renderDevBtn() {
-    const {
-      gameState: { game },
-      applicationState: { application },
-      currentUserState: { currentUser }
-    } = this.props
     return (
       <>
         <Button
@@ -116,11 +117,9 @@ class PagesPublicShow extends React.Component {
 
   renderTalentBtn() {
     const {
-      gameState: { game },
-      applicationState: { application },
-      currentUserState: { currentUser }
+      applicationState: { application }
     } = this.props
-    console.log(application)
+
     return (
       <>
         {
@@ -205,7 +204,8 @@ class PagesPublicShow extends React.Component {
   }
 
   renderApplicantsList() {
-    const { devGameState: { devGameApplications } } = this.props
+    const { devGameState: { devGameApplications, applicationsApprovals } } = this.props
+    console.log(devGameApplications)
     return (
       <Container className="mb-5">
         <div id="applicant-list">
@@ -220,6 +220,7 @@ class PagesPublicShow extends React.Component {
                   <ListGroup.Item className="showpage-applicant-list-item">{applicant.Talent.lastName}</ListGroup.Item>
                   <ListGroup.Item className="showpage-applicant-list-item">{applicant.Talent.cvUrl}</ListGroup.Item>
                   <ListGroup.Item className="showpage-applicant-list-item">{applicant.Talent.email}</ListGroup.Item>
+                  { !applicant.approved && (
                   <Button
                     type="button"
                     id="btn-apply"
@@ -229,6 +230,18 @@ class PagesPublicShow extends React.Component {
                     }}
                   >Approve
                   </Button>
+                  )}
+                  { applicant.approved && (
+                  <Button
+                    type="button"
+                    id="btn-apply"
+                    className="btn btn-warning my-3"
+                    onClick={() => {
+                      this.handleApprovedSubmit(applicant.GameId, applicant.Talent.id)
+                    }}
+                  >Approved
+                  </Button>
+                  )}
                 </ListGroup>
               ))}
             </Col>
