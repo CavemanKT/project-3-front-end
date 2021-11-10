@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import FormsTalentProfileUpdate from '@/forms/profile/talent-profile'
 import { connect } from 'react-redux'
 
-import { updateProfile } from '@/actions/talent/profile'
+import { updateTalentProfile } from '@/actions/talent/profile'
 
 class pageTalentProfile extends React.Component {
   constructor(props) {
@@ -17,7 +17,7 @@ class pageTalentProfile extends React.Component {
   handleTalentProfileFormUpdateSubmit(values) {
     const { currentUserState: { currentUser } } = this.props
 
-    this.props.updateProfile(values, currentUser.id).then(() => {
+    this.props.updateTalentProfile(values, currentUser.id).then(() => {
       const { history: { push } } = this.props
       push('/')
     })
@@ -46,7 +46,7 @@ class pageTalentProfile extends React.Component {
 
 pageTalentProfile.propTypes = {
   history: PropTypes.shape().isRequired,
-  updateProfile: PropTypes.func.isRequired,
+  updateTalentProfile: PropTypes.func.isRequired,
   currentUserState: PropTypes.shape().isRequired,
   TalentInfoState: PropTypes.shape().isRequired
 }
@@ -57,7 +57,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  updateProfile
+  updateTalentProfile
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(pageTalentProfile)

@@ -152,8 +152,7 @@ const mapDispatchToProps = {
   getGames,
   resetGames,
 
-  getMyProfile
-
+  getMyProfile,
 
   getDevGames,
   resetDevGames
