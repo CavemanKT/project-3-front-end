@@ -23,19 +23,11 @@ class PagesPublicShow extends React.Component {
     this.state = {
     }
 
-    this.componentDidMount = this.componentDidMount.bind(this)
-    this.componentWillUnmount = this.componentWillUnmount.bind(this)
     this.handleApplySubmit = this.handleApplySubmit.bind(this)
     this.handleCancelSubmit = this.handleCancelSubmit.bind(this)
     this.handleEditSubmit = this.handleEditSubmit.bind(this)
     this.handleApproveSubmit = this.handleApproveSubmit.bind(this)
     this.handleApprovedSubmit = this.handleApprovedSubmit.bind(this)
-
-    this.renderDevBtn = this.renderDevBtn.bind(this)
-    this.renderTalentBtn = this.renderTalentBtn.bind(this)
-    this.renderCarouselAndDescription = this.renderCarouselAndDescription.bind(this)
-    this.renderApplicantsList = this.renderApplicantsList.bind(this)
-    this.renderJobDetails = this.renderJobDetails.bind(this)
   }
 
   componentDidMount() {

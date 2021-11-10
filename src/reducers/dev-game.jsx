@@ -17,6 +17,7 @@ import {
   DESTROY_IMAGE
 } from '@/actions/dev/image'
 
+// TODO this should be an object not an array
 const initialState = {
   devGame: [],
   isGetGameLoading: false,

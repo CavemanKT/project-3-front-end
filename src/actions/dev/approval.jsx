@@ -11,7 +11,7 @@ export const getApplicationsApproval = (GameId) => (dispatch) => {
   dispatch(loading(GET_APPLICATIONS_APPROVAL, { loading: true }))
   axios({
     method: 'GET',
-    url: `/api/dev/approve/${GameId}`,
+    url: `${process.env.API_URL}/api/dev/approve/${GameId}`,
     withCredentials: true
   }).then((resp) => {
     console.log(resp.data)
