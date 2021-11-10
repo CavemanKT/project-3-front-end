@@ -14,7 +14,7 @@ import { getGame, resetGame } from '@/actions/game'
 import { getDevGame, unsetDevGame, getDevGameApplications, resetDevGameApplications, destroyGame } from '@/actions/dev/game'
 import { createTalentApplication, destroyTalentApplication, getTalentApplication } from '@/actions/talent/application'
 
-import { getApplicationsApproval, updateApprovedToTrueInDB } from '@/actions/dev/approval'
+import { getApplicationsApproval, updateApprovedToTrueInDB, updateApprovedToFalseInDB } from '@/actions/dev/approval'
 
 class PagesPublicShow extends React.Component {
   constructor(props) {
@@ -28,8 +28,6 @@ class PagesPublicShow extends React.Component {
     this.handleEditSubmit = this.handleEditSubmit.bind(this)
     this.handleApproveSubmit = this.handleApproveSubmit.bind(this)
     this.handleApprovedSubmit = this.handleApprovedSubmit.bind(this)
-
-    this.componentDidUpdate = this.componentDidUpdate.bind(this)
   }
 
   componentDidMount() {
@@ -87,8 +85,10 @@ class PagesPublicShow extends React.Component {
     console.log(devGameApplications)
   }
 
-  handleApprovedSubmit(GameId) {
-    this.props.getApplicationsApproval(GameId)
+  handleApprovedSubmit(GameId, TalentId) {
+    this.props.updateApprovedToFalseInDB(GameId, TalentId)
+    const { devGameState: { devGameApplications } } = this.props
+    console.log(devGameApplications)
   }
 
   // render func
@@ -347,7 +347,8 @@ PagesPublicShow.propTypes = {
   destroyTalentApplication: PropTypes.func.isRequired,
 
   getApplicationsApproval: PropTypes.func.isRequired,
-  updateApprovedToTrueInDB: PropTypes.func.isRequired
+  updateApprovedToTrueInDB: PropTypes.func.isRequired,
+  updateApprovedToFalseInDB: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
@@ -371,7 +372,8 @@ const mapDispatchToProps = {
   destroyTalentApplication,
 
   getApplicationsApproval,
-  updateApprovedToTrueInDB
+  updateApprovedToTrueInDB,
+  updateApprovedToFalseInDB
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PagesPublicShow)

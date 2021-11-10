@@ -21,7 +21,8 @@ import {
   SET_APPLICATIONS_APPROVAL,
   UNSET_APPLICATION_APPROVAL,
   CHANGE_BTN_TO_APPROVED,
-  UPDATE_APPROVED_TO_TRUE_IN_DB
+  UPDATE_APPROVED_TO_TRUE_IN_DB,
+  CHANGE_BTN_TO_APPROVE
 } from '@/actions/dev/approval'
 
 // TODO this should be an object not an array
@@ -113,11 +114,17 @@ export default (state = initialState, action) => {
 
     // application approval
     case CHANGE_BTN_TO_APPROVED: {
-      console.log(action.payload)
       return produce(state, (draft) => {
         const index = draft.devGameApplications.findIndex((application) => application.TalentId === action.payload.application.TalentId)
         if (index !== -1) draft.devGameApplications[index].approved = true
         console.log(index)
+      })
+    }
+    case CHANGE_BTN_TO_APPROVE: {
+      console.log(action.payload)
+      return produce(state, (draft) => {
+        const index = draft.devGameApplications.findIndex((application) => application.TalentId === action.payload.application.TalentId)
+        if (index !== -1) draft.devGameApplications[index].approved = false
       })
     }
     default: {

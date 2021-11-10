@@ -26,7 +26,6 @@ export const unsetApplicationApproval = () => ({ type: UNSET_APPLICATION_APPROVA
 export const resetApplicationApproval = () => (dispatch) => {
   dispatch(unsetApplicationApproval())
 }
-// remember finish the approve btn
 
 export const CHANGE_BTN_TO_APPROVED = 'CHANGE_BTN_TO_APPROVED'
 export const changeBtnToApproved = (payload) => ({
@@ -37,15 +36,36 @@ export const updateApprovedToTrueInDB = (GameId, TalentId) => (dispatch) => new 
   dispatch(loading(UPDATE_APPROVED_TO_TRUE_IN_DB, { loading: true }))
   axios({
     method: 'PUT',
-    url: `http://localhost:3000/api/dev/approve/${GameId}/${TalentId}`,
+    url: `${process.env.API_URL}/api/dev/approve/${GameId}/${TalentId}`,
     withCredentials: true
   }).then((resp) => {
-    console.log(resp.data)
     dispatch(changeBtnToApproved(resp.data))
     resolve(resp)
   }).catch((err) => {
     reject(err)
   }).finally(() => {
     dispatch(loading(UPDATE_APPROVED_TO_TRUE_IN_DB, { loading: false }))
+  })
+})
+
+export const CHANGE_BTN_TO_APPROVE = 'CHANGE_BTN_TO_APPROVE'
+export const changeBtnToApprove = (payload) => ({
+  type: CHANGE_BTN_TO_APPROVE, payload
+})
+export const UPDATE_APPROVED_TO_FALSE_IN_DB = 'UPDATE_APPROVED_TO_TRUE_IN_DB'
+export const updateApprovedToFalseInDB = (GameId, TalentId) => (dispatch) => new Promise((resolve, reject) => {
+  dispatch(loading(UPDATE_APPROVED_TO_FALSE_IN_DB), { loading: true })
+  axios({
+    method: 'PUT',
+    url: `${process.env.API_URL}/api/dev/approved/${GameId}/${TalentId}`,
+    withCredentials: true
+  }).then((resp) => {
+    console.log(resp.data)
+    dispatch(changeBtnToApprove(resp.data))
+    resolve(resp)
+  }).catch((err) => {
+    reject(err)
+  }).finally(() => {
+    dispatch(loading(UPDATE_APPROVED_TO_FALSE_IN_DB, { loading: false }))
   })
 })
