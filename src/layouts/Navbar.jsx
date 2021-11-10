@@ -30,7 +30,10 @@ class LayoutsNavbar extends React.Component {
   }
 
   handleLogoutClick() {
-    this.props.authLogout()
+    this.props.authLogout().then(() => {
+      // const { history: { push } } = this.props
+      // push('/')
+    })
   }
 
   handleSignupSubmit(values) {
@@ -43,6 +46,10 @@ class LayoutsNavbar extends React.Component {
   handleLoginSubmit(values) {
     this.props.authLogin(values).then(() => {
       this.setState({ showModalsLogin: false })
+
+      const { history: { push } } = this.props
+      push('/')
+
     })
   }
 
@@ -115,7 +122,7 @@ class LayoutsNavbar extends React.Component {
 
 LayoutsNavbar.propTypes = {
   currentUserState: PropTypes.shape().isRequired,
-  // history: PropTypes.shape().isRequired,
+  history: PropTypes.shape().isRequired,
   authLogout: PropTypes.func.isRequired,
   authSignup: PropTypes.func.isRequired,
   authLogin: PropTypes.func.isRequired
