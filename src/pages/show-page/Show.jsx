@@ -186,6 +186,7 @@ class PagesPublicShow extends React.Component {
     } = this.props
 
     if (currentUser && currentUser.type !== 'Marketer') return null
+    console.log(application)
     return (
       <>
         {
