@@ -15,6 +15,8 @@ import { getTalentApplications, resetTalentApplications } from '@/actions/talent
 
 import { getProfile } from '@/actions/dev/profile'
 
+import { getMyProfile } from '@/actions/my/profile'
+
 class PagesDevGameList extends React.Component {
   constructor(props) {
     super(props)
@@ -40,7 +42,7 @@ class PagesDevGameList extends React.Component {
   }
 
   handleGetDevProfile() {
-    this.props.getProfile()
+    this.props.getMyProfile()
   }
 
   render() {
@@ -122,6 +124,9 @@ PagesDevGameList.propTypes = {
 
   getGames: PropTypes.func.isRequired,
   resetGames: PropTypes.func.isRequired,
+
+  getMyProfile: PropTypes.func.isRequired,
+
   getDevGames: PropTypes.func.isRequired,
   resetDevGames: PropTypes.func.isRequired,
 
@@ -147,8 +152,12 @@ const mapDispatchToProps = {
   getGames,
   resetGames,
 
+  getMyProfile
+
+
   getDevGames,
   resetDevGames
+
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PagesDevGameList)
