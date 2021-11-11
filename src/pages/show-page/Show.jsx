@@ -10,7 +10,7 @@ import ListGroup from 'react-bootstrap/ListGroup'
 import Container from 'react-bootstrap/Container'
 
 import { getGame, resetGame } from '@/actions/game'
-import { getDevGame, unsetDevGame, getDevGameApplications, resetDevGameApplications, destroyGame } from '@/actions/dev/game'
+import { getDevGameApplications, resetDevGameApplications, destroyGame } from '@/actions/dev/games'
 import { createTalentApplication, destroyTalentApplication, getTalentApplication } from '@/actions/talent/application'
 
 import { getApplicationsApproval, updateApprovedToTrueInDB, updateApprovedToFalseInDB } from '@/actions/dev/approval'
@@ -19,12 +19,10 @@ class PagesPublicShow extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-    }
-
     this.handleApplySubmit = this.handleApplySubmit.bind(this)
     this.handleCancelSubmit = this.handleCancelSubmit.bind(this)
     this.handleEditSubmit = this.handleEditSubmit.bind(this)
+    this.handleDelete = this.handleDelete.bind(this)
     this.handleApproveSubmit = this.handleApproveSubmit.bind(this)
     this.handleApprovedSubmit = this.handleApprovedSubmit.bind(this)
   }
@@ -36,7 +34,6 @@ class PagesPublicShow extends React.Component {
 
     if (currentUser) {
       if (currentUser.type === 'Developer') {
-        this.props.getDevGame(GameId)
         this.props.getDevGameApplications(GameId)
         this.props.getApplicationsApproval(GameId)
       }
@@ -48,7 +45,6 @@ class PagesPublicShow extends React.Component {
 
   componentWillUnmount() {
     this.props.resetGame()
-    this.props.unsetDevGame()
     this.props.resetDevGameApplications()
   }
 
@@ -151,38 +147,52 @@ class PagesPublicShow extends React.Component {
     const {
       gameState: { game }
     } = this.props
+
     return (
       <Row>
-        {game.Images
-              && (
-              <Col>
-                <div id="showpage-carousel-container">
-                  <Carousel variant="dark">
-                    <Carousel.Item className="showpage-carousel-item">
-                      <img
-                        className="w-100"
-                        src={game.Images[0].url1}
-                        alt="First slide"
-                      />
-                    </Carousel.Item>
-                    <Carousel.Item>
-                      <img
-                        className="w-100"
-                        src={game.Images[0].url2}
-                        alt="Second slide"
-                      />
-                    </Carousel.Item>
-                    <Carousel.Item>
-                      <img
-                        className="w-100"
-                        src={game.Images[0].url3}
-                        alt="Third slide"
-                      />
-                    </Carousel.Item>
-                  </Carousel>
-                </div>
-              </Col>
-              )}
+        {
+          game.Images && (
+            <Col xs={6}>
+              <div id="showpage-carousel-container">
+                <Carousel variant="dark">
+                  {
+                    game.Images[0]?.url1 && (
+                      <Carousel.Item className="showpage-carousel-item">
+                        <img
+                          className="w-100"
+                          src={game.Images[0]?.url1}
+                          alt="First slide"
+                        />
+                      </Carousel.Item>
+                    )
+                  }
+                  {
+                    game.Images[0]?.url2 && (
+                      <Carousel.Item>
+                        <img
+                          className="w-100"
+                          src={game.Images[0]?.url2}
+                          alt="Second slide"
+                        />
+                      </Carousel.Item>
+                    )
+                  }
+                  {
+                    game.Images[0]?.url3 && (
+                      <Carousel.Item>
+                        <img
+                          className="w-100"
+                          src={game.Images[0]?.url3}
+                          alt="Third slide"
+                        />
+                      </Carousel.Item>
+                    )
+                  }
+                </Carousel>
+              </div>
+            </Col>
+          )
+        }
 
         <Col xs={6}>
           <div id="showpage-description-container" className="col-md-auto">
@@ -199,13 +209,15 @@ class PagesPublicShow extends React.Component {
   renderApplicantsList() {
     const { devGameState: { devGameApplications } } = this.props
 
+    if (devGameApplications.length === 0) return null
+
     return (
       <Container className="mb-5">
         <div id="applicant-list">
           <h3>Applicant list</h3>
           <Row>
             <Col>
-              { devGameApplications.map((applicant, i) => (
+              { devGameApplications.map((applicant) => (
                 <ListGroup horizontal className="showpage-applicant-list-row" key={applicant.Talent.id}>
                   <ListGroup.Item className="showpage-applicant-list-item">{applicant.Talent.type}</ListGroup.Item>
                   <ListGroup.Item className="showpage-applicant-list-item">{applicant.Talent.username}</ListGroup.Item>
@@ -280,18 +292,17 @@ class PagesPublicShow extends React.Component {
 
   render() {
     const {
-      gameState: { game },
-      devGameState: { devGameApplications },
+      gameState: { game, isGetGameLoading },
       currentUserState: { currentUser }
     } = this.props
 
+    if (isGetGameLoading) return <div>Loading</div>
+    if (!game) return <div>Cannot Find Game</div>
+
     return (
       <div id="showpage">
-
         <div id="showpage-carousel-and-description-wrapper">
-
           <div className="showpage-header mb-3">
-
             {/* Public: game's name */}
             <h1 id="game-name">{game.name}</h1>
 
@@ -300,7 +311,6 @@ class PagesPublicShow extends React.Component {
 
             {/* Talent: apply and cancel btn */}
             { currentUser && currentUser.type === 'Marketer' && this.renderTalentBtn()}
-
           </div>
 
           {/* Public: carousel and description */}
@@ -308,7 +318,7 @@ class PagesPublicShow extends React.Component {
         </div>
 
         {/* Dev: Applicants' list */}
-        {currentUser && currentUser.type === 'Developer' && devGameApplications[0] && this.renderApplicantsList() }
+        {currentUser && currentUser.type === 'Developer' && this.renderApplicantsList() }
 
         {/* Talent: Job details */}
         {currentUser && currentUser.type === 'Marketer' && this.renderJobDetails()}
@@ -319,54 +329,48 @@ class PagesPublicShow extends React.Component {
 
 PagesPublicShow.propTypes = {
   history: PropTypes.shape().isRequired,
-
   match: PropTypes.shape().isRequired,
-  getDevGame: PropTypes.func.isRequired,
-  unsetDevGame: PropTypes.func.isRequired,
+  currentUserState: PropTypes.shape().isRequired,
+
+  gameState: PropTypes.shape().isRequired,
   getGame: PropTypes.func.isRequired,
   resetGame: PropTypes.func.isRequired,
   destroyGame: PropTypes.func.isRequired,
 
-  gameState: PropTypes.shape().isRequired,
   devGameState: PropTypes.shape().isRequired,
-  currentUserState: PropTypes.shape().isRequired,
-
-  applicationState: PropTypes.shape().isRequired,
-
-  getTalentApplication: PropTypes.func.isRequired,
   getDevGameApplications: PropTypes.func.isRequired,
   resetDevGameApplications: PropTypes.func.isRequired,
-  createTalentApplication: PropTypes.func.isRequired,
-  destroyTalentApplication: PropTypes.func.isRequired,
-
   getApplicationsApproval: PropTypes.func.isRequired,
   updateApprovedToTrueInDB: PropTypes.func.isRequired,
-  updateApprovedToFalseInDB: PropTypes.func.isRequired
+  updateApprovedToFalseInDB: PropTypes.func.isRequired,
+
+  applicationState: PropTypes.shape().isRequired,
+  getTalentApplication: PropTypes.func.isRequired,
+  createTalentApplication: PropTypes.func.isRequired,
+  destroyTalentApplication: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
+  currentUserState: state.currentUser,
   gameState: state.game,
   devGameState: state.devGame,
-  currentUserState: state.currentUser,
   applicationState: state.application
-
 })
 
 const mapDispatchToProps = {
-  getDevGame,
-  unsetDevGame,
   getGame,
   resetGame,
+
   destroyGame,
-  getTalentApplication,
   getDevGameApplications,
   resetDevGameApplications,
-  createTalentApplication,
-  destroyTalentApplication,
-
   getApplicationsApproval,
   updateApprovedToTrueInDB,
-  updateApprovedToFalseInDB
+  updateApprovedToFalseInDB,
+
+  getTalentApplication,
+  createTalentApplication,
+  destroyTalentApplication
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PagesPublicShow)

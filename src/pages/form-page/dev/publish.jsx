@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import FormsGamePublish from '@/forms/publish/new'
 import { connect } from 'react-redux'
 
-import { createGame, updateGame, destroyGame } from '@/actions/dev/game'
+import { createGame, updateGame, destroyGame } from '@/actions/dev/games'
 
 import { createImage } from '@/actions/dev/image'
 
@@ -21,10 +21,10 @@ class pageDevPublish extends React.Component {
       const { history: { replace } } = this.props
       if (url1 || url2 || url3) {
         this.props.createImage({ url1, url2, url3 }, GameId).then(() => {
-          replace('/my/games')
+          replace(`/games/${GameId}`)
         })
       } else {
-        replace('/my/games')
+        replace(`/games/${GameId}`)
       }
     })
   }

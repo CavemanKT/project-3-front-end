@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as yup from 'yup'
-import { loading } from '@/actions/loading'
+
+import FileField from '@/components/FileField'
 
 const RenderForm = ({ values, errors, touched, isSubmitting, setFieldValue }) => (
   <Form>
@@ -50,47 +51,26 @@ const RenderForm = ({ values, errors, touched, isSubmitting, setFieldValue }) =>
       <ErrorMessage component="div" className="invalid-feedback" name="qualification" />
     </div>
 
-    <div className="form-group">
-      <label htmlFor="url">File upload</label>
-      <input
-        id="url1"
-        className="form-control"
-        name="url1"
-        type="file"
-        onChange={(e) => {
-          setFieldValue('url1', e.target.files[0])
-        }}
-        value={values?.url1?.filename}
-      />
-    </div>
+    <FileField
+      name="url1"
+      setFieldValue={setFieldValue}
+      value={values.url1}
+      existingFileUrl={values?.Images?.[0]?.url1}
+    />
 
-    <div className="form-group">
-      <label htmlFor="url">File upload</label>
-      <input
-        id="url2"
-        className="form-control"
-        name="url2"
-        type="file"
-        onChange={(e) => {
-          setFieldValue('url2', e.target.files[0])
-        }}
-        value={values?.url2?.filename}
-      />
-    </div>
+    <FileField
+      name="url2"
+      setFieldValue={setFieldValue}
+      value={values.url2}
+      existingFileUrl={values?.Images?.[0]?.url2}
+    />
 
-    <div className="form-group">
-      <label htmlFor="url">File upload</label>
-      <input
-        id="url3"
-        className="form-control"
-        name="url3"
-        type="file"
-        onChange={(e) => {
-          setFieldValue('url3', e.target.files[0])
-        }}
-        value={values?.url3?.filename}
-      />
-    </div>
+    <FileField
+      name="url3"
+      setFieldValue={setFieldValue}
+      value={values.url3}
+      existingFileUrl={values?.Images?.[0]?.url3}
+    />
 
     <button className="btn btn-success" type="submit" disabled={isSubmitting}>Update</button>
   </Form>
@@ -110,14 +90,9 @@ const authLoginSchema = yup.object().shape({
   qualification: yup.string().required('Required')
 })
 
-const FormsGamePublishEdit = ({ onSubmit }) => (
+const FormsGamePublishEdit = ({ onSubmit, initialValues }) => (
   <Formik
-    initialValues={{
-      name: '',
-      description: '',
-      jobDescription: '',
-      qualification: ''
-    }}
+    initialValues={initialValues}
     validationSchema={authLoginSchema}
     onSubmit={onSubmit}
     component={RenderForm}
@@ -125,8 +100,8 @@ const FormsGamePublishEdit = ({ onSubmit }) => (
 )
 
 FormsGamePublishEdit.propTypes = {
-  onSubmit: PropTypes.func.isRequired
-  // setFieldValue: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
+  initialValues: PropTypes.shape().isRequired
 }
 
 export default FormsGamePublishEdit

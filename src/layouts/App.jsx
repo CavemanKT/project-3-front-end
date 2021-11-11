@@ -48,37 +48,33 @@ class App extends React.Component {
         <LayoutsNavbar1 />
         <div id="body-footer-container">
           {
-          loaded ? (
-            <Switch>
-              {/* Shared Paths */}
-              <Route exact path="/" component={PagesHome} />
+            loaded ? (
+              <Switch>
+                {/* Shared Paths */}
+                <Route exact path="/" component={PagesHome} />
 
-              {/* Shared Paths */}
-              {/* ! */}
-              <Route exact path="/games/:id" component={PagesShow} />
+                {/* Shared Paths */}
+                <Route exact path="/games/:id" component={PagesShow} />
 
-              {/* for now, it will just be Route, later change to GeneralRoute */}
-              <PrivateRoute exact path="/my/profile" component={PagesMyProfile} />
+                {/* for now, it will just be Route, later change to GeneralRoute */}
+                <PrivateRoute exact path="/my/profile" component={PagesMyProfile} />
 
-              {/* Talent Paths */}
-              {/* ! */}
-              <TalentsPrivateRoute exact path="/my/applications" component={PagesUserGameList} />
+                {/* Talent Paths */}
+                <TalentsPrivateRoute exact path="/my/applications" component={PagesUserGameList} />
 
-              {/* Developer Paths */}
-              {/* ! */}
-              <DevPrivateRoute exact path="/my/games" component={PagesUserGameList} />
-              <DevPrivateRoute exact path="/my/games/new" component={pageDevPublish} />
-              {/* ! */}
-              <DevPrivateRoute exact path="/my/games/:id/edit" component={pageDevEditPublish} />
+                {/* Developer Paths */}
+                <DevPrivateRoute exact path="/my/games" component={PagesUserGameList} />
+                <DevPrivateRoute exact path="/my/games/new" component={pageDevPublish} />
+                <DevPrivateRoute exact path="/my/games/:id/edit" component={pageDevEditPublish} />
 
-              <Route component={PagesNotFound} />
-            </Switch>
-          ) : (
-            <div className="my-3">
-              <Loading />
-            </div>
-          )
-        }
+                <Route component={PagesNotFound} />
+              </Switch>
+            ) : (
+              <div className="my-3">
+                <Loading />
+              </div>
+            )
+          }
         </div>
 
         <LayoutsFooter />

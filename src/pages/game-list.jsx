@@ -9,21 +9,12 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import ListGroup from 'react-bootstrap/ListGroup'
 
-import { getGames, resetGames } from '@/actions/game'
-import { getGames as getDevGames, resetGames as resetDevGames } from '@/actions/dev/game'
+import { getGames as getDevGames, resetGames as resetDevGames } from '@/actions/dev/games'
 import { getTalentApplications, resetTalentApplications } from '@/actions/talent/application'
-import { getMyProfile } from '@/actions/my/profile'
 
-class PagesDevGameList extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.handleGetDevProfile = this.handleGetDevProfile.bind(this)
-  }
-
+class PagesMyGameList extends React.Component {
   componentDidMount() {
     const { currentUserState: { currentUser } } = this.props
-    this.props.getGames()
     if (currentUser.type === 'Developer') {
       this.props.getDevGames()
     }
@@ -33,41 +24,38 @@ class PagesDevGameList extends React.Component {
   }
 
   componentWillUnmount() {
-    this.props.resetGames()
     this.props.resetDevGames()
     this.props.resetTalentApplications()
   }
 
-  handleGetDevProfile() {
-    this.props.getMyProfile()
-  }
-
   render() {
     const {
-      gameState: { games },
-      devGamesState: { devGames },
       currentUserState: { currentUser },
+      devGamesState: { devGames },
       applicationsState: { applications }
     } = this.props
 
     return (
       <div id="pages-dev-gamelist">
-
         {/* // header */}
         <header className="text-center border-bottom pages-dev-gamelist-header">
-          {currentUser && currentUser.type === 'Developer' && (
-          <>
-            <Link className="btn btn-primary" to="/my/profile" onClick={this.handleGetDevProfile}>Profile</Link>
-            <h1>My Games</h1>
-            <Link className="btn btn-primary" to="/my/games/new">Publish</Link>
-          </>
-          )}
-          {currentUser && currentUser.type === 'Marketer' && (
-          <>
-            <h1>My Applications</h1>
-            <Link className="btn btn-primary" to="/my/profile" onClick={this.handleGetDevProfile}>Profile</Link>
-          </>
-          )}
+          {
+            currentUser && currentUser.type === 'Developer' && (
+              <>
+                <Link className="btn btn-primary" to="/my/profile">Profile</Link>
+                <h1>My Games</h1>
+                <Link className="btn btn-primary" to="/my/games/new">Publish</Link>
+              </>
+            )
+          }
+          {
+            currentUser && currentUser.type === 'Marketer' && (
+              <>
+                <h1>My Applications</h1>
+                <Link className="btn btn-primary" to="/my/profile" onClick={this.handleGetDevProfile}>Profile</Link>
+              </>
+            )
+          }
         </header>
 
         {/* Container */}
@@ -75,9 +63,8 @@ class PagesDevGameList extends React.Component {
           <Row>
             <Col>
               {
-              currentUser && currentUser.type === 'Developer'
-                && devGames.map((item) => (
-                  <ListGroup horizontal="sm" className="pages-dev-games-list">
+                currentUser && currentUser.type === 'Developer' && devGames.map((item) => (
+                  <ListGroup key={item.id} horizontal="sm" className="pages-dev-games-list">
                     <Link
                       key={item.id}
                       to={`/games/${item.id}`}
@@ -89,9 +76,8 @@ class PagesDevGameList extends React.Component {
                 ))
               }
               {
-                currentUser && currentUser.type === 'Marketer'
-                && applications.map((item, idx) => (
-                  <ListGroup horizontal="sm" className="pages-talents-games-list">
+                currentUser && currentUser.type === 'Marketer' && applications.map((item) => (
+                  <ListGroup key={item.GameId} horizontal="sm" className="pages-talents-games-list">
                     <Link
                       key={item.Game.name}
                       to={`/games/${item.Game.id}`}
@@ -102,52 +88,35 @@ class PagesDevGameList extends React.Component {
                   </ListGroup>
                 ))
               }
-
             </Col>
           </Row>
         </Container>
-
       </div>
-
     )
   }
 }
 
-PagesDevGameList.propTypes = {
-  getTalentApplications: PropTypes.func.isRequired,
-  resetTalentApplications: PropTypes.func.isRequired,
-  getMyProfile: PropTypes.func.isRequired,
-
-  getGames: PropTypes.func.isRequired,
-  resetGames: PropTypes.func.isRequired,
-
+PagesMyGameList.propTypes = {
+  currentUserState: PropTypes.shape().isRequired,
+  devGamesState: PropTypes.shape().isRequired,
   getDevGames: PropTypes.func.isRequired,
   resetDevGames: PropTypes.func.isRequired,
-
-  gameState: PropTypes.shape().isRequired,
-
-  devGamesState: PropTypes.shape().isRequired,
-  currentUserState: PropTypes.shape().isRequired,
-  applicationsState: PropTypes.shape().isRequired
+  applicationsState: PropTypes.shape().isRequired,
+  getTalentApplications: PropTypes.func.isRequired,
+  resetTalentApplications: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
-  gameState: state.games,
-  devGamesState: state.devGames,
   currentUserState: state.currentUser,
+  devGamesState: state.devGames,
   applicationsState: state.applications
-
 })
 
 const mapDispatchToProps = {
-  getTalentApplications,
-  resetTalentApplications,
-  getMyProfile,
-  getGames,
-  resetGames,
   getDevGames,
-  resetDevGames
-
+  resetDevGames,
+  getTalentApplications,
+  resetTalentApplications
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PagesDevGameList)
+export default connect(mapStateToProps, mapDispatchToProps)(PagesMyGameList)

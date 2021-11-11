@@ -4,8 +4,6 @@ import {
   SET_TALENT_APPLICATIONS,
   GET_TALENT_APPLICATIONS,
   UNSET_TALENT_APPLICATIONS,
-  ADD_APPLICATION_IN_TALENT,
-  REMOVE_APPLICATION_IN_TALENT,
   DESTROY_TALENT_APPLICATION
 } from '@/actions/talent/application'
 
@@ -28,17 +26,6 @@ export default (state = initialState, action) => {
       return produce(state, (draft) => {
         draft.meta = null
         draft.applications = []
-      })
-    }
-    case ADD_APPLICATION_IN_TALENT: {
-      return produce(state, (draft) => {
-        // draft.applied = true
-      })
-    }
-    case REMOVE_APPLICATION_IN_TALENT: {
-      return produce(state, (draft) => {
-        const index = draft.applications.findIndex((application) => application.id === action.payload)
-        if (index !== -1) draft.applications.splice(index, 1)
       })
     }
     case GET_TALENT_APPLICATIONS: {
