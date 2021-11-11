@@ -10,7 +10,7 @@ import {
 
 import 'react-accessible-accordion/dist/fancy-example.css'
 
-export default function Example() {
+export default function showGameDescription() {
   return (
     <Accordion allowZeroExpanded>
       <AccordionItem>
