@@ -2,11 +2,11 @@ html {
   body {
     #root {
 
-      // showpage
       #showpage {
 
         #applicant-list {
           margin-top: 200px;
+          margin-bottom: 100px;
 
           @media screen and (max-width: 1358px) {
             margin-top: 250px;

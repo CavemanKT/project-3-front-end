@@ -38,9 +38,9 @@ const RenderForm = ({ errors, touched, isSubmitting }) => (
       <ErrorMessage component="div" className="invalid-feedback" name="passwordConfirmation" />
     </div>
 
-    <div id="radio-role-group">Role</div>
+    <div id="radio-role-group" className="d-flex">Role</div>
     {/* need radio validation */}
-    <div className="form-group radio-group mt-3 " role="group" aira-labelledby="radio-role-group">
+    <div className="form-group radio-group mt-4 d-flex justify-content-around" role="group" aira-labelledby="radio-role-group">
       <label htmlFor="type" className="radio-label">
         <Field
           className={`form-control ${(errors.type && touched.type ? ' is-invalid' : '')}`}

@@ -6,8 +6,10 @@
 @import "@/styles/layouts/Navbar";
 @import "@/styles/layouts/Footer";
 
+@import "@/styles/game-list/user-game-list/gamelist-applications.scss";
 @import "@/styles/game-list/dev-game-list";
 @import "@/styles/game-list/talents-game-list";
+
 @import "@/styles/show-page/public-show-page";
 @import "@/styles/show-page/dev-show-page";
 @import "@/styles/show-page/talent-show-page";
@@ -33,6 +35,9 @@ html {
       margin: 0px;
       padding: 0px;
 
+      background-image: url("https://media.istockphoto.com/photos/abstract-watercolor-background-pastel-coral-color-soft-texture-picture-id1152262840?b=1&k=20&m=1152262840&s=170667a&w=0&h=1ppx2FSjGPVgeDSeJyvnFkap1j1m2KO-FB8xB3vv-dM=");
+      background-size: cover;
+
       #body-footer-container {
         min-height: 100vh;
 
@@ -41,13 +46,18 @@ html {
           min-height: 100vh;
           position: relative;
           display: flex;
-          flex-direction: column;
+          justify-content: center;
+          align-items: center;
 
           .header {
             font-family: 'Biryani',
               sans-serif;
           }
 
+        }
+
+        #page-btn {
+          margin-bottom: 20px;
         }
 
       }

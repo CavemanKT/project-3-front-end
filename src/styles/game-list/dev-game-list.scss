@@ -11,6 +11,7 @@ html {
         flex-direction: column;
 
         .pages-dev-gamelist-header {
+          margin-top: 10px; // added
           display: flex;
           flex-direction: row;
           justify-content: space-evenly;

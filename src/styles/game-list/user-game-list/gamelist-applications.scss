@@ -1,0 +1,64 @@
+//TEXT HOVER
+.game-list-card-text ::before {
+  transform: scaleX(0);
+  transform-origin: bottom right;
+}
+
+.game-list-card-text :hover::before {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.game-list-card-text ::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  inset: 0 0 0 0;
+  background: grey;
+  z-index: -1;
+  transition: transform .3s ease;
+}
+
+.game-list-card-text {
+  position: relative;
+  font-size: 1rem;
+}
+
+@media (orientation: landscape) {
+  body {
+    grid-auto-flow: column;
+  }
+}
+
+//TEXT HOVER
+.text-box :hover {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  animation-name: example;
+  animation-duration: 0.25s;
+  border-left: 8px solid rgb(85, 85, 85);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+
+@keyframes example {
+  0% {
+    border-left: 2px solid #ffffff;
+  }
+
+  25% {
+    border-left: 3px solid #bbbbbb;
+  }
+
+  50% {
+    border-left: 4px solid #a0a0a0;
+  }
+
+  100% {
+    border-left: 5px solid #575757;
+  }
+}
