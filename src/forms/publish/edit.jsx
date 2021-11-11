@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as yup from 'yup'
+import { loading } from '@/actions/loading'
 
 const RenderForm = ({ values, errors, touched, isSubmitting, setFieldValue }) => (
   <Form>
@@ -66,7 +67,7 @@ const RenderForm = ({ values, errors, touched, isSubmitting, setFieldValue }) =>
     <div className="form-group">
       <label htmlFor="url">File upload</label>
       <input
-        id="url1"
+        id="url2"
         className="form-control"
         name="url2"
         type="file"
@@ -87,7 +88,7 @@ const RenderForm = ({ values, errors, touched, isSubmitting, setFieldValue }) =>
         onChange={(e) => {
           setFieldValue('url3', e.target.files[0])
         }}
-        value={values?.url1?.filename}
+        value={values?.url3?.filename}
       />
     </div>
 

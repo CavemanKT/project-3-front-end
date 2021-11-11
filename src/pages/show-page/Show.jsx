@@ -1,4 +1,3 @@
-// applicants' list shows or not depends on if the game being owned by dev or not owned
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -79,12 +78,10 @@ class PagesPublicShow extends React.Component {
 
   handleApproveSubmit(GameId, TalentId) {
     this.props.updateApprovedToTrueInDB(GameId, TalentId)
-    const { devGameState: { devGameApplications } } = this.props
   }
 
   handleApprovedSubmit(GameId, TalentId) {
     this.props.updateApprovedToFalseInDB(GameId, TalentId)
-    const { devGameState: { devGameApplications } } = this.props
   }
 
   // render func
@@ -163,21 +160,21 @@ class PagesPublicShow extends React.Component {
                   <Carousel variant="dark">
                     <Carousel.Item className="showpage-carousel-item">
                       <img
-                        className="w-100 img-size"
+                        className="w-100"
                         src={game.Images[0].url1}
                         alt="First slide"
                       />
                     </Carousel.Item>
                     <Carousel.Item>
                       <img
-                        className="w-100 img-size"
+                        className="w-100"
                         src={game.Images[0].url2}
                         alt="Second slide"
                       />
                     </Carousel.Item>
                     <Carousel.Item>
                       <img
-                        className="w-100 img-size"
+                        className="w-100"
                         src={game.Images[0].url3}
                         alt="Third slide"
                       />

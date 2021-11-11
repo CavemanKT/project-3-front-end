@@ -6,6 +6,10 @@ import {
   UNSET_GAME
 } from '@/actions/game'
 
+import {
+  EDIT_IMAGE_IN_GAME
+} from '@/actions/dev/image'
+
 const initialState = {
   game: [],
   isGetGameLoading: false,
@@ -30,6 +34,13 @@ export default (state = initialState, action) => {
       return produce(state, (draft) => {
         draft.meta = null
         draft.game = []
+      })
+    }
+    case EDIT_IMAGE_IN_GAME: {
+      console.log(action.payload)
+      return produce(state, (draft) => {
+        const index = draft.game.Images.findIndex((image) => image.id === action.payload.image.id)
+        if (index !== -1) draft.game.Images[index] = action.payload.image
       })
     }
     default: {

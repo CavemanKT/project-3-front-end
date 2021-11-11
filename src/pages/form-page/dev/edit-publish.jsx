@@ -12,7 +12,6 @@ class pageDevEditPublish extends React.Component {
     super(props)
 
     this.state = {
-      // selectedGame: null
     }
 
     this.handlePublishFormUpdateSubmit = this.handlePublishFormUpdateSubmit.bind(this)

@@ -11,7 +11,7 @@ export const createImage = (values, GameId) => (dispatch) => new Promise((resolv
 
   axios({
     method: 'POST',
-    url: `http://localhost:3000/api/dev/games/${GameId}/images`,
+    url: `${process.env.API_URL}/api/dev/games/${GameId}/images`,
     data: getFormData(values, 'image'),
     withCredentials: true
   }).then((resp) => {
@@ -24,18 +24,18 @@ export const createImage = (values, GameId) => (dispatch) => new Promise((resolv
   })
 })
 
-export const EDIT_IMAGE_IN_DEV_GAME = 'EDIT_IMAGE_IN_DEV_GAME'
-export const editImageInDevGame = (payload) => ({ type: EDIT_IMAGE_IN_DEV_GAME, payload })
+export const EDIT_IMAGE_IN_GAME = 'EDIT_IMAGE_IN_DEV_GAME'
+export const editImageInGame = (payload) => ({ type: EDIT_IMAGE_IN_GAME, payload })
 export const UPDATE_IMAGE = 'UPDATE_IMAGE'
 export const updateImage = (values, GameId) => (dispatch) => new Promise((resolve, reject) => {
   dispatch(loading(UPDATE_IMAGE, { loading: true }))
   axios({
     method: 'PUT',
-    url: `http://localhost:300/api/dev/games/${GameId}/images`,
-    data: values,
+    url: `${process.env.API_URL}/api/dev/games/${GameId}/images`,
+    data: getFormData(values, 'image'),
     withCredentials: true
   }).then((resp) => {
-    dispatch(editImageInDevGame(resp.data))
+    dispatch(editImageInGame(resp.data))
     resolve(resp)
   }).catch((err) => {
     reject(err)

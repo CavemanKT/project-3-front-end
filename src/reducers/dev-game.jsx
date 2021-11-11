@@ -78,12 +78,7 @@ export default (state = initialState, action) => {
         draft.devGame.Images.push(action.payload.image)
       })
     }
-    case EDIT_IMAGE_IN_DEV_GAME: {
-      return produce(state, (draft) => {
-        const index = draft.devGame.Images.findIndex((image) => image.id === action.payload.image.id)
-        if (index !== -1) draft.devGame.Images[index] = action.payload.image
-      })
-    }
+
     case UPDATE_IMAGE: {
       return produce(state, (draft) => {
         if (action.payload.loading) {
