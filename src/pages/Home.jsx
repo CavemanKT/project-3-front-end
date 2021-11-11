@@ -14,8 +14,7 @@ class PagesHome extends React.Component {
     super(props)
 
     this.state = {
-      page: 1,
-      meta: null
+      page: 1
     }
   }
 

@@ -9,6 +9,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Card from 'react-bootstrap/Card'
+import Button from 'react-bootstrap/Button'
 import { MDBBtn, MDBIcon } from 'mdbreact'
 
 import { getGames, resetGames } from '@/actions/game'
