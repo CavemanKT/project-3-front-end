@@ -56,7 +56,7 @@ class PagesHome extends React.Component {
             page > 1 && <button type="button" className="btn btn-info btn-spacing" onClick={() => this.getFilteredProductsPrevious(page - 1)}>Previous</button>
           }
           {
-            page <= meta?.totalPages && <button type="button" className="btn btn-info" onClick={() => this.getFilteredProductsNext(page + 1)}>Next</button>
+            page < meta?.totalPages && <button type="button" className="btn btn-info" onClick={() => this.getFilteredProductsNext(page + 1)}>Next</button>
           }
         </div>
       </>
