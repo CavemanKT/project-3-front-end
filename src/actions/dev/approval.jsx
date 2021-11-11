@@ -14,7 +14,6 @@ export const getApplicationsApproval = (GameId) => (dispatch) => {
     url: `${process.env.API_URL}/api/dev/approve/${GameId}`,
     withCredentials: true
   }).then((resp) => {
-    console.log(resp.data)
     dispatch(setApplicationsApproval(resp.data))
   }).finally(() => {
     dispatch(loading(GET_APPLICATIONS_APPROVAL, { loading: false }))
@@ -60,7 +59,6 @@ export const updateApprovedToFalseInDB = (GameId, TalentId) => (dispatch) => new
     url: `${process.env.API_URL}/api/dev/approved/${GameId}/${TalentId}`,
     withCredentials: true
   }).then((resp) => {
-    console.log(resp.data)
     dispatch(changeBtnToApprove(resp.data))
     resolve(resp)
   }).catch((err) => {

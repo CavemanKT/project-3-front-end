@@ -53,7 +53,6 @@ class PagesDevGameList extends React.Component {
       applicationsState: { applications }
     } = this.props
 
-    console.log(applications)
     return (
       <div id="pages-dev-gamelist">
 
@@ -75,7 +74,7 @@ class PagesDevGameList extends React.Component {
         </header>
 
         {/* Container */}
-        <Container id="pages-dev-games-container">
+        <Container id="pages-games-container">
           <Row>
             <Col>
               {

@@ -27,13 +27,10 @@ export const updateProfile = (values, currentUserId) => (dispatch) => new Promis
     data: values,
     withCredentials: true
   }).then((resp) => {
-
-    console.log(resp.data)
     resolve(resp)
   }).catch((err) => {
     reject(err)
   }).finally(() => {
-    console.log('currentUserId', currentUserId)
     dispatch(loading(UPDATE_PROFILE, { loading: false, id: currentUserId }))
   })
 })

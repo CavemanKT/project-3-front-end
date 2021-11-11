@@ -35,18 +35,16 @@ class PagesPublicShow extends React.Component {
     const { currentUserState: { currentUser } } = this.props
     this.props.getGame(GameId)
 
-    if (currentUser.type === 'Developer') {
-      this.props.getDevGame(GameId)
-      this.props.getDevGameApplications(GameId)
-      this.props.getApplicationsApproval(GameId)
+    if (currentUser) {
+      if (currentUser.type === 'Developer') {
+        this.props.getDevGame(GameId)
+        this.props.getDevGameApplications(GameId)
+        this.props.getApplicationsApproval(GameId)
+      }
+      if (currentUser.type === 'Marketer') {
+        this.props.getTalentApplication(GameId)
+      }
     }
-
-    if (currentUser.type === 'Marketer') {
-      this.props.getTalentApplication(GameId)
-    }
-
-    const { devGameState: { devGameApplications } } = this.props
-    console.log(devGameApplications)
   }
 
   componentWillUnmount() {
@@ -82,13 +80,11 @@ class PagesPublicShow extends React.Component {
   handleApproveSubmit(GameId, TalentId) {
     this.props.updateApprovedToTrueInDB(GameId, TalentId)
     const { devGameState: { devGameApplications } } = this.props
-    console.log(devGameApplications)
   }
 
   handleApprovedSubmit(GameId, TalentId) {
     this.props.updateApprovedToFalseInDB(GameId, TalentId)
     const { devGameState: { devGameApplications } } = this.props
-    console.log(devGameApplications)
   }
 
   // render func
@@ -167,21 +163,21 @@ class PagesPublicShow extends React.Component {
                   <Carousel variant="dark">
                     <Carousel.Item className="showpage-carousel-item">
                       <img
-                        className="w-100"
+                        className="w-100 img-size"
                         src={game.Images[0].url1}
                         alt="First slide"
                       />
                     </Carousel.Item>
                     <Carousel.Item>
                       <img
-                        className="w-100"
+                        className="w-100 img-size"
                         src={game.Images[0].url2}
                         alt="Second slide"
                       />
                     </Carousel.Item>
                     <Carousel.Item>
                       <img
-                        className="w-100"
+                        className="w-100 img-size"
                         src={game.Images[0].url3}
                         alt="Third slide"
                       />
@@ -204,8 +200,8 @@ class PagesPublicShow extends React.Component {
   }
 
   renderApplicantsList() {
-    const { devGameState: { devGameApplications, applicationsApprovals } } = this.props
-    console.log(devGameApplications)
+    const { devGameState: { devGameApplications } } = this.props
+
     return (
       <Container className="mb-5">
         <div id="applicant-list">
@@ -270,8 +266,8 @@ class PagesPublicShow extends React.Component {
             </Col>
             <Col xs={12} lg={6} className="job-requirement">
               <h3>Requirements</h3>
-              <ListGroup horizontal className="showpage-job-description-listgroup" key={game.id}>
-                <ListGroup.Item className="showpage-job-description-item">
+              <ListGroup horizontal className="showpage-job-requirement-listgroup" key={game.id}>
+                <ListGroup.Item className="showpage-job-requirement-item">
                   <p>
                     {game.qualification}
                   </p>
@@ -293,11 +289,11 @@ class PagesPublicShow extends React.Component {
     } = this.props
 
     return (
-      <div id="dev-showpage">
+      <div id="showpage">
 
         <div id="showpage-carousel-and-description-wrapper">
 
-          <div className="dev-showpage-header mb-3">
+          <div className="showpage-header mb-3">
 
             {/* Public: game's name */}
             <h1 id="game-name">{game.name}</h1>

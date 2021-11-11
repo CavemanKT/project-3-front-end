@@ -27,22 +27,16 @@ class pageDevProfile extends React.Component {
   }
 
   handleTalentProfileFormUpdateSubmit(values) {
-    console.log('hi')
     const { currentUserState: { currentUser }, TalentInfoState: { talentInfo } } = this.props
-    console.log('>>>>>>>>talentInfo', talentInfo)
-    console.log('>>>>>>>>talent', currentUser)
 
     this.props.updateTalentProfile(values, currentUser.id).then(() => {
-      console.log('hello world')
       const { history: { push } } = this.props
       push('/my/applications')
     })
   }
 
   render() {
-
     const { currentUserState: { currentUser }, profileState: { devInfo, updatingIDs }, TalentInfoState: { talentInfo } } = this.props
-    console.log('currentUser: ', currentUser, 'devInfo: ', devInfo, 'updatingIDs:', updatingIDs, 'talentInfo', talentInfo)
 
     return (
       <>

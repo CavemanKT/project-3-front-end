@@ -27,7 +27,6 @@ import pageDevEditPublish from '@/pages/form-page/dev/edit-publish'
 
 // profile page
 import pageDevProfile from '@/pages/form-page/dev/profile'
-import pageTalentProfile from '@/pages/form-page/talents/profile'
 
 import PagesNotFound from '@/pages/NotFound'
 

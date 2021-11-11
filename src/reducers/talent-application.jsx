@@ -15,7 +15,6 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_TALENT_APPLICATION: {
-      console.log('SET_TALENT_APPLICATION', action.payload)
       return produce(state, (draft) => {
         draft.application = action.payload.application
       })

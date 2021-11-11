@@ -8,14 +8,13 @@ export const addImageInDevGame = (payload) => ({ type: ADD_IMAGE_IN_DEV_GAME, pa
 export const CREATE_IMAGE = 'CREATE_IMAGE'
 export const createImage = (values, GameId) => (dispatch) => new Promise((resolve, reject) => {
   dispatch(loading(CREATE_IMAGE, { loading: true }))
-  console.log(values)
+
   axios({
     method: 'POST',
     url: `http://localhost:3000/api/dev/games/${GameId}/images`,
     data: getFormData(values, 'image'),
     withCredentials: true
   }).then((resp) => {
-    console.log(resp.data)
     dispatch(addImageInDevGame(resp.data))
     resolve(resp)
   }).catch((err) => {

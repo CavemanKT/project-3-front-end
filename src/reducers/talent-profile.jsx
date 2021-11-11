@@ -16,7 +16,6 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_TALENT_PROFILE: {
-      console.log(action.payload)
       return produce(state, (draft) => {
         draft.talentInfo = action.payload.currentUser
       })

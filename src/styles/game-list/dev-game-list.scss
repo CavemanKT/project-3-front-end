@@ -1,0 +1,43 @@
+html {
+  body {
+
+    #root {
+
+      // dev game list page
+      #pages-dev-gamelist {
+        min-height: 100vh;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+
+        .pages-dev-gamelist-header {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-evenly;
+          font-family: 'Biryani',
+            sans-serif;
+
+        }
+
+        #pages-games-container {
+          display: flex;
+          justify-content: center;
+          flex-grow: 1;
+
+          .pages-dev-games-list {
+            display: flex;
+            justify-content: center;
+            font-family: 'Biryani',
+              sans-serif;
+          }
+
+        }
+
+      }
+
+    }
+
+
+
+  }
+}

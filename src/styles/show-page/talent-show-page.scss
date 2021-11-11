@@ -1,0 +1,54 @@
+html {
+  body {
+    #root {
+      #showpage {
+        #showpage-job-detail-container {
+          @media screen and (min-width: 1358px) {
+            margin: 130px;
+          }
+
+          @media screen and (min-width: 1430px) {
+            margin-top: 200px;
+          }
+
+          #job-detail {
+            font-family: 'Biryani',
+              sans-serif;
+
+            .showpage-job-detail-row {
+              margin-top: 100px;
+
+              .job-description {
+                margin-top: 50px;
+
+                .showpage-job-description-listgroup {
+                  margin-top: 10px;
+
+                  .showpage-job-description-item {
+                    border-right-style: none;
+                  }
+
+                }
+              }
+
+              .job-requirement {
+                margin-top: 50px;
+
+                .showpage-job-requirement-listgroup {
+                  margin-top: 10px;
+
+                  .showpage-job-requirement-item {
+                    border-right-style: none;
+                  }
+                }
+
+              }
+            }
+
+          }
+        }
+
+      }
+    }
+  }
+}

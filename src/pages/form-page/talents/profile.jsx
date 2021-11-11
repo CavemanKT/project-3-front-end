@@ -25,7 +25,7 @@ class pageTalentProfile extends React.Component {
 
   render() {
     const { currentUserState: { currentUser }, TalentInfoState: { TalentInfo, updatingIDs } } = this.props
-    console.log('currentUser: ', currentUser, 'TalentInfo: ', TalentInfo, 'updatingIDs:', updatingIDs)
+
     return (
       <>
         <div>Edit your profile</div>

@@ -13,7 +13,6 @@ export const getTalentProfile = () => (dispatch) => {
     withCredentials: true
   }).then((resp) => {
     dispatch(setTalentProfile(resp.data))
-    console.log(resp.data)
   }).finally(() => {
     dispatch(loading(GET_TALENT_PROFILE, { loading: false }))
   })
@@ -22,20 +21,17 @@ export const getTalentProfile = () => (dispatch) => {
 export const UPDATE_TALENT_PROFILE = 'UPDATE_TALENT_PROFILE'
 export const updateTalentProfile = (values, currentUserId) => (dispatch) => new Promise((resolve, reject) => {
   dispatch(loading(UPDATE_TALENT_PROFILE, { loading: true, id: currentUserId }))
-  console.log('>>>>>>>>>>>currentUserId', currentUserId)
-  console.log(values)
+
   axios({
     method: 'PUT',
     url: 'http://localhost:3000/api/profile',
     data: values,
     withCredentials: true
   }).then((resp) => {
-    console.log(resp.data)
     resolve(resp)
   }).catch((err) => {
     reject(err)
   }).finally(() => {
-    console.log('currentUserId', currentUserId)
     dispatch(loading(UPDATE_TALENT_PROFILE, { loading: false, id: currentUserId }))
   })
 })
