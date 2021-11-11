@@ -12,6 +12,7 @@ html {
 
         .pages-dev-gamelist-header {
           display: flex;
+          margin-top: 10px;
           flex-direction: row;
           justify-content: space-evenly;
           font-family: 'Biryani',
@@ -39,7 +40,7 @@ html {
 
               a:link,
               a:visited {
-                color: black;
+                color: rgb(255, 255, 255);
                 text-decoration: none;
               }
 
@@ -60,8 +61,7 @@ html {
           position: relative;
 
           #game-name {
-            font-family: 'Expletus Sans',
-              cursive;
+            font-family: 'Expletus Sans';
           }
 
           #btn-apply {
@@ -148,4 +148,8 @@ html {
 .job-requirement {
   margin-top: 50px;
   margin-bottom: 50px;
+}
+
+.game-info-row {
+  margin-top: 10px;
 }

@@ -86,7 +86,7 @@ class PagesPublicShow extends React.Component {
     return (
       <div id="game-info">
         <h1 id="game-name">{game.name}</h1>
-        <Row>
+        <Row className="game-info-row">
           {
             game.Images && (
               <Col>
@@ -207,7 +207,6 @@ class PagesPublicShow extends React.Component {
     } = this.props
 
     if (currentUser && currentUser.type !== 'Marketer') return null
-    console.log('>>>>>>>>>>Application', application)
     return (
       <>
         {

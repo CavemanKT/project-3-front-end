@@ -5,12 +5,13 @@ import { loading } from '@/actions/loading'
 export const SET_GAMES = 'SET_GAMES'
 export const setGames = (payload) => ({ type: SET_GAMES, payload })
 export const GET_GAMES = 'GET_GAMES'
-export const getGames = () => (dispatch) => {
+export const getGames = (filter) => (dispatch) => {
   console.log('public game list')
   dispatch(loading(GET_GAMES, { loading: true }))
   axios({
     method: 'GET',
-    url: 'http://localhost:3000/api/games'
+    url: 'http://localhost:3000/api/games',
+    params: filter
   }).then((resp) => {
     dispatch(setGames(resp.data))
     console.log(' public game list: ', resp.data)

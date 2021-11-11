@@ -74,7 +74,7 @@ class LayoutsNavbar extends React.Component {
 
     return (
       <>
-        <Navbar id="layouts-navbar" bg="light" variant="light" expand="lg" collapseOnSelect>
+        <Navbar id="layouts-navbar" bg="dark" variant="dark" expand="lg" collapseOnSelect>
           <Navbar.Brand id="layouts-navbar-brand" as={NavLink} to="/">Indie Zone</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">

@@ -35,6 +35,11 @@ html {
       margin: 0px;
       padding: 0px;
 
+      background-image: url("https://media.istockphoto.com/photos/abstract-watercolor-background-pastel-coral-color-soft-texture-picture-id1152262840?b=1&k=20&m=1152262840&s=170667a&w=0&h=1ppx2FSjGPVgeDSeJyvnFkap1j1m2KO-FB8xB3vv-dM=");
+      background-size: cover;
+
+
+
       //sign up form
       .radio-group {
         .radio-label {
@@ -53,7 +58,8 @@ html {
           min-height: 100vh;
           position: relative;
           display: flex;
-          flex-direction: column;
+          justify-content: center;
+          align-items: center;
 
           header {
             font-family: 'Biryani',
@@ -61,8 +67,8 @@ html {
           }
 
           #pagesHome-games-container {
-            // display: flex;
-            // justify-content: center;
+            display: flex;
+            align-items: center;
 
             .pagesHome-games-list {
               // display: flex;
@@ -86,9 +92,14 @@ html {
                 }
               }
             }
+
           }
         }
       }
     }
   }
+}
+
+#page-btn {
+  margin-bottom: 20px;
 }

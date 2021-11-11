@@ -208,6 +208,7 @@ html {
 
         .pages-dev-gamelist-header {
           display: flex;
+          margin-top: 10px;
           flex-direction: row;
           justify-content: space-evenly;
           font-family: 'Biryani',
@@ -250,6 +251,8 @@ html {
 
       // dev-showpage
       #dev-showpage {
+        margin-top: 30px;
+        margin-bottom: 30px;
 
         #showpage-carousel-and-description-wrapper {
           margin-left: 100px;

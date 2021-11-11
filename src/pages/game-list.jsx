@@ -59,7 +59,7 @@ class PagesDevGameList extends React.Component {
       <div id="pages-dev-gamelist">
 
         {/* // header */}
-        <header className="text-center border-bottom pages-dev-gamelist-header">
+        <header className="text-center pages-dev-gamelist-header">
           {currentUser && currentUser.type === 'Developer' && (
           <>
             <Link className="btn btn-primary btn-box" to="/my/profile" onClick={this.handleGetDevProfile}>Profile</Link>

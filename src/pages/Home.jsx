@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 // import Container from 'react-bootstrap/Container'
 // import Row from 'react-bootstrap/Row'
 // import Col from 'react-bootstrap/Col'
-// import ListGroup from 'react-bootstrap/ListGroup'
+import Button from 'react-bootstrap/Button'
 
 import { getGames, resetGames } from '@/actions/game'
 
@@ -16,6 +16,8 @@ class PagesHome extends React.Component {
     this.state = {
       page: 1
     }
+
+    this.getFilteredProducts = this.getFilteredProducts.bind(this)
   }
 
   componentDidMount() {
@@ -26,37 +28,32 @@ class PagesHome extends React.Component {
     this.props.resetGames()
   }
 
-  getFilteredProductsNext(newPage) {
-    this.props.getGames({ ...this.state, page: newPage })
-    this.setState({ page: newPage })
-  }
-
-  getFilteredProductsPrevious(newPage) {
+  getFilteredProducts(newPage) {
     this.props.getGames({ ...this.state, page: newPage })
     this.setState({ page: newPage })
   }
 
   render() {
-    const { stateGame: { games, meta } } = this.props
+    const { stateGame: { games } } = this.props
     const { page } = this.state
-    console.log('>>>>>>>>>>', meta)
+
     return (
       <>
         <div id="pages-home" className="container text-center">
           <div className="row">
             {
               games.map((game) => (
-                <Link key={game.id} className="col-6 col-sm-4 col-md-3 mt-4" to={`/games/${game.id}`}>{game.name}</Link>
+                <Link key={game.id} className="col-6 col-sm-4 col-md-3 mt-4" to={`/games/${game.id}`}><Button variant="secondary" size="lg">{game.name}</Button></Link>
               ))
             }
           </div>
         </div>
-        <div className="d-flex justify-content-center">
+        <div id="page-btn" className="d-flex justify-content-center">
           {
-            page > 1 && <button type="button" className="btn btn-info btn-spacing" onClick={() => this.getFilteredProductsPrevious(page - 1)}>Previous</button>
+            page > 1 && <button type="button" className="btn btn-info btn-spacing" onClick={() => this.getFilteredProducts(page - 1)}>Previous</button>
           }
           {
-            page < meta?.totalPages && <button type="button" className="btn btn-info" onClick={() => this.getFilteredProductsNext(page + 1)}>Next</button>
+            true && <button type="button" className="btn btn-info" onClick={() => this.getFilteredProducts(page + 1)}>Next</button>
           }
         </div>
       </>
