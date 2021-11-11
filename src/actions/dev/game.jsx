@@ -33,9 +33,9 @@ export const createGame = (values) => (dispatch) => new Promise((resolve, reject
   axios({
     method: 'POST',
     url: 'http://localhost:3000/api/dev/games',
-    data: values
+    data: values,
+    withCredentials: true
   }).then((resp) => {
-    console.log(resp)
     dispatch(addGameInDev(resp.data))
     resolve(resp)
   }).catch((err) => {
@@ -53,7 +53,8 @@ export const updateGame = (values, GameId) => (dispatch) => new Promise((resolve
   axios({
     method: 'PUT',
     url: `http://localhost:3000/api/dev/games/${GameId}`,
-    data: values
+    data: values,
+    withCredentials: true
   }).then((resp) => {
     dispatch(editGameInDev(resp.data))
     resolve(resp)
@@ -71,7 +72,8 @@ export const destroyGame = (GameId) => (dispatch) => new Promise((resolve, rejec
   dispatch(loading(DESTROY_GAME, { loading: true }))
   axios({
     method: 'DELETE',
-    url: `http://localhost:3000/api/dev/games/${GameId}`
+    url: `http://localhost:3000/api/dev/games/${GameId}`,
+    withCredentials: true
   }).then((resp) => {
     dispatch(removeGameInDev(GameId))
     resolve(resp)
@@ -84,9 +86,9 @@ export const destroyGame = (GameId) => (dispatch) => new Promise((resolve, rejec
 
 export const SET_DEV_GAME = 'SET_DEV_GAME'
 export const setDevGame = (payload) => ({ type: SET_DEV_GAME, payload })
-export const GET_GAME = 'GET_GAME'
-export const getGame = (GameId) => (dispatch) => {
-  dispatch(loading(GET_GAME, { loading: true }))
+export const GET_DEV_GAME = 'GET_DEV_GAME'
+export const getDevGame = (GameId) => (dispatch) => {
+  dispatch(loading(GET_DEV_GAME, { loading: true }))
   axios({
     method: 'GET',
     url: `http://localhost:3000/api/dev/games/${GameId}`,
@@ -94,7 +96,7 @@ export const getGame = (GameId) => (dispatch) => {
   }).then((resp) => {
     dispatch(setDevGame(resp.data))
   }).finally(() => {
-    dispatch(loading(GET_GAME, { loading: false }))
+    dispatch(loading(GET_DEV_GAME, { loading: false }))
   })
 }
 
@@ -102,4 +104,27 @@ export const UNSET_DEV_GAME = 'UNSET_DEV_GAME'
 export const unsetDevGame = () => ({ type: UNSET_DEV_GAME })
 export const resetGame = () => (dispatch) => {
   dispatch(unsetDevGame())
+}
+
+export const SET_DEV_GAME_APPLICATIONS = 'SET_DEV_GAME_APPLICATIONS'
+export const setDevGameApplications = (payload) => ({ type: SET_DEV_GAME_APPLICATIONS, payload })
+export const GET_DEV_GAME_APPLICATIONS = 'GET_DEV_GAME_APPLICATIONS'
+export const getDevGameApplications = (GameId) => (dispatch) => {
+  dispatch(loading(GET_DEV_GAME_APPLICATIONS, { loading: true }))
+  axios({
+    method: 'GET',
+    url: `http://localhost:3000/api/dev/games/${GameId}/applications`,
+    withCredentials: true
+  }).then((resp) => {
+    console.log('GET_DEV_GAME_APPLICATIONS: ', resp.data)
+    dispatch(setDevGameApplications(resp.data))
+  }).finally(() => {
+    dispatch(loading(GET_DEV_GAME_APPLICATIONS, { loading: false }))
+  })
+}
+
+export const UNSET_DEV_GAME_APPLICATIONS = 'UNSET_DEV_GAME_APPLICATIONS'
+export const unsetDevGameApplications = () => ({ type: UNSET_DEV_GAME_APPLICATIONS })
+export const resetDevGameApplications = () => (dispatch) => {
+  dispatch(unsetDevGameApplications())
 }

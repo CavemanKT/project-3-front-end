@@ -10,11 +10,11 @@ export const getMyProfile = () => (dispatch) => new Promise((resolve, reject) =>
   console.log('getMyProfile')
   axios({
     method: 'GET',
-    url: 'http://localhost:3000/api/profile/:currentUserId',
+    url: 'http://localhost:3000/api/profile/',
     withCredentials: true
   }).then((resp) => {
-    console.log('getMyProfile--resp.data:', resp.data)
-    dispatch(setCurrentUser(resp.data))
+    console.log('getMyProfile--resp.data:', resp.data.currentUser)
+    dispatch(setCurrentUser(resp.data.currentUser))
     resolve(resp)
   }).catch((err) => {
     dispatch(unsetCurrentUser())
