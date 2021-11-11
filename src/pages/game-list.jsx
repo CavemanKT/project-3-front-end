@@ -12,9 +12,6 @@ import ListGroup from 'react-bootstrap/ListGroup'
 import { getGames, resetGames } from '@/actions/game'
 import { getGames as getDevGames, resetGames as resetDevGames } from '@/actions/dev/game'
 import { getTalentApplications, resetTalentApplications } from '@/actions/talent/application'
-
-import { getProfile } from '@/actions/dev/profile'
-
 import { getMyProfile } from '@/actions/my/profile'
 
 class PagesDevGameList extends React.Component {
@@ -119,12 +116,10 @@ class PagesDevGameList extends React.Component {
 PagesDevGameList.propTypes = {
   getTalentApplications: PropTypes.func.isRequired,
   resetTalentApplications: PropTypes.func.isRequired,
-  getProfile: PropTypes.func.isRequired,
+  getMyProfile: PropTypes.func.isRequired,
 
   getGames: PropTypes.func.isRequired,
   resetGames: PropTypes.func.isRequired,
-
-  getMyProfile: PropTypes.func.isRequired,
 
   getDevGames: PropTypes.func.isRequired,
   resetDevGames: PropTypes.func.isRequired,
@@ -147,12 +142,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   getTalentApplications,
   resetTalentApplications,
-  getProfile,
+  getMyProfile,
   getGames,
   resetGames,
-
-  getMyProfile,
-
   getDevGames,
   resetDevGames
 

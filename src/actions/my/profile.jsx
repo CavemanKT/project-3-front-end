@@ -1,21 +1,42 @@
 import axios from 'axios'
 
-export const SET_CURRENT_USER = 'SET_CURRENT_USER'
-export const setCurrentUser = (payload) => ({ type: SET_CURRENT_USER, payload })
+import { loading } from '@/actions/loading'
 
-export const UNSET_CURRENT_USER = 'UNSET_CURRENT_USER'
-export const unsetCurrentUser = () => ({ type: UNSET_CURRENT_USER })
-
+export const SET_MY_PROFILE = 'SET_MY_PROFILE'
+export const setMyProfile = (payload) => ({ type: SET_MY_PROFILE, payload })
+export const UNSET_MY_PROFILE = 'UNSET_MY_PROFILE'
+export const unsetMyProfile = (payload) => ({ type: UNSET_MY_PROFILE, payload })
+export const GET_MY_PROFILE = 'GET_MY_PROFILE'
 export const getMyProfile = () => (dispatch) => new Promise((resolve, reject) => {
+  dispatch(loading(GET_MY_PROFILE, { loading: true }))
   axios({
     method: 'GET',
-    url: 'http://localhost:3000/api/profile/',
+    url: 'http://localhost:3000/api/profile',
     withCredentials: true
   }).then((resp) => {
-    dispatch(setCurrentUser(resp.data.currentUser))
     resolve(resp)
+    dispatch(setMyProfile(resp.data.currentUser))
   }).catch((err) => {
-    dispatch(unsetCurrentUser())
     reject(err)
+  }).finally(() => {
+    dispatch(loading(GET_MY_PROFILE, { loading: false }))
+  })
+})
+
+export const UPDATE_PROFILE = 'UPDATE_PROFILE'
+export const updateProfile = (values, currentUserId) => (dispatch) => new Promise((resolve, reject) => {
+  dispatch(loading(UPDATE_PROFILE, { loading: true, id: currentUserId }))
+  axios({
+    method: 'PUT',
+    url: 'http://localhost:3000/api/profile',
+    data: values,
+    withCredentials: true
+  }).then((resp) => {
+    resolve(resp)
+    dispatch(setMyProfile(resp.data.currentUser))
+  }).catch((err) => {
+    reject(err)
+  }).finally(() => {
+    dispatch(loading(UPDATE_PROFILE, { loading: false, id: currentUserId }))
   })
 })

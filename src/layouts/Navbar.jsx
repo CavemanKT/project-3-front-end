@@ -30,10 +30,7 @@ class LayoutsNavbar extends React.Component {
   }
 
   handleLogoutClick() {
-    this.props.authLogout().then(() => {
-      // const { history: { push } } = this.props
-      // push('/')
-    })
+    this.props.authLogout()
   }
 
   handleSignupSubmit(values) {

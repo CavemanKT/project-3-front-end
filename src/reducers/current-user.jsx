@@ -1,8 +1,8 @@
 import produce from 'immer'
 
 import {
-  SET_CURRENT_USER,
-  UNSET_CURRENT_USER
+  SET_MY_PROFILE,
+  UNSET_MY_PROFILE
 } from '@/actions/my/profile'
 
 const initialState = {
@@ -11,12 +11,12 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case SET_CURRENT_USER: {
+    case SET_MY_PROFILE: {
       return produce(state, (draft) => {
         draft.currentUser = action.payload
       })
     }
-    case UNSET_CURRENT_USER: {
+    case UNSET_MY_PROFILE: {
       return produce(state, (draft) => {
         draft.currentUser = null
       })

@@ -11,22 +11,17 @@ import LayoutsFooter from '@/layouts/Footer'
 
 import DevPrivateRoute from '@/components/DevPrivateRoute'
 import TalentsPrivateRoute from '@/components/TalentsPrivateRoute'
+import PrivateRoute from '@/components/PrivateRoute'
 import Loading from '@/components/Loading'
 
-// main page & game list
 import PagesHome from '@/pages/Home'
-import PagesUserGameList from '@/pages/game-list'
-
-// show page
 import PagesShow from '@/pages/show-page/Show'
 
-// publish page
+import PagesMyProfile from '@/pages/form-page/profile'
+
+import PagesUserGameList from '@/pages/game-list'
 import pageDevPublish from '@/pages/form-page/dev/publish'
-
 import pageDevEditPublish from '@/pages/form-page/dev/edit-publish'
-
-// profile page
-import pageDevProfile from '@/pages/form-page/dev/profile'
 
 import PagesNotFound from '@/pages/NotFound'
 
@@ -57,11 +52,13 @@ class App extends React.Component {
             <Switch>
               {/* Shared Paths */}
               <Route exact path="/" component={PagesHome} />
+
               {/* Shared Paths */}
               <Route exact path="/games/:id" component={PagesShow} />
+
               {/* for now, it will just be Route, later change to GeneralRoute */}
-              <Route exact path="/my/profile" component={pageDevProfile} />
-              {/* <TalentsPrivateRoute exact path="/my/profile/talent" component={pageTalentProfile} /> */}
+              <PrivateRoute exact path="/my/profile" component={PagesMyProfile} />
+
               {/* Talent Paths */}
               <TalentsPrivateRoute exact path="/my/applications" component={PagesUserGameList} />
 
@@ -105,7 +102,6 @@ App.propTypes = {
 
 const mapDispatchToProps = {
   getMyProfile
-
 }
 
 export default connect(null, mapDispatchToProps)(App)

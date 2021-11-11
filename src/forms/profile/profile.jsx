@@ -6,7 +6,7 @@ import * as yup from 'yup'
 const RenderForm = ({ errors, touched, isSubmitting }) => (
   <Form>
     <div className="form-group">
-      <label htmlFor="username">username</label>
+      <label htmlFor="username">Username</label>
       <Field
         id="username"
         className={`form-control ${(errors.username && touched.username ? ' is-invalid' : '')}`}
