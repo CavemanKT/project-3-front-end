@@ -11,46 +11,46 @@ class pageDevPublish extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {}
-
-    this.handlePublishFormCreateSubmit = this.handlePublishFormCreateSubmit.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handlePublishFormCreateSubmit(values) {
-    this.props.createGame(values).then((resp) => {
+  handleSubmit({ url1, url2, url3, ...gameValues }) {
+    this.props.createGame(gameValues).then((resp) => {
       const GameId = Number(resp.data.game.id)
-      this.props.createImage(values, GameId)
+
       const { history: { replace } } = this.props
-      replace('/my/games')
+      if (url1 || url2 || url3) {
+        this.props.createImage({ url1, url2, url3 }, GameId).then(() => {
+          replace('/my/games')
+        })
+      } else {
+        replace('/my/games')
+      }
     })
   }
 
   render() {
     return (
-      <>
-        <div>Publish Your New Game</div>
-        <FormsGamePublish
-          onSubmit={this.handlePublishFormCreateSubmit}
-        />
-      </>
+      <div id="pages-my-games-new" className="container my-3">
+        <div className="row">
+          <div className="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+            <h2 className="text-center">Publish Your New Game</h2>
+            <FormsGamePublish
+              onSubmit={this.handleSubmit}
+            />
+          </div>
+        </div>
+      </div>
     )
   }
 }
 
 pageDevPublish.propTypes = {
-
   history: PropTypes.shape().isRequired,
   createGame: PropTypes.func.isRequired,
-  updateGame: PropTypes.func.isRequired,
-  destroyGame: PropTypes.func.isRequired,
   createImage: PropTypes.func.isRequired
-  // stateGame: PropTypes.shape().isRequired
 
 }
-
-const mapStateToProps = (state) => ({
-  // stateGame: state.game
-})
 
 const mapDispatchToProps = {
   createGame,
@@ -59,4 +59,4 @@ const mapDispatchToProps = {
   createImage
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(pageDevPublish)
+export default connect(null, mapDispatchToProps)(pageDevPublish)

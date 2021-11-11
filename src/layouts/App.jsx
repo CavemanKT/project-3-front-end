@@ -54,17 +54,21 @@ class App extends React.Component {
               <Route exact path="/" component={PagesHome} />
 
               {/* Shared Paths */}
+              {/* ! */}
               <Route exact path="/games/:id" component={PagesShow} />
 
               {/* for now, it will just be Route, later change to GeneralRoute */}
               <PrivateRoute exact path="/my/profile" component={PagesMyProfile} />
 
               {/* Talent Paths */}
+              {/* ! */}
               <TalentsPrivateRoute exact path="/my/applications" component={PagesUserGameList} />
 
               {/* Developer Paths */}
+              {/* ! */}
               <DevPrivateRoute exact path="/my/games" component={PagesUserGameList} />
               <DevPrivateRoute exact path="/my/games/new" component={pageDevPublish} />
+              {/* ! */}
               <DevPrivateRoute exact path="/my/games/:id/edit" component={pageDevEditPublish} />
 
               <Route component={PagesNotFound} />
