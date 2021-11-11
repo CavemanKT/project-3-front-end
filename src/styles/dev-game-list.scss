@@ -90,10 +90,9 @@ html {
           }
 
           #showpage-description-container {
-
-            margin-left: 70px;
+            margin-left: 40px;
             margin-top: 200px;
-            margin-right: 60px;
+            margin-right: 40px;
 
             position: relative;
             font-family: 'Biryani',
@@ -112,6 +111,7 @@ html {
 
         #applicant-list {
           margin-top: 200px;
+          margin-bottom: 100px;
 
           @media screen and (max-width: 1358px) {
             margin-top: 250px;
@@ -129,61 +129,23 @@ html {
 
           }
         }
-
-
-        #showpage-job-detail-container {
-          @media screen and (min-width: 1358px) {
-            margin: 130px;
-          }
-
-          @media screen and (min-width: 1430px) {
-            margin-top: 200px;
-          }
-
-          #job-detail {
-            font-family: 'Biryani',
-              sans-serif;
-
-            .showpage-job-detail-row {
-              margin-top: 100px;
-
-              .job-description {
-                margin-top: 50px;
-
-                .showpage-job-description-listgroup {
-                  margin-top: 10px;
-
-                  .showpage-job-description-item {
-                    border-right-style: none;
-                  }
-
-                }
-              }
-
-              .job-requirement {
-                margin-top: 50px;
-
-                .showpage-job-requirement-listgroup {
-                  margin-top: 10px;
-
-                  .showpage-job-requirement-item {
-                    border-right-style: none;
-                  }
-                }
-
-              }
-            }
-
-          }
-        }
-
-
       }
-
-
     }
-
-
-
   }
+
+
+}
+
+#job-detail {
+  font-family: 'Biryani';
+}
+
+.job-description {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.job-requirement {
+  margin-top: 50px;
+  margin-bottom: 50px;
 }

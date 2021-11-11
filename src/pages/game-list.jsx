@@ -53,7 +53,7 @@ class PagesDevGameList extends React.Component {
       currentUserState: { currentUser },
       applicationsState: { applications }
     } = this.props
-    console.log(applications)
+    console.log('>>>>>>>>>>>>', applications)
 
     return (
       <div id="pages-dev-gamelist">
@@ -109,15 +109,15 @@ class PagesDevGameList extends React.Component {
                   <>
                     <Col>
                       {/* <ListGroup horizontal="sm" className="pages-dev-games-list" /> */}
-                      <Card horizontal="sm" className="pages-dev-games-list">
+                      <Card horizontal="sm" className="pages-dev-games-list card-box">
                         <Card.Header>{item.Game.name}</Card.Header>
                         <Card.Body>
-                          <Card.Text>
+                          <Card.Text className="game-list-card-text text-box">
                             <Link
                               key={item.Game.name}
                               to={`/games/${item.Game.id}`}
                               className="list-group-item list-group-item-action"
-                            > <div>{item.Game.description}</div>
+                            > {item.Game.description}
                             </Link>
                           </Card.Text>
                         </Card.Body>

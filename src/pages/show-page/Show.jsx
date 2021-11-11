@@ -9,6 +9,17 @@ import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import ListGroup from 'react-bootstrap/ListGroup'
 
+// Jason Stuff
+import {
+  Accordion,
+  AccordionItem,
+  AccordionItemHeading,
+  AccordionItemButton,
+  AccordionItemPanel
+} from 'react-accessible-accordion'
+
+import 'react-accessible-accordion/dist/fancy-example.css'
+
 import { getGame, resetGame } from '@/actions/game'
 import { getDevGameApplications, resetDevGameApplications, destroyGame } from '@/actions/dev/game'
 import { createTalentApplication, destroyTalentApplication, getTalentApplication, resetTalentApplication } from '@/actions/talent/application'
@@ -110,9 +121,19 @@ class PagesPublicShow extends React.Component {
 
           <Col xs={6}>
             <div id="showpage-description-container" className="col-md-auto">
-              <h2>Description: </h2>
               <article>
-                <p>{game.description}</p>
+                <Accordion allowZeroExpanded>
+                  <AccordionItem>
+                    <AccordionItemHeading>
+                      <AccordionItemButton>
+                        Description
+                      </AccordionItemButton>
+                    </AccordionItemHeading>
+                    <AccordionItemPanel>
+                      <p>{game.description}</p>
+                    </AccordionItemPanel>
+                  </AccordionItem>
+                </Accordion>
               </article>
             </div>
           </Col>
@@ -159,7 +180,7 @@ class PagesPublicShow extends React.Component {
     return (
       <div id="applicant-list">
         <h3>Applicant list</h3>
-        <Row>
+        <Row className="showpage-applicant-list-row ">
           <Col>
             {
               devGameApplications.map((applicant) => (
@@ -227,30 +248,34 @@ class PagesPublicShow extends React.Component {
     if (currentUser && currentUser.type !== 'Marketer') return null
     return (
       <div id="job-detail">
-        <Row className="showpage-job-detail-row">
-          <Col xs={12} lg={6} className="job-description">
-            <h3>Job Description</h3>
-            <ListGroup horizontal className="showpage-job-description-listgroup" key={game.id}>
-              <ListGroup.Item className="showpage-job-description-item">
-                <p>
-                  {game.jobDescription}
-                </p>
-              </ListGroup.Item>
-
-            </ListGroup>
-          </Col>
-          <Col xs={12} lg={6} className="job-requirement">
-            <h3>Requirements</h3>
-            <ListGroup horizontal className="showpage-job-description-listgroup" key={game.id}>
-              <ListGroup.Item className="showpage-job-description-item">
-                <p>
-                  {game.qualification}
-                </p>
-              </ListGroup.Item>
-
-            </ListGroup>
-          </Col>
-        </Row>
+        <Col xs={12} lg={6} className="job-description">
+          <Accordion allowZeroExpanded>
+            <AccordionItem>
+              <AccordionItemHeading>
+                <AccordionItemButton>
+                  Job Description
+                </AccordionItemButton>
+              </AccordionItemHeading>
+              <AccordionItemPanel>
+                <p>{game.jobDescription}</p>
+              </AccordionItemPanel>
+            </AccordionItem>
+          </Accordion>
+        </Col>
+        <Col xs={12} lg={6} className="job-requirement">
+          <Accordion allowZeroExpanded>
+            <AccordionItem>
+              <AccordionItemHeading>
+                <AccordionItemButton>
+                  Requirements
+                </AccordionItemButton>
+              </AccordionItemHeading>
+              <AccordionItemPanel>
+                <p>{game.qualification}</p>
+              </AccordionItemPanel>
+            </AccordionItem>
+          </Accordion>
+        </Col>
       </div>
     )
   }
