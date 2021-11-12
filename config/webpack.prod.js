@@ -62,7 +62,7 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.API_URL': JSON.stringify('http://localhost:3000')
+      'process.env.API_URL': JSON.stringify('https://indie-zone.herokuapp.com')
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '../src/template.html'),
