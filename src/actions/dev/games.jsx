@@ -9,7 +9,7 @@ export const getGames = () => (dispatch) => {
   dispatch(loading(GET_DEV_GAMES, { loading: true }))
   axios({
     method: 'GET',
-    url: 'http://localhost:3000/api/dev/games',
+    url: `${process.env.API_URL}/api/dev/games`,
     withCredentials: true
   }).then((resp) => {
     dispatch(setDevGames(resp.data))
@@ -31,7 +31,7 @@ export const getDevGame = (GameId) => (dispatch) => {
   dispatch(loading(GET_DEV_GAME, { loading: true }))
   axios({
     method: 'GET',
-    url: `http://localhost:3000/api/dev/games/${GameId}`,
+    url: `${process.env.API_URL}/api/dev/games/${GameId}`,
     withCredentials: true
   }).then((resp) => {
     dispatch(setDevGame(resp.data))
@@ -51,7 +51,7 @@ export const createGame = (values) => (dispatch) => new Promise((resolve, reject
   dispatch(loading(CREATE_GAME, { loading: true }))
   axios({
     method: 'POST',
-    url: 'http://localhost:3000/api/dev/games',
+    url: `${process.env.API_URL}/api/dev/games`,
     data: values,
     withCredentials: true
   }).then((resp) => {
@@ -68,7 +68,7 @@ export const updateGame = (values, GameId) => (dispatch) => new Promise((resolve
   dispatch(loading(UPDATE_GAME, { loading: true }))
   axios({
     method: 'PUT',
-    url: `http://localhost:3000/api/dev/games/${GameId}`,
+    url: `${process.env.API_URL}/api/dev/games/${GameId}`,
     data: values,
     withCredentials: true
   }).then((resp) => {
@@ -85,7 +85,7 @@ export const destroyGame = (GameId) => (dispatch) => new Promise((resolve, rejec
   dispatch(loading(DESTROY_GAME, { loading: true }))
   axios({
     method: 'DELETE',
-    url: `http://localhost:3000/api/dev/games/${GameId}`,
+    url: `${process.env.API_URL}/api/dev/games/${GameId}`,
     withCredentials: true
   }).then((resp) => {
     resolve(resp)
@@ -103,7 +103,7 @@ export const getDevGameApplications = (GameId) => (dispatch) => {
   dispatch(loading(GET_DEV_GAME_APPLICATIONS, { loading: true }))
   axios({
     method: 'GET',
-    url: `http://localhost:3000/api/dev/games/${GameId}/applications`,
+    url: `${process.env.API_URL}/api/dev/games/${GameId}/applications`,
     withCredentials: true
   }).then((resp) => {
     dispatch(setDevGameApplications(resp.data))

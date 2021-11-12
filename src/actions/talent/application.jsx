@@ -9,7 +9,7 @@ export const getTalentApplications = () => (dispatch) => {
   dispatch(loading(GET_TALENT_APPLICATIONS, { loading: true }))
   axios({
     method: 'GET',
-    url: 'http://localhost:3000/api/talent/applications',
+    url: `${process.env.API_URL}/api/talent/applications`,
     withCredentials: true
   }).then((resp) => {
     dispatch(setTalentApplications(resp.data))
@@ -32,7 +32,7 @@ export const getTalentApplication = (GameId) => (dispatch) => {
   dispatch(loading(GET_TALENT_APPLICATION, { loading: true }))
   axios({
     method: 'GET',
-    url: `http://localhost:3000/api/talent/applications/${GameId}`,
+    url: `${process.env.API_URL}/api/talent/applications/${GameId}`,
     withCredentials: true
   }).then((resp) => {
     dispatch(setTalentApplication(resp.data))
@@ -53,7 +53,7 @@ export const createTalentApplication = (GameId) => (dispatch) => new Promise((re
   dispatch(loading(CREATE_TALENT_APPLICATION, { loading: true, GameId }))
   axios({
     method: 'POST',
-    url: `http://localhost:3000/api/talent/games/${GameId}/applications`,
+    url: `${process.env.API_URL}/api/talent/games/${GameId}/applications`,
     withCredentials: true
   }).then((resp) => {
     dispatch(setTalentApplication(resp.data))
@@ -71,7 +71,7 @@ export const destroyTalentApplication = (GameId) => (dispatch) => new Promise((r
   dispatch(loading(DESTROY_TALENT_APPLICATION, { loading: true }))
   axios({
     method: 'DELETE',
-    url: `http://localhost:3000/api/talent/games/${GameId}/applications`,
+    url: `${process.env.API_URL}/api/talent/games/${GameId}/applications`,
     withCredentials: true
   }).then((resp) => {
     dispatch(unsetTalentApplication())

@@ -11,7 +11,7 @@ export const getMyProfile = () => (dispatch) => new Promise((resolve, reject) =>
   dispatch(loading(GET_MY_PROFILE, { loading: true }))
   axios({
     method: 'GET',
-    url: 'http://localhost:3000/api/profile',
+    url: `${process.env.API_URL}/api/profile`,
     withCredentials: true
   }).then((resp) => {
     resolve(resp)
@@ -28,7 +28,7 @@ export const updateProfile = (values, currentUserId) => (dispatch) => new Promis
   dispatch(loading(UPDATE_PROFILE, { loading: true, id: currentUserId }))
   axios({
     method: 'PUT',
-    url: 'http://localhost:3000/api/profile',
+    url: `${process.env.API_URL}/api/profile`,
     data: values,
     withCredentials: true
   }).then((resp) => {
