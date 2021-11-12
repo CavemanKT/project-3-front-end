@@ -17,6 +17,8 @@ import {
   AccordionItemPanel
 } from 'react-accessible-accordion'
 
+import 'react-accessible-accordion/dist/fancy-example.css'
+
 import { getGame, resetGame } from '@/actions/game'
 import { getDevGameApplications, resetDevGameApplications, destroyGame } from '@/actions/dev/games'
 import { createTalentApplication, destroyTalentApplication, getTalentApplication } from '@/actions/talent/application'

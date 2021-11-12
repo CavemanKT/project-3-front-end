@@ -49,11 +49,11 @@ html {
             font-family: 'Biryani',
               sans-serif;
 
-            // @media screen and(max-width: 1358px) {
-            //   width: 350px;
-            //   min-height: 400px;
-            //   margin-right: 60px;
-            // }
+            @media screen and(max-width: 1358px) {
+              width: 350px;
+              min-height: 400px;
+              margin-right: 60px;
+            }
           }
         }
 

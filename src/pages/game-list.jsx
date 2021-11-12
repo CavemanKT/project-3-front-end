@@ -45,7 +45,7 @@ class PagesMyGameList extends React.Component {
               <>
                 <Link className="btn btn-primary btn-box" to="/my/profile">Profile</Link>
                 <h1>My Games</h1>
-                <Link className="btn btn-primary btn-box" to="/my/games/new">Publish</Link>
+                <Link className="btn btn-outline-primary btn-box" to="/my/games/new">Publish</Link>
               </>
             )
           }
@@ -62,8 +62,7 @@ class PagesMyGameList extends React.Component {
         {/* Container */}
         <Container id="pages-games-container">
           <Row xs={1} md={2} lg={2} className="g-4">
-            <Col>
-              {
+            {
                 currentUser && currentUser.type === 'Developer' && devGames.map((item) => (
                   <>
                     <Col className="col-box">
@@ -87,7 +86,7 @@ class PagesMyGameList extends React.Component {
                   </>
                 ))
               }
-              {
+            {
                 currentUser && currentUser.type === 'Marketer' && applications.map((item) => (
                   <>
                     <Col>
@@ -109,7 +108,6 @@ class PagesMyGameList extends React.Component {
                   </>
                 ))
               }
-            </Col>
           </Row>
         </Container>
       </div>
