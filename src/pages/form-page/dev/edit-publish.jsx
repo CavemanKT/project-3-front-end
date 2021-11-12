@@ -3,32 +3,47 @@ import PropTypes from 'prop-types'
 import FormsGamePublishEdit from '@/forms/publish/edit'
 import { connect } from 'react-redux'
 
-import { createGame, updateGame, destroyGame } from '@/actions/dev/game'
+import { updateGame, getDevGame } from '@/actions/dev/games'
+import { updateImage } from '@/actions/dev/image'
 
 class pageDevEditPublish extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      // selectedGame: null
-    }
-
-    this.handlePublishFormUpdateSubmit = this.handlePublishFormUpdateSubmit.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handlePublishFormUpdateSubmit(values) {
+  componentDidMount() {
+    const { match: { params: { id } } } = this.props
+    this.props.getDevGame(id)
+  }
+
+  handleSubmit({ url1, url2, url3, ...gameValues }) {
     const GameId = this.props.match.params.id
-    this.props.updateGame(values, GameId).then((resp) => {
+    this.props.updateGame(gameValues, GameId).then(() => {
       const { history: { push } } = this.props
-      push(`/games/${resp.data.game.id}`)
+      if (url1 || url2 || url3) {
+        this.props.updateImage({ url1, url2, url3 }, GameId).then(() => {
+          push(`/games/${GameId}`)
+        })
+      } else {
+        push(`/games/${GameId}`)
+      }
     })
   }
 
   render() {
+    const { devGameState: { devGame, isGetDevGameLoading } } = this.props
+
+    if (isGetDevGameLoading) return <div>Loading</div>
+    if (!devGame) return <div>No Such Game</div>
     return (
       <>
         <div>Edit and Update Your Game Here</div>
-        <FormsGamePublishEdit onSubmit={this.handlePublishFormUpdateSubmit} />
+        <FormsGamePublishEdit
+          onSubmit={this.handleSubmit}
+          initialValues={devGame}
+        />
       </>
     )
   }
@@ -37,20 +52,20 @@ class pageDevEditPublish extends React.Component {
 pageDevEditPublish.propTypes = {
   match: PropTypes.shape().isRequired,
   history: PropTypes.shape().isRequired,
-  createGame: PropTypes.func.isRequired,
+  devGameState: PropTypes.shape().isRequired,
+  getDevGame: PropTypes.func.isRequired,
   updateGame: PropTypes.func.isRequired,
-  destroyGame: PropTypes.func.isRequired
-  // stateGame: PropTypes.shape().isRequired
+  updateImage: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
-  // stateGame: state.game
+  devGameState: state.devGame
 })
 
 const mapDispatchToProps = {
-  createGame,
+  getDevGame,
   updateGame,
-  destroyGame
+  updateImage
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(pageDevEditPublish)

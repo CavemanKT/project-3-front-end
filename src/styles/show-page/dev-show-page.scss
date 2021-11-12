@@ -1,0 +1,31 @@
+html {
+  body {
+    #root {
+
+      #showpage {
+
+        #applicant-list {
+          margin-top: 200px;
+          margin-bottom: 100px;
+
+          @media screen and (max-width: 1358px) {
+            margin-top: 250px;
+          }
+
+          font-family: 'Biryani',
+          sans-serif;
+
+          .showpage-applicant-list-row {
+            margin-top: 10px;
+
+            .showpage-applicant-list-item {
+              border-right-style: none;
+            }
+
+          }
+        }
+
+      }
+    }
+  }
+}

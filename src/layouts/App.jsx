@@ -6,27 +6,22 @@ import { ToastContainer } from 'react-toastify'
 
 import { getMyProfile } from '@/actions/my/profile'
 
-import LayoutsNavbar from '@/layouts/Navbar'
+import LayoutsNavbar1 from '@/layouts/Navbar'
 import LayoutsFooter from '@/layouts/Footer'
 
 import DevPrivateRoute from '@/components/DevPrivateRoute'
 import TalentsPrivateRoute from '@/components/TalentsPrivateRoute'
+import PrivateRoute from '@/components/PrivateRoute'
 import Loading from '@/components/Loading'
 
-// main page & game list
 import PagesHome from '@/pages/Home'
-import PagesUserGameList from '@/pages/game-list'
-
-// show page
 import PagesShow from '@/pages/show-page/Show'
 
-// publish page
+import PagesMyProfile from '@/pages/form-page/profile'
+
+import PagesUserGameList from '@/pages/game-list'
 import pageDevPublish from '@/pages/form-page/dev/publish'
-
 import pageDevEditPublish from '@/pages/form-page/dev/edit-publish'
-
-// profile page
-import pageDevProfile from '@/pages/form-page/dev/profile'
 
 import PagesNotFound from '@/pages/NotFound'
 
@@ -41,7 +36,6 @@ class App extends React.Component {
 
   componentDidMount() {
     this.props.getMyProfile().finally(() => {
-      console.log('getMyProfile---didMount')
       this.setState({ loaded: true })
     })
   }
@@ -51,34 +45,36 @@ class App extends React.Component {
 
     return (
       <Router>
-        <LayoutsNavbar />
+        <LayoutsNavbar1 />
         <div id="body-footer-container">
           {
-          loaded ? (
-            <Switch>
-              {/* Shared Paths */}
-              <Route exact path="/" component={PagesHome} />
-              {/* Shared Paths */}
-              <Route exact path="/games/:id" component={PagesShow} />
-              {/* for now, it will just be Route, later change to GeneralRoute */}
-              <Route exact path="/my/profile" component={pageDevProfile} />
+            loaded ? (
+              <Switch>
+                {/* Shared Paths */}
+                <Route exact path="/" component={PagesHome} />
 
-              {/* Talent Paths */}
-              <TalentsPrivateRoute exact path="/my/applications" component={PagesUserGameList} />
+                {/* Shared Paths */}
+                <Route exact path="/games/:id" component={PagesShow} />
 
-              {/* Developer Paths */}
-              <DevPrivateRoute exact path="/my/games" component={PagesUserGameList} />
-              <DevPrivateRoute exact path="/my/games/new" component={pageDevPublish} />
-              <DevPrivateRoute exact path="/my/games/:id/edit" component={pageDevEditPublish} />
+                {/* for now, it will just be Route, later change to GeneralRoute */}
+                <PrivateRoute exact path="/my/profile" component={PagesMyProfile} />
 
-              <Route component={PagesNotFound} />
-            </Switch>
-          ) : (
-            <div className="my-3">
-              <Loading />
-            </div>
-          )
-        }
+                {/* Talent Paths */}
+                <TalentsPrivateRoute exact path="/my/applications" component={PagesUserGameList} />
+
+                {/* Developer Paths */}
+                <DevPrivateRoute exact path="/my/games" component={PagesUserGameList} />
+                <DevPrivateRoute exact path="/my/games/new" component={pageDevPublish} />
+                <DevPrivateRoute exact path="/my/games/:id/edit" component={pageDevEditPublish} />
+
+                <Route component={PagesNotFound} />
+              </Switch>
+            ) : (
+              <div className="my-3">
+                <Loading />
+              </div>
+            )
+          }
         </div>
 
         <LayoutsFooter />
@@ -106,7 +102,6 @@ App.propTypes = {
 
 const mapDispatchToProps = {
   getMyProfile
-
 }
 
 export default connect(null, mapDispatchToProps)(App)

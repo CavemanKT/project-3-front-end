@@ -3,7 +3,9 @@ import PropTypes from 'prop-types'
 import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as yup from 'yup'
 
-const RenderForm = ({ errors, touched, isSubmitting }) => (
+import FileField from '@/components/FileField'
+
+const RenderForm = ({ values, errors, touched, isSubmitting, setFieldValue }) => (
   <Form>
     <div className="form-group">
       <label htmlFor="name">Name</label>
@@ -23,6 +25,8 @@ const RenderForm = ({ errors, touched, isSubmitting }) => (
         className={`form-control ${(errors.description && touched.description ? ' is-invalid' : '')}`}
         name="description"
         type="text"
+        as="textarea"
+        rows={6}
       />
       <ErrorMessage component="div" className="invalid-feedback" name="description" />
     </div>
@@ -34,6 +38,8 @@ const RenderForm = ({ errors, touched, isSubmitting }) => (
         className={`form-control ${(errors.jobDescription && touched.jobDescription ? ' is-invalid' : '')}`}
         name="jobDescription"
         type="text"
+        as="textarea"
+        rows={4}
       />
       <ErrorMessage component="div" className="invalid-feedback" name="jobDescription" />
     </div>
@@ -44,23 +50,33 @@ const RenderForm = ({ errors, touched, isSubmitting }) => (
         id="qualification"
         className={`form-control ${(errors.qualification && touched.qualification ? ' is-invalid' : '')}`}
         name="qualification"
-        type="qualification"
+        type="text"
+        as="textarea"
+        rows={4}
       />
       <ErrorMessage component="div" className="invalid-feedback" name="qualification" />
     </div>
 
-    {/* <div className="form-group">
-      <label htmlFor="url">File upload</label>
-      <Field
-        id="url"
-        name="url"
-        type="file"
-        onChange={(event) => {
-          setFieldValue('url', event.currentTarget.files[0])
-        }}
-        className="form-control"
-      />
-    </div> */}
+    <FileField
+      name="url1"
+      setFieldValue={setFieldValue}
+      value={values.url1}
+      existingFileUrl={values?.Images?.[0]?.url1}
+    />
+
+    <FileField
+      name="url2"
+      setFieldValue={setFieldValue}
+      value={values.url2}
+      existingFileUrl={values?.Images?.[0]?.url2}
+    />
+
+    <FileField
+      name="url3"
+      setFieldValue={setFieldValue}
+      value={values.url3}
+      existingFileUrl={values?.Images?.[0]?.url3}
+    />
 
     <button className="btn btn-success" type="submit" disabled={isSubmitting}>Update</button>
   </Form>
@@ -68,7 +84,9 @@ const RenderForm = ({ errors, touched, isSubmitting }) => (
 RenderForm.propTypes = {
   errors: PropTypes.shape().isRequired,
   touched: PropTypes.shape().isRequired,
-  isSubmitting: PropTypes.bool.isRequired
+  isSubmitting: PropTypes.bool.isRequired,
+  values: PropTypes.shape().isRequired,
+  setFieldValue: PropTypes.func.isRequired
 }
 
 const authLoginSchema = yup.object().shape({
@@ -78,15 +96,9 @@ const authLoginSchema = yup.object().shape({
   qualification: yup.string().required('Required')
 })
 
-
-const FormsGamePublishEdit = ({ onSubmit }) => (
+const FormsGamePublishEdit = ({ onSubmit, initialValues }) => (
   <Formik
-    initialValues={{
-      name: '',
-      description: '',
-      jobDescription: '',
-      qualification: ''
-    }}
+    initialValues={initialValues}
     validationSchema={authLoginSchema}
     onSubmit={onSubmit}
     component={RenderForm}
@@ -94,8 +106,8 @@ const FormsGamePublishEdit = ({ onSubmit }) => (
 )
 
 FormsGamePublishEdit.propTypes = {
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
+  initialValues: PropTypes.shape().isRequired
 }
 
 export default FormsGamePublishEdit
-

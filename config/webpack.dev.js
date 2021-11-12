@@ -34,10 +34,19 @@ module.exports = {
           'postcss-loader',
           'sass-loader'
         ]
+      }, {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader'
+        ]
       }
     ]
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env.API_URL': JSON.stringify('http://localhost:3000')
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '../src/template.html'),
@@ -45,6 +54,8 @@ module.exports = {
     })
   ],
   devServer: {
+    host: 'localhost',
+    port: 8080,
     historyApiFallback: true,
     hot: true
   }

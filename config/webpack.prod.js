@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
@@ -32,6 +33,12 @@ module.exports = {
           'postcss-loader',
           'sass-loader'
         ]
+      }, {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader'
+        ]
       }
     ]
   },
@@ -54,6 +61,9 @@ module.exports = {
     }
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env.API_URL': JSON.stringify('http://localhost:3000')
+    }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '../src/template.html'),
       filename: 'index.html'

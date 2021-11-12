@@ -7,24 +7,15 @@ import { connect } from 'react-redux'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import ListGroup from 'react-bootstrap/ListGroup'
 
-import { getGames, resetGames } from '@/actions/game'
-import { getGames as getDevGames, resetGames as resetDevGames } from '@/actions/dev/game'
+import Card from 'react-bootstrap/Card'
+
+import { getGames as getDevGames, resetGames as resetDevGames } from '@/actions/dev/games'
 import { getTalentApplications, resetTalentApplications } from '@/actions/talent/application'
 
-import { getProfile } from '@/actions/dev/profile'
-
-class PagesDevGameList extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.handleGetDevProfile = this.handleGetDevProfile.bind(this)
-  }
-
+class PagesMyGameList extends React.Component {
   componentDidMount() {
     const { currentUserState: { currentUser } } = this.props
-    this.props.getGames()
     if (currentUser.type === 'Developer') {
       this.props.getDevGames()
     }
@@ -34,120 +25,117 @@ class PagesDevGameList extends React.Component {
   }
 
   componentWillUnmount() {
-    this.props.resetGames()
     this.props.resetDevGames()
     this.props.resetTalentApplications()
   }
 
-  handleGetDevProfile() {
-    this.props.getProfile()
-  }
-
   render() {
     const {
-      gameState: { games },
-      devGamesState: { devGames },
       currentUserState: { currentUser },
+      devGamesState: { devGames },
       applicationsState: { applications }
     } = this.props
-    console.log(applications)
 
     return (
       <div id="pages-dev-gamelist">
-
         {/* // header */}
-        <header className="text-center border-bottom pages-dev-gamelist-header">
-          {currentUser && currentUser.type === 'Developer' && (
-          <>
-            <Link className="btn btn-primary" to="/my/profile" onClick={this.handleGetDevProfile}>Profile</Link>
-            <h1>My Games</h1>
-            <Link className="btn btn-primary" to="/my/games/new">Publish</Link>
-          </>
-          )}
-          {currentUser && currentUser.type === 'Marketer' && (
-          <>
-            <h1>My Applications</h1>
-            <Link className="btn btn-primary" to="/my/profile" onClick={this.handleGetDevProfile}>Profile</Link>
-          </>
-          )}
+        <header className="text-center pages-dev-gamelist-header">
+          {
+            currentUser && currentUser.type === 'Developer' && (
+              <>
+                <Link className="btn btn-primary btn-box" to="/my/profile">Profile</Link>
+                <h1>My Games</h1>
+                <Link className="btn btn-outline-primary btn-box" to="/my/games/new">Publish</Link>
+              </>
+            )
+          }
+          {
+            currentUser && currentUser.type === 'Marketer' && (
+              <>
+                <h1>My Applications</h1>
+                <Link className="btn btn-primary" to="/my/profile" onClick={this.handleGetDevProfile}>Profile</Link>
+              </>
+            )
+          }
         </header>
 
         {/* Container */}
-        <Container id="pages-dev-games-container">
-          <Row>
-            <Col>
-              {
-              currentUser && currentUser.type === 'Developer'
-                && devGames.map((item) => (
-                  <ListGroup horizontal="sm" className="pages-dev-games-list">
-                    <Link
-                      key={item.id}
-                      to={`/games/${item.id}`}
-                      className="list-group-item list-group-item-action"
-                    >
-                      <div>{item.name}</div>
-                    </Link>
-                  </ListGroup>
-                ))
-              }
-              {
-                currentUser && currentUser.type === 'Marketer'
-                && applications.map((item, idx) => (
-                  <ListGroup horizontal="sm" className="pages-talents-games-list">
-                    <Link
-                      key={item.Game.name}
-                      to={`/games/${item.Game.id}`}
-                      className="list-group-item list-group-item-action"
-                    >
-                      <div>{item.Game.name}</div>
-                    </Link>
-                  </ListGroup>
-                ))
-              }
+        <Container id="pages-games-container">
+          <Row xs={1} md={2} lg={2} className="g-4">
+            {
+                currentUser && currentUser.type === 'Developer' && devGames.map((item) => (
+                  <>
+                    <Col className="col-box">
+                      {/* <ListGroup horizontal="sm" className="pages-dev-games-list" /> */}
 
-            </Col>
+                      <Card horizontal="sm" className="pages-dev-games-list card-box">
+                        <Card.Header>{item.name}</Card.Header>
+                        <Card.Body className="cardBody-box">
+                          <Card.Text className="game-list-card-text text-box">
+                            <Link
+                              key={item.id}
+                              to={`/games/${item.id}`}
+                              className="list-group-item list-group-item-action"
+                            >
+                              {item.description}
+                            </Link>
+                          </Card.Text>
+                        </Card.Body>
+                      </Card>
+                    </Col>
+                  </>
+                ))
+              }
+            {
+                currentUser && currentUser.type === 'Marketer' && applications.map((item) => (
+                  <>
+                    <Col>
+                      {/* <ListGroup horizontal="sm" className="pages-dev-games-list" /> */}
+                      <Card horizontal="sm" className="pages-dev-games-list card-box">
+                        <Card.Header>{item.Game.name}</Card.Header>
+                        <Card.Body>
+                          <Card.Text className="game-list-card-text text-box">
+                            <Link
+                              key={item.Game.name}
+                              to={`/games/${item.Game.id}`}
+                              className="list-group-item list-group-item-action"
+                            > {item.Game.description}
+                            </Link>
+                          </Card.Text>
+                        </Card.Body>
+                      </Card>
+                    </Col>
+                  </>
+                ))
+              }
           </Row>
         </Container>
-
       </div>
-
     )
   }
 }
 
-PagesDevGameList.propTypes = {
-  getTalentApplications: PropTypes.func.isRequired,
-  resetTalentApplications: PropTypes.func.isRequired,
-  getProfile: PropTypes.func.isRequired,
-
-  getGames: PropTypes.func.isRequired,
-  resetGames: PropTypes.func.isRequired,
+PagesMyGameList.propTypes = {
+  currentUserState: PropTypes.shape().isRequired,
+  devGamesState: PropTypes.shape().isRequired,
   getDevGames: PropTypes.func.isRequired,
   resetDevGames: PropTypes.func.isRequired,
-
-  gameState: PropTypes.shape().isRequired,
-  devGamesState: PropTypes.shape().isRequired,
-  currentUserState: PropTypes.shape().isRequired,
-  applicationsState: PropTypes.shape().isRequired
+  applicationsState: PropTypes.shape().isRequired,
+  getTalentApplications: PropTypes.func.isRequired,
+  resetTalentApplications: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
-  gameState: state.games,
-  devGamesState: state.devGames,
   currentUserState: state.currentUser,
+  devGamesState: state.devGames,
   applicationsState: state.applications
-
 })
 
 const mapDispatchToProps = {
-  getTalentApplications,
-  resetTalentApplications,
-  getProfile,
-  getGames,
-  resetGames,
   getDevGames,
-  resetDevGames
-
+  resetDevGames,
+  getTalentApplications,
+  resetTalentApplications
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PagesDevGameList)
+export default connect(mapStateToProps, mapDispatchToProps)(PagesMyGameList)

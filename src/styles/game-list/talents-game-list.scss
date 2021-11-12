@@ -1,0 +1,24 @@
+html {
+  body {
+
+    // talents game list page
+    #pages-talents-gamelist {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+
+      .pages-talents-gamelist-header {
+        font-family: 'Biryani',
+          sans-serif;
+      }
+
+      .pages-talents-games-list {
+        display: flex;
+        justify-content: center;
+      }
+
+    }
+
+  }
+}

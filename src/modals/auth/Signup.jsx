@@ -7,7 +7,7 @@ import FormsAuthSignup from '@/forms/auth/Signup'
 const ModalsSignup = ({ close, onSubmit }) => (
   <Modal show onHide={close}>
     <Modal.Header closeButton>
-      <Modal.Title>Create Todo</Modal.Title>
+      <Modal.Title>Signup</Modal.Title>
     </Modal.Header>
     <Modal.Body>
       <FormsAuthSignup

@@ -7,29 +7,25 @@ import {
 } from '@/actions/game'
 
 const initialState = {
-  game: [],
-  isGetGameLoading: false,
-  destroyingIDs: [],
-  updatingIDs: [],
-  meta: null
+  game: null,
+  isGetGameLoading: false
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case SET_GAME: {
-      return produce(state, (draft) => {
-        draft.game = action.payload.game
-      })
-    }
     case GET_GAME: {
       return produce(state, (draft) => {
         draft.isGetGameLoading = action.payload.loading
       })
     }
+    case SET_GAME: {
+      return produce(state, (draft) => {
+        draft.game = action.payload.game
+      })
+    }
     case UNSET_GAME: {
       return produce(state, (draft) => {
-        draft.meta = null
-        draft.game = []
+        draft.game = null
       })
     }
     default: {

@@ -1,4 +1,3 @@
-// applicants' list shows or not depends on if the game being owned by dev or not owned
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -10,47 +9,61 @@ import Button from 'react-bootstrap/Button'
 import ListGroup from 'react-bootstrap/ListGroup'
 import Container from 'react-bootstrap/Container'
 
+import {
+  Accordion,
+  AccordionItem,
+  AccordionItemHeading,
+  AccordionItemButton,
+  AccordionItemPanel
+} from 'react-accessible-accordion'
+
+import 'react-accessible-accordion/dist/fancy-example.css'
+
 import { getGame, resetGame } from '@/actions/game'
-import { getDevGame, unsetDevGame, getDevGameApplications, resetDevGameApplications } from '@/actions/dev/game'
+import { getDevGameApplications, resetDevGameApplications, destroyGame } from '@/actions/dev/games'
 import { createTalentApplication, destroyTalentApplication, getTalentApplication } from '@/actions/talent/application'
+
+import { getApplicationsApproval, updateApprovedToTrueInDB, updateApprovedToFalseInDB } from '@/actions/dev/approval'
 
 class PagesPublicShow extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      clickedApplyBtn: false
-    }
-
-    this.componentDidMount = this.componentDidMount.bind(this)
-    this.componentWillUnmount = this.componentWillUnmount.bind(this)
     this.handleApplySubmit = this.handleApplySubmit.bind(this)
     this.handleCancelSubmit = this.handleCancelSubmit.bind(this)
     this.handleEditSubmit = this.handleEditSubmit.bind(this)
+    this.handleDelete = this.handleDelete.bind(this)
+    this.handleApproveSubmit = this.handleApproveSubmit.bind(this)
+    this.handleApprovedSubmit = this.handleApprovedSubmit.bind(this)
   }
 
   componentDidMount() {
     const { id: GameId } = this.props.match.params
+    const { currentUserState: { currentUser } } = this.props
     this.props.getGame(GameId)
-    this.props.getDevGame(GameId)
-    this.props.getDevGameApplications(GameId)
-    this.props.getTalentApplication(GameId)
+
+    if (currentUser) {
+      if (currentUser.type === 'Developer') {
+        this.props.getDevGameApplications(GameId)
+        this.props.getApplicationsApproval(GameId)
+      }
+      if (currentUser.type === 'Marketer') {
+        this.props.getTalentApplication(GameId)
+      }
+    }
   }
 
   componentWillUnmount() {
     this.props.resetGame()
-    this.props.unsetDevGame()
     this.props.resetDevGameApplications()
   }
 
   handleApplySubmit() {
-    this.setState({ clickedApplyBtn: true })
     const { id: GameId } = this.props.match.params
     this.props.createTalentApplication(GameId)
   }
 
   handleCancelSubmit() {
-    this.setState({ clickedApplyBtn: false })
     const { id: GameId } = this.props.match.params
     this.props.destroyTalentApplication(GameId)
   }
@@ -61,182 +74,278 @@ class PagesPublicShow extends React.Component {
     push(`/my/games/${GameId}/edit`)
   }
 
-  render() {
+  handleDelete() {
+    const GameId = this.props.match.params.id
+    this.props.destroyGame(GameId).then(() => {
+      const { history: { replace } } = this.props
+      replace('/my/games')
+    })
+  }
+
+  handleApproveSubmit(GameId, TalentId) {
+    this.props.updateApprovedToTrueInDB(GameId, TalentId)
+  }
+
+  handleApprovedSubmit(GameId, TalentId) {
+    this.props.updateApprovedToFalseInDB(GameId, TalentId)
+  }
+
+  // render func
+  renderDevBtn() {
+    return (
+      <>
+        <Button
+          href="/my/game/:id/edit"
+          className="btn btn-success"
+          onClick={(e) => {
+            e.preventDefault()
+            this.handleEditSubmit()
+          }}
+        >Edit</Button>
+        <Button
+          type="button"
+          className="btn btn-danger mx-4"
+          onClick={(e) => {
+            e.preventDefault()
+            this.handleDelete()
+          }}
+        >Delete</Button>
+      </>
+    )
+  }
+
+  renderTalentBtn() {
     const {
-      gameState: { game },
-      devGameState: { devGame, devGameApplications },
-      currentUserState: { currentUser },
       applicationState: { application }
-
     } = this.props
-    const { clickedApplyBtn } = this.state
-
-    console.log('talent-show-page-game', game)
-    console.log('talent-show-page-devGame', devGame)
-    console.log('talent-show-page-devGame-applications', devGameApplications)
-
-    console.log('talent-show-page-currentUser', currentUser)
-    console.log('talent-show-page-application: ', application)
 
     return (
-      <div id="dev-showpage">
+      <>
+        {
+          !application && (
+          <Button
+            type="button"
+            id="btn-apply"
+            className="btn btn-primary my-3"
+            onClick={() => {
+              this.handleApplySubmit()
+            }}
+          >Apply
+          </Button>
+          )
+        }
 
-        <div id="showpage-carousel-and-description-wrapper">
+        {
+          application && (
+          <Button
+            type="button"
+            id="btn-applied"
+            className="btn btn-secondary my-3"
+            onClick={() => {
+              this.handleCancelSubmit()
+            }}
+          >Applied
+          </Button>
+          )
+        }
 
-          { currentUser && currentUser.type === 'Developer' && (
-          <div className="dev-showpage-header mb-3">
-            <h1 id="game-name">{devGame.name}</h1>
-            <Button
-              href="/my/game/:id/edit"
-              className="btn btn-success"
-              onClick={(e) => {
-                e.preventDefault()
-                this.handleEditSubmit()
-              }}
-            >Edit</Button>
-            <Button type="button" className="btn btn-danger mx-4">Delete</Button>
+      </>
+    )
+  }
+
+  renderCarouselAndDescription() {
+    const {
+      gameState: { game }
+    } = this.props
+
+    return (
+      <Row className="game-info-row">
+        {
+          game.Images && (
+            <Col xs={6}>
+              <div id="showpage-carousel-container">
+                <Carousel variant="dark">
+                  {
+                    game.Images[0]?.url1 && (
+                      <Carousel.Item className="showpage-carousel-item">
+                        <img
+                          className="w-100"
+                          src={game.Images[0]?.url1}
+                          alt="First slide"
+                        />
+                      </Carousel.Item>
+                    )
+                  }
+                  {
+                    game.Images[0]?.url2 && (
+                      <Carousel.Item>
+                        <img
+                          className="w-100"
+                          src={game.Images[0]?.url2}
+                          alt="Second slide"
+                        />
+                      </Carousel.Item>
+                    )
+                  }
+                  {
+                    game.Images[0]?.url3 && (
+                      <Carousel.Item>
+                        <img
+                          className="w-100"
+                          src={game.Images[0]?.url3}
+                          alt="Third slide"
+                        />
+                      </Carousel.Item>
+                    )
+                  }
+                </Carousel>
+              </div>
+            </Col>
+          )
+        }
+
+        <Col xs={6}>
+          <div id="showpage-description-container" className="col-md-auto">
+            <article>
+              <Accordion allowZeroExpanded>
+                <AccordionItem>
+                  <AccordionItemHeading>
+                    <AccordionItemButton>
+                      Description
+                    </AccordionItemButton>
+                  </AccordionItemHeading>
+                  <AccordionItemPanel>
+                    <p>{game.description}</p>
+                  </AccordionItemPanel>
+                </AccordionItem>
+              </Accordion>
+            </article>
           </div>
-          )}
-          {
-            currentUser && currentUser.type === 'Marketer' && (
-              <>
-                <div className="dev-showpage-header mb-3">
+        </Col>
+      </Row>
+    )
+  }
 
-                  <h1 id="game-name">{game.name}</h1>
-                </div>
-                {
-                  !clickedApplyBtn && (
+  renderApplicantsList() {
+    const { devGameState: { devGameApplications } } = this.props
+
+    if (devGameApplications.length === 0) return null
+
+    return (
+      <Container className="mb-5">
+        <div id="applicant-list">
+          <h3>Applicant list</h3>
+          <Row className="showpage-applicant-list-row">
+            <Col>
+              { devGameApplications.map((applicant) => (
+                <ListGroup horizontal className="showpage-applicant-list-row" key={applicant.Talent.id}>
+                  <ListGroup.Item className="showpage-applicant-list-item">{applicant.Talent.type}</ListGroup.Item>
+                  <ListGroup.Item className="showpage-applicant-list-item">{applicant.Talent.username}</ListGroup.Item>
+                  <ListGroup.Item className="showpage-applicant-list-item">{applicant.Talent.firstName}</ListGroup.Item>
+                  <ListGroup.Item className="showpage-applicant-list-item">{applicant.Talent.lastName}</ListGroup.Item>
+                  <ListGroup.Item className="showpage-applicant-list-item">{applicant.Talent.cvUrl}</ListGroup.Item>
+                  <ListGroup.Item className="showpage-applicant-list-item">{applicant.Talent.email}</ListGroup.Item>
+                  { !applicant.approved && (
                   <Button
                     type="button"
                     id="btn-apply"
                     className="btn btn-primary my-3"
                     onClick={() => {
-                      this.handleApplySubmit()
+                      this.handleApproveSubmit(applicant.GameId, applicant.Talent.id)
                     }}
-                  >Apply
+                  >Approve
                   </Button>
-                  )
-                }
-
-                {
-                  clickedApplyBtn && (
+                  )}
+                  { applicant.approved && (
                   <Button
                     type="button"
-                    id="btn-applied"
-                    className="btn btn-secondary my-3"
+                    id="btn-apply"
+                    className="btn btn-warning my-3"
                     onClick={() => {
-                      this.handleCancelSubmit()
+                      this.handleApprovedSubmit(applicant.GameId, applicant.Talent.id)
                     }}
-                  >Applied
+                  >Approved
                   </Button>
-                  )
-                }
-
-              </>
-            )
-          }
-
-          {!currentUser && <h1 id="game-name">{game.name}</h1>}
-
-          {/* public */}
-          <Row>
-            <Col>
-              <div id="showpage-carousel-container">
-                <Carousel variant="dark">
-                  <Carousel.Item className="showpage-carousel-item">
-                    <img
-                      className="w-100"
-                      src="https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/HNEV2?wid=1144&hei=1144&fmt=jpeg&qlt=95&.v=1599760849000"
-                      alt="First slide"
-                    />
-
-                  </Carousel.Item>
-                  <Carousel.Item>
-                    <img
-                      className="w-100"
-                      src="https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/HNEV2?wid=1144&hei=1144&fmt=jpeg&qlt=95&.v=1599760849000"
-                      alt="Second slide"
-                    />
-
-                  </Carousel.Item>
-                  <Carousel.Item>
-                    <img
-                      className="w-100"
-                      src="https://media.contentapi.ea.com/content/dam/gin/images/2021/06/battlefield-2042-key-art.jpg.adapt.crop1x1.767p.jpg"
-                      alt="Third slide"
-                    />
-
-                  </Carousel.Item>
-                </Carousel>
-              </div>
-            </Col>
-
-            <Col xs={6}>
-              <div id="showpage-description-container" className="col-md-auto">
-                <h2>Description: </h2>
-                <article>
-                  <p>{game.description}</p>
-                </article>
-              </div>
+                  )}
+                </ListGroup>
+              ))}
             </Col>
           </Row>
         </div>
+      </Container>
+    )
+  }
 
-        {currentUser && currentUser.type === 'Developer' && (
-        <Container className="mb-5">
-          <div id="applicant-list">
-            <h3>Applicant list</h3>
-            <Row>
-              <Col>
-                {
-                  devGameApplications.map((applicant, i) => (
-                    <ListGroup horizontal className="showpage-applicant-list-row" key={applicant.Talent.id}>
-                      <ListGroup.Item className="showpage-applicant-list-item">{applicant.Talent.type}</ListGroup.Item>
-                      <ListGroup.Item className="showpage-applicant-list-item">{applicant.Talent.username}</ListGroup.Item>
-                      <ListGroup.Item className="showpage-applicant-list-item">{applicant.Talent.firstName}</ListGroup.Item>
-                      <ListGroup.Item className="showpage-applicant-list-item">{applicant.Talent.lastName}</ListGroup.Item>
-                      <ListGroup.Item className="showpage-applicant-list-item">{applicant.Talent.cvUrl}</ListGroup.Item>
-                      <button type="button" className="btn btn-primary">Approve</button>
-                    </ListGroup>
-                  ))
-                }
-              </Col>
-            </Row>
+  renderJobDetails() {
+    const { gameState: { game } } = this.props
+    return (
+      <Container className="mb-5" fluid id="showpage-job-detail-container">
+        <div id="job-detail">
+          <Col xs={12} lg={6} className="job-description">
+            <Accordion allowZeroExpanded>
+              <AccordionItem>
+                <AccordionItemHeading>
+                  <AccordionItemButton>
+                    Job Description
+                  </AccordionItemButton>
+                </AccordionItemHeading>
+                <AccordionItemPanel>
+                  <p>{game.jobDescription}</p>
+                </AccordionItemPanel>
+              </AccordionItem>
+            </Accordion>
+          </Col>
+          <Col xs={12} lg={6} className="job-requirement">
+            <Accordion allowZeroExpanded>
+              <AccordionItem>
+                <AccordionItemHeading>
+                  <AccordionItemButton>
+                    Requirements
+                  </AccordionItemButton>
+                </AccordionItemHeading>
+                <AccordionItemPanel>
+                  <p>{game.qualification}</p>
+                </AccordionItemPanel>
+              </AccordionItem>
+            </Accordion>
+          </Col>
+        </div>
+      </Container>
+    )
+  }
+
+  render() {
+    const {
+      gameState: { game, isGetGameLoading },
+      currentUserState: { currentUser }
+    } = this.props
+
+    if (isGetGameLoading) return <div>Loading</div>
+    if (!game) return <div>Cannot Find Game</div>
+
+    return (
+      <div id="showpage">
+        <div id="showpage-carousel-and-description-wrapper">
+          <div className="showpage-header mb-3">
+            {/* Public: game's name */}
+            <h1 id="game-name">{game.name}</h1>
+
+            {/*  Dev: edit and delete btns */}
+            { currentUser && currentUser.type === 'Developer' && this.renderDevBtn()}
+
+            {/* Talent: apply and cancel btn */}
+            { currentUser && currentUser.type === 'Marketer' && this.renderTalentBtn()}
           </div>
-        </Container>
-        )}
 
-        {currentUser && currentUser.type === 'Marketer' && (
+          {/* Public: carousel and description */}
+          {this.renderCarouselAndDescription()}
+        </div>
 
-          <Container className="mb-5" fluid id="showpage-job-detail-container">
-            <div id="job-detail">
-              <Row className="showpage-job-detail-row">
-                <Col xs={12} lg={6} className="job-description">
-                  <h3>Job Description</h3>
-                  <ListGroup horizontal className="showpage-job-description-listgroup" key={game.id}>
-                    <ListGroup.Item className="showpage-job-description-item">
-                      <p>
-                        {game.jobDescription}
-                      </p>
-                    </ListGroup.Item>
+        {/* Dev: Applicants' list */}
+        {currentUser && currentUser.type === 'Developer' && this.renderApplicantsList() }
 
-                  </ListGroup>
-                </Col>
-                <Col xs={12} lg={6} className="job-requirement">
-                  <h3>Requirements</h3>
-                  <ListGroup horizontal className="showpage-job-description-listgroup" key={game.id}>
-                    <ListGroup.Item className="showpage-job-description-item">
-                      <p>
-                        {game.qualification}
-                      </p>
-                    </ListGroup.Item>
-
-                  </ListGroup>
-                </Col>
-              </Row>
-            </div>
-          </Container>
-        )}
+        {/* Talent: Job details */}
+        {currentUser && currentUser.type === 'Marketer' && this.renderJobDetails()}
       </div>
     )
   }
@@ -244,42 +353,46 @@ class PagesPublicShow extends React.Component {
 
 PagesPublicShow.propTypes = {
   history: PropTypes.shape().isRequired,
-
   match: PropTypes.shape().isRequired,
-  getDevGame: PropTypes.func.isRequired,
-  unsetDevGame: PropTypes.func.isRequired,
-  getGame: PropTypes.func.isRequired,
-  resetGame: PropTypes.func.isRequired,
-
-  gameState: PropTypes.shape().isRequired,
-  devGameState: PropTypes.shape().isRequired,
   currentUserState: PropTypes.shape().isRequired,
 
-  applicationState: PropTypes.shape().isRequired,
+  gameState: PropTypes.shape().isRequired,
+  getGame: PropTypes.func.isRequired,
+  resetGame: PropTypes.func.isRequired,
+  destroyGame: PropTypes.func.isRequired,
 
-  getTalentApplication: PropTypes.func.isRequired,
+  devGameState: PropTypes.shape().isRequired,
   getDevGameApplications: PropTypes.func.isRequired,
   resetDevGameApplications: PropTypes.func.isRequired,
+  getApplicationsApproval: PropTypes.func.isRequired,
+  updateApprovedToTrueInDB: PropTypes.func.isRequired,
+  updateApprovedToFalseInDB: PropTypes.func.isRequired,
+
+  applicationState: PropTypes.shape().isRequired,
+  getTalentApplication: PropTypes.func.isRequired,
   createTalentApplication: PropTypes.func.isRequired,
   destroyTalentApplication: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
+  currentUserState: state.currentUser,
   gameState: state.game,
   devGameState: state.devGame,
-  currentUserState: state.currentUser,
   applicationState: state.application
-
 })
 
 const mapDispatchToProps = {
-  getDevGame,
-  unsetDevGame,
   getGame,
   resetGame,
-  getTalentApplication,
+
+  destroyGame,
   getDevGameApplications,
   resetDevGameApplications,
+  getApplicationsApproval,
+  updateApprovedToTrueInDB,
+  updateApprovedToFalseInDB,
+
+  getTalentApplication,
   createTalentApplication,
   destroyTalentApplication
 }

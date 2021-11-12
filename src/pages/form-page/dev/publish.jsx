@@ -3,52 +3,60 @@ import PropTypes from 'prop-types'
 import FormsGamePublish from '@/forms/publish/new'
 import { connect } from 'react-redux'
 
-import { createGame, updateGame, destroyGame } from '@/actions/dev/game'
+import { createGame, updateGame, destroyGame } from '@/actions/dev/games'
+
+import { createImage } from '@/actions/dev/image'
 
 class pageDevPublish extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {}
-
-    this.handlePublishFormCreateSubmit = this.handlePublishFormCreateSubmit.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handlePublishFormCreateSubmit(values) {
-    this.props.createGame(values).then((resp) => {
-      const { history: { push } } = this.props
-      push(`/games/${resp.data.game.id}`)
+  handleSubmit({ url1, url2, url3, ...gameValues }) {
+    this.props.createGame(gameValues).then((resp) => {
+      const GameId = Number(resp.data.game.id)
+
+      const { history: { replace } } = this.props
+      if (url1 || url2 || url3) {
+        this.props.createImage({ url1, url2, url3 }, GameId).then(() => {
+          replace(`/games/${GameId}`)
+        })
+      } else {
+        replace(`/games/${GameId}`)
+      }
     })
   }
 
   render() {
     return (
-      <>
-        <div>Publish Your New Game</div>
-        <FormsGamePublish onSubmit={this.handlePublishFormCreateSubmit} />
-      </>
+      <div id="pages-my-games-new" className="container my-3">
+        <div className="row">
+          <div className="col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+            <h2 className="text-center">Publish Your New Game</h2>
+            <FormsGamePublish
+              onSubmit={this.handleSubmit}
+            />
+          </div>
+        </div>
+      </div>
     )
   }
 }
 
 pageDevPublish.propTypes = {
-
   history: PropTypes.shape().isRequired,
   createGame: PropTypes.func.isRequired,
-  updateGame: PropTypes.func.isRequired,
-  destroyGame: PropTypes.func.isRequired
-  // stateGame: PropTypes.shape().isRequired
+  createImage: PropTypes.func.isRequired
 
 }
-
-const mapStateToProps = (state) => ({
-  // stateGame: state.game
-})
 
 const mapDispatchToProps = {
   createGame,
   updateGame,
-  destroyGame
+  destroyGame,
+  createImage
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(pageDevPublish)
+export default connect(null, mapDispatchToProps)(pageDevPublish)

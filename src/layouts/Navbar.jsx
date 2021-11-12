@@ -4,7 +4,7 @@ import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
-
+import { withRouter } from 'react-router'
 // modals
 import ModalsSignup from '@/modals/auth/Signup'
 import ModalsLogin from '@/modals/auth/Login'
@@ -43,8 +43,9 @@ class LayoutsNavbar extends React.Component {
   handleLoginSubmit(values) {
     this.props.authLogin(values).then(() => {
       this.setState({ showModalsLogin: false })
-      // const { history: { push } } = this.props
-      // push('http://localhost:8080/api/games')
+
+      const { history: { push } } = this.props
+      push('/')
     })
   }
 
@@ -67,7 +68,6 @@ class LayoutsNavbar extends React.Component {
   render() {
     const { currentUserState: { currentUser } } = this.props
     const { showModalsSignup, showModalsLogin } = this.state
-    console.log('currentUser-Navbar: ', currentUser)
 
     return (
       <>
@@ -118,7 +118,7 @@ class LayoutsNavbar extends React.Component {
 
 LayoutsNavbar.propTypes = {
   currentUserState: PropTypes.shape().isRequired,
-  // history: PropTypes.shape().isRequired,
+  history: PropTypes.shape().isRequired,
   authLogout: PropTypes.func.isRequired,
   authSignup: PropTypes.func.isRequired,
   authLogin: PropTypes.func.isRequired
@@ -135,4 +135,6 @@ const mapDispatchToProps = {
   authSignup
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LayoutsNavbar)
+const LayoutsNavbar1 = withRouter(LayoutsNavbar)
+
+export default connect(mapStateToProps, mapDispatchToProps)(LayoutsNavbar1)
