@@ -1,23 +1,33 @@
-import React from 'react'
+import * as React from 'react'
+import AppBar from '@mui/material/AppBar'
+import Box from '@mui/material/Box'
+import Toolbar from '@mui/material/Toolbar'
+import IconButton from '@mui/material/IconButton'
+import Typography from '@mui/material/Typography'
+import Menu from '@mui/material/Menu'
+import MenuIcon from '@mui/icons-material/Menu'
+import Container from '@mui/material/Container'
+import Avatar from '@mui/material/Avatar'
+import Button from '@mui/material/Button'
+import Tooltip from '@mui/material/Tooltip'
+import MenuItem from '@mui/material/MenuItem'
+
 import PropTypes from 'prop-types'
-import Navbar from 'react-bootstrap/Navbar'
-import Nav from 'react-bootstrap/Nav'
-import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-// modals
+import { authLogout, authLogin, authSignup } from '@/actions/auth'
 import ModalsSignup from '@/modals/auth/Signup'
 import ModalsLogin from '@/modals/auth/Login'
 
-import { authLogout, authLogin, authSignup } from '@/actions/auth'
+const pages = ['Products', 'Pricing', 'Blog']
+const settings = ['Profile', 'Account', 'My games', 'Logout']
 
 class LayoutsNavbar extends React.Component {
   constructor(props) {
     super(props)
-
     this.state = {
-      showModalsSignup: false,
-      showModalsLogin: false
+      anchorElNav: null,
+      anchorElUser: null
     }
 
     this.openModalsSignup = this.openModalsSignup.bind(this)
@@ -27,8 +37,30 @@ class LayoutsNavbar extends React.Component {
     this.handleLogoutClick = this.handleLogoutClick.bind(this)
     this.handleSignupSubmit = this.handleSignupSubmit.bind(this)
     this.handleLoginSubmit = this.handleLoginSubmit.bind(this)
+
+    this.handleOpenNavMenu = this.handleOpenNavMenu.bind(this)
+    this.handleOpenUserMenu = this.handleOpenUserMenu.bind(this)
+    this.handleCloseNavMenu = this.handleCloseNavMenu.bind(this)
+    this.handleCloseUserMenu = this.handleCloseUserMenu.bind(this)
   }
 
+  handleOpenNavMenu = (event) => {
+    this.setState({ anchorElNav: event.currentTarget })
+  }
+
+  handleOpenUserMenu = (event) => {
+    this.setState({ anchorElUser: event.currentTarget })
+  }
+
+  handleCloseNavMenu = () => {
+    this.setState({ anchorElNav: null })
+  }
+
+  handleCloseUserMenu = () => {
+    this.setState({ anchorElUser: null })
+  }
+
+  // authentication function
   handleLogoutClick() {
     this.props.authLogout()
   }
@@ -68,43 +100,125 @@ class LayoutsNavbar extends React.Component {
   render() {
     const { currentUserState: { currentUser } } = this.props
     const { showModalsSignup, showModalsLogin } = this.state
-
+    console.log(currentUser)
     return (
       <>
-        <Navbar id="layouts-navbar" bg="light" variant="light" expand="lg" collapseOnSelect>
-          <Navbar.Brand id="layouts-navbar-brand" as={NavLink} to="/">Indie Zone</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav id="layouts-navbar-navlink" className="ml-auto">
-              <Nav.Link as={NavLink} to="/" eventKey="1">Browse Games</Nav.Link>
-              {
-                currentUser && (currentUser.type === 'Developer') && (
-                  <>
-                    <Nav.Link as={NavLink} to="/my/games" eventKey="2">My Games</Nav.Link>
-                    {/* if the user type is marketers */}
-                    <Nav.Link onClick={this.handleLogoutClick} eventKey="3">Logout</Nav.Link>
-                  </>
-                )
-              }
-              {
-                currentUser && (currentUser.type === 'Marketer') && (
-                  <>
-                    <Nav.Link as={NavLink} to="/my/applications" eventKey="2">My Applications</Nav.Link>
-                    <Nav.Link onClick={this.handleLogoutClick} eventKey="3">Logout</Nav.Link>
-                  </>
-                )
-              }
-              {
-                (!currentUser) && (
+        <AppBar position="static">
+          <Container maxWidth="xl">
+            <Toolbar disableGutters>
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+              >
+                Indie Zone
+              </Typography>
+
+              <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={this.handleOpenNavMenu}
+                  color="inherit"
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={this.state.anchorElNav}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left'
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left'
+                  }}
+                  open={Boolean(this.state.anchorElNav)}
+                  onClose={this.handleCloseNavMenu}
+                  sx={{
+                    display: { xs: 'block', md: 'none' }
+                  }}
+                >
+                  {pages.map((page) => (
+                    <MenuItem key={page} onClick={this.handleCloseNavMenu}>
+                      <Typography textAlign="center">{page}</Typography>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </Box>
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
+              >
+                Indie Zone
+              </Typography>
+              <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                {pages.map((page) => (
+                  <Button
+                    key={page}
+                    onClick={this.handleCloseNavMenu}
+                    sx={{ my: 2, color: 'white', display: 'block' }}
+                  >
+                    {page}
+                  </Button>
+                ))}
+              </Box>
+
+              <Box sx={{ flexGrow: 0 }}>
+                {
+              currentUser && (currentUser.type === 'Developer') && (
                 <>
-                  <Nav.Link onClick={this.openModalsSignup} eventKey="4">Signup</Nav.Link>
-                  <Nav.Link onClick={this.openModalsLogin} eventKey="5">Login</Nav.Link>
+                  <Tooltip title="Open settings">
+                    <IconButton onClick={this.handleOpenUserMenu} sx={{ p: 0 }}>
+                      <Avatar alt="Rounded Avatar" src="/static/images/avatar/2.jpg" />
+                    </IconButton>
+                  </Tooltip>
+                  <Menu
+                    sx={{ mt: '45px' }}
+                    id="menu-appbar"
+                    anchorEl={this.state.anchorElUser}
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right'
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right'
+                    }}
+                    open={Boolean(this.state.anchorElUser)}
+                    onClose={this.handleCloseUserMenu}
+                  >
+                    {settings.map((setting) => (
+                      <MenuItem key={setting} onClick={this.handleCloseNavMenu}>
+                        <Typography textAlign="center">{setting}</Typography>
+                      </MenuItem>
+                    ))}
+                  </Menu>
                 </>
+              )
+            }
+
+                {
+                !currentUser && (
+                  <>
+                    <Button color="inherit" onClick={this.openModalsSignup}>Signup</Button>
+                    <Button color="inherit" onClick={this.openModalsLogin}>Login</Button>
+                  </>
                 )
-              }
-            </Nav>
-          </Navbar.Collapse>
-        </Navbar>
+            }
+
+              </Box>
+            </Toolbar>
+          </Container>
+        </AppBar>
 
         <div id="authModals" className="container">
           { showModalsSignup && <ModalsSignup close={this.closeModalsSignup} onSubmit={this.handleSignupSubmit} />}
@@ -136,5 +250,4 @@ const mapDispatchToProps = {
 }
 
 const LayoutsNavbar1 = withRouter(LayoutsNavbar)
-
 export default connect(mapStateToProps, mapDispatchToProps)(LayoutsNavbar1)
